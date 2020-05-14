@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
     <!-- VENDOR CSS -->
     <link rel="stylesheet" href="{{asset('assets/vendor/bootstrap/css/bootstrap.min.css')}}">
-    <link rel="stylesheet" href="{{asset('assets/vendor/font-awesome/css/font-awesome.min.css')}}">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css">
     <link rel="stylesheet" href="{{asset('assets/vendor/linearicons/style.css')}}">
     <link rel="stylesheet" href="{{asset('assets/vendor/chartist/css/chartist-custom.css')}}">
     <!-- MAIN CSS -->
@@ -62,6 +62,9 @@
     <!-- <script src="{{asset('assets/vendor/jquery.easy-pie-chart/jquery.easypiechart.min.js')}}"></script>
     <script src="{{asset('assets/vendor/chartist/js/chartist.min.js')}}"></script> -->
     <script src="{{asset('assets/scripts/klorofil-common.js')}}"></script>
+    <script>
+        setTimeout(function(){$(".notification").hide();},2500);
+    </script>
     <script>
     // $(function() {
     //     var data, options;

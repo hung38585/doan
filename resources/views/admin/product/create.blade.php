@@ -134,6 +134,14 @@
 	</form> 
 </div> 
 <script type="text/javascript">
+	$("#filename").change(function(){
+		var filename = $(this).val();
+		var ext = filename.substring(filename.lastIndexOf('.') + 1).toLowerCase();
+		if (!(ext == "gif" || ext == "png" || ext == "jpg" || ext == "jpeg")){
+			alert("Please change image.");
+			$("#filename").val('');
+        }
+	});
 	$('#selectsize').val($('.size').val());
 	$(".size").change(function(){
 		$('#selectsize').val($(this).val());

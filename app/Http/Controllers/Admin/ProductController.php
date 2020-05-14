@@ -41,7 +41,7 @@ class ProductController extends Controller
         if ($request->name) {
             $products = $products->where('name','like','%'.$request->name.'%'); 
         }
-        $products = $products->get();
+        $products = $products->paginate(10)->appends(request()->query());
         return view('admin.product.index',compact('products'));
     }
 
@@ -101,16 +101,18 @@ class ProductController extends Controller
                 $product_detail->save();
             }
         }
-        foreach ($request->listimage as $key => $value) {
-            $image = new Image([
-                'product_id' => $product->id,
-                'name' => $value,
-                'created_by'=> Auth::guard('admin')->user()->id,
-                'updated_at' => null
-            ]);
-            $image->save();
-        }
-        
+        if ($request->listimage) {
+            $lists = array_unique($request->listimage);
+            foreach ($lists as $key => $value) {
+                $image = new Image([
+                    'product_id' => $product->id,
+                    'name' => $value,
+                    'created_by'=> Auth::guard('admin')->user()->id,
+                    'updated_at' => null
+                ]);
+                $image->save();
+            }
+        } 
         if ($product){
             return redirect('/admin/product')->with('message','Create successfully!');
         }else{
@@ -209,9 +211,15 @@ class ProductController extends Controller
     public function destroy(Request $request)
     {
         $product = Product::findOrFail($request->id);
+        $product_details = Product_Detail::select('id')->where('product_id', $product->id)->get();
         if ($product) {
             $product->isdelete = true;
             $product->update();
+            foreach ($product_details as $key => $value) {
+                $product_detail = Product_Detail::findOrFail($value->id);
+                $product_detail->isdelete = true;
+                $product_detail->update();
+            }
             return back()->with('message','Delete success!');
         } else {
             return back()->with('err','Delete failse!');
@@ -237,6 +245,45 @@ class ProductController extends Controller
             $imagename=$request->filename2->getClientOriginalName();
             $request->filename2->move('images', $imagename);
             return Response($imagename);
+        }
+    }
+    public function getListImage(Request $request)
+    {
+        if ($request->ajax()) {
+            $images = Image::select('id','name')->where('product_id',$request->product_id)->orderBy('created_at', 'desc')->get();
+            $list = array();
+            $id = array();
+            foreach ($images as $key => $value) {
+                $list[] = $value->name;
+                $id[] = $value->id;
+            }
+            return response()->json(array('success'=> true, 'lists' => $list,'ids'=> $id));
+        }
+    }
+    public function saveImage(Request $request)
+    {
+        if ($request->ajax()) {
+            $nameimage = class_basename($request->nameimage);
+            $images = Image::select('id')->where('product_id',$request->product_id)->where('name',$nameimage)->first();
+            if (isset($images->id)) {
+                return response('0');
+            }
+            $image = new Image([
+                'product_id' => $request->product_id,
+                'name' => $nameimage,
+                'created_by'=> Auth::guard('admin')->user()->id,
+                'updated_at' => null
+            ]);
+            $image->save();
+            return response($image->id);
+        }
+    }
+    public function deleteImage(Request $request)
+    {
+        if ($request->ajax()) {
+            $image = Image::findOrFail($request->id);
+            $image->delete();
+            return response($request->id);
         }
     }
 }

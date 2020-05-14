@@ -126,12 +126,12 @@ class CategoryController extends Controller
     public function destroy(Request $request)
     {
         $category = Category::findOrFail($request->id);
-        $product = Product::where('category_id', '=', $category->id)->get();
+        $product = Product::where('category_id', $category->id)->get();
         if ($category && $product->count()==0){
             $category->isdelete = true;
             $category->update();
         }else{
-            return redirect("admin/category")->with('message','Data is being used on the product side!');
+            return redirect("admin/category")->with('err','Data is being used on the product side!');
         }
         return redirect("admin/category")->with('message','Delete successfully!');
     }

@@ -54,6 +54,9 @@ Route::get('/get_color_in_productdetail', 'User\HomeController@getListColor');
 Route::get('/get_quantity_in_productdetail', 'User\HomeController@getQuantity');
 Route::get('/get_quantity_order', 'Admin\OrderController@getQuantity');
 Route::post('/move_image', 'Admin\ProductController@moveImage');
+Route::post('/get_list_image', 'Admin\ProductController@getListImage');
+Route::post('/save_image', 'Admin\ProductController@saveImage');
+Route::post('/delete_image', 'Admin\ProductController@deleteImage');
 //END ajax
 // -------------------------------------------------------------------------------
 // END ADMIN

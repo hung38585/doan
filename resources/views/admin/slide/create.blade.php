@@ -20,12 +20,7 @@
 				{{Form::label('Url img:')}}
 				<input  name="url_img" type="file" class="form-control">
 				<span class="text-danger">{{ $errors->first('url_img')}}</span>
-			</div>
-			<div class="form-group {{ $errors->has('display_order') ?'has-error':'' }}">
-				{{ Form::label('display_order','Display Order : ')}}
-				{{ Form::text('display_order','',['class'=>'form-control'])}}
-				<span class="text-danger">{{ $errors->first('display_order')}}</span>
-			</div>
+			</div> 
 		</div>
 		<div class="form-group">
 			{{ Form::submit('Save',['class'=>'btn btn-success']) }}

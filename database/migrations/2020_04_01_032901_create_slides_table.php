@@ -16,8 +16,7 @@ class CreateSlidesTable extends Migration
         Schema::create('slides', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('link');
-            $table->string('url_img');
-            $table->integer('display_order');
+            $table->string('url_img'); 
             $table->boolean('isdelete');
             $table->boolean('isdisplay');
             $table->string('created_by')->nullable();

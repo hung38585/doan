@@ -9,9 +9,9 @@
 </div>
 <div class="row ml-1">
 @if (Session::has('message'))
-<p class="alert alert-success">{{ Session::get('message')}}</p> 
+<p class="alert alert-success notification">{{ Session::get('message')}}</p> 
 @elseif(Session::has('err'))    
-<p class="alert alert-danger">{{ Session::get('err')}}</p>
+<p class="alert alert-danger notification">{{ Session::get('err')}}</p>
 @endif
 </div>
 <div class="card">
@@ -32,11 +32,11 @@
 	<table class="table table-striped table-sm">
 		<thead>
 			<tr>
-				<th >STT</th>
+				<th >#</th>
 				<th >Link</th>
 				<th >Url img</th>
 				<th >Display order</th>
-				<th colspan="5">#</th>
+				<th colspan="5">Action</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -51,9 +51,9 @@
 					<td colspan="5">
 						<!-- Button trigger modal -->
 						<!-- Tạo data-id để chưa giá trị id -->
-						<button type="button" class="fa fa-trash deleteUser text-danger btn" data-id="{{$slide->id}}" data-toggle="modal" data-target="#Modal" style="width: 40px; padding: 7px 5px;">
+						<button type="button" class="fas fa-trash-alt deleteUser text-danger btn" data-id="{{$slide->id}}" data-toggle="modal" data-target="#Modal" style="width: 40px; padding: 7px 5px;">
 						</button>
-						<a href="{{route('slide.edit',$slide->id)}}" class="ml-1 btn" style="width:40px; padding: 5px;"><i class="fa fa-edit "></i></a>
+						<a href="{{route('slide.edit',$slide->id)}}" class="ml-1 btn" style="width:40px; padding: 4px;background: #f0f0f0;"><i class="fa fa-edit "></i></a>
 					</td>
 				</tr>
 				@endforeach

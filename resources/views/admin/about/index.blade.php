@@ -29,13 +29,13 @@
 	<table class="table table-striped table-sm">
 		<thead>
 			<tr>
-				<th >STT</th>
+				<th >#</th>
 				<th >Title</th>
 				<th >Phone Number</th>
 				<th >Content</th>
 				<th >Email</th>
 				<th >Logo</th>
-				<th colspan="5">#</th>
+				<th colspan="5">Action</th>
 			</tr>
 		</thead>
 		<tbody>

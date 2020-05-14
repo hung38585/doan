@@ -23,12 +23,7 @@
 				{{ Form::hidden('url_img', $slide->url_img, ['class' => 'form-control','id' => 'image_file' ]) }}
 				<p id="path">{{ $slide->url_img }}</p>
 				<span class="text-danger">{{ $errors->first('url_img')}}</span>		
-			</div>
-			<div class="form-group col-6 {{ $errors->has('display_order') ?'has-error':'' }}">
-				{{ Form::label('display_order','DisPlay Order : ')}}
-				{{ Form::text('display_order',$slide->display_order,['class'=>'form-control'])}}
-				<span class="text-danger">{{ $errors->first('display_order')}}</span>
-			</div>
+			</div> 
 		</div>
 		<div class="form-group">
 			{{ Form::submit('Update',['class'=>'btn btn-success']) }}

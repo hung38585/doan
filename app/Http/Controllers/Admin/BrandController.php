@@ -128,12 +128,12 @@ class BrandController extends Controller
     public function destroy(Request $request)
     {
         $brand = Brand::findOrFail($request->id);
-        $product = Product::where('brand_id', '=', $brand->id)->get();
+        $product = Product::where('brand_id', $brand->id)->get();
         if ($brand && $product->count()==0){
             $brand->isdelete = true;
             $brand->update();
         }else{
-            return redirect("admin/brand")->with('message','Data is being used on the product side!');
+            return redirect("admin/brand")->with('err','Data is being used on the product side!');
         }
         return redirect("admin/brand")->with('message','Delete successfully!');
     }

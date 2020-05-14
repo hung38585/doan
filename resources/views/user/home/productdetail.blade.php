@@ -161,12 +161,15 @@
 						<div class="col-lg-6 col-md-6 col-sm-6 ">
 							<div class="product_gallery">
 								<ul id="gallery_imgs">
+									<li><a class="fancybox" data-fancybox-group="group" href="{{asset('images/'.$product->image)}}"><img src="{{asset('images/'.$product->image)}}" alt="" style="height: 450px;" /></a></li>
 									@foreach($images as $key=>$value)
 									<li><a class="fancybox" data-fancybox-group="group" href="{{asset('images/'.$value->name)}}"><img src="{{asset('images/'.$value->name)}}" alt="" style="height: 450px;" /></a></li>
 									@endforeach 
 								</ul>
 								<div class="bxpage_slider" id="bx-pager" style="margin-top: -40px;">
+									<a data-slide-index="0"  href=""><img class="select" src="{{asset('images/'.$product->image)}}" style="height: 100px;" /></a>
 									@foreach($images as $key=>$value)
+									<?php ++$key ?>
 									<a data-slide-index="{{$key}}"  href=""><img class="select" src="{{asset('images/'.$value->name)}}" style="height: 100px;" /></a>
 									@endforeach 
 								</div>

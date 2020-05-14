@@ -9,9 +9,9 @@
 </div>
 <div class="row ml-1 col-md-12">
 	@if (Session::has('message'))
-	<p class="alert alert-success">{{ Session::get('message')}}</p> 
+	<p class="alert alert-success notification">{{ Session::get('message')}}</p> 
 	@elseif(Session::has('err'))    
-	<p class="alert alert-danger">{{ Session::get('err')}}</p>
+	<p class="alert alert-danger notification">{{ Session::get('err')}}</p>
 	@endif
 </div>
 <div class="card">
@@ -31,13 +31,13 @@
 		<table class="table table-striped table-sm">
 			<thead>
 				<tr>
-					<th >STT</th>
+					<th >#</th>
 					<th >Order code</th>
 					<th>Total amount</th>
 					<th>Status</th>
 					<th>Transaction date</th>
-					<th>Username</th>
-					<th colspan="5">#</th>
+					<th>Username id</th>
+					<th colspan="5">Action</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -47,9 +47,34 @@
 						<td >{{ ++$key }}</td>
 						<td >{{ $order->order_code }}</td>
 						<td>{{$order->total_amount}}</td>
-						<td>{{$order->status}}</td>
+						@switch($order->status)
+						    @case('unconfimred')
+						        <td ><span class="label label-warning col-md-8 " style="font-size: 13px;" >{{$order->status}}</span></td>
+						        @break 
+						    @case('confimred')
+						        <td ><span class="label label-success col-md-8" style="font-size: 13px;" >{{$order->status}}</span></td>
+						        @break
+							@case('cancel')
+						        <td ><span class="label label-danger col-md-8" style="font-size: 13px;" >{{$order->status}}</span></td>
+						        @break
+						    @case('delivery')
+						        <td ><span class="label label-info col-md-8" style="font-size: 13px;" >{{$order->status}}</span></td>
+						        @break
+						    @case('delivered')
+						        <td ><span class="label label-primary col-md-8" style="font-size: 13px;" >{{$order->status}}</span></td>
+						        @break          
+						    @default
+						         
+						@endswitch
+						
 						<td>{{$order->transaction_date}}</td>
-						<td>{{$order->user_id}}</td>
+						<td>
+							@if($order->user_id)
+								{{$order->user_id}}
+							@else
+								At store
+							@endif
+						</td>
 						<td colspan="5">
 							<a href="{{route('order.edit',$order->id)}}" class="ml-1 btn" style="width:40px; padding: 5px;"><i class="fa fa-edit "></i></a>
 						</td>

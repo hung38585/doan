@@ -59,7 +59,7 @@ class OrderController extends Controller
         $order = new Order([
             'order_code' => $request->product_code,
             'total_amount' => $total_amount,
-            'status' => 'confimred',
+            'status' => 'delivered',
             'transaction_date' => Carbon::now()->toDateTimeString(),
             'notes' => $request->notes,
             'user_id' => null,
@@ -80,6 +80,11 @@ class OrderController extends Controller
                 'updated_by' => null
             ]);
             $order_detail->save();
+        }
+        if ($order){
+            return redirect('/admin/order')->with('message','Create New successfully!');
+        }else{
+            return back()->with('err','Save error!');
         }
     }
 

@@ -30,12 +30,12 @@
 		<table class="table table-striped table-sm">
 			<thead>
 				<tr>
-					<th>STT</th>
+					<th>#</th>
 					<th>Product</th>
 					<th>Size</th>
 					<th>Color</th>
 					<th>Quantity</th>
-					<th>#</th>
+					<th>Action</th>
 				</tr>
 			</thead>
 			<tbody>

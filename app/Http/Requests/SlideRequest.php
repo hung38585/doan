@@ -25,16 +25,14 @@ class SlideRequest extends FormRequest
     {
         return [
             'link' => 'required',
-            'url_img' => 'required',
-            'display_order' => 'required',
+            'url_img' => 'required', 
         ];
     }
     public function messages()
     {
         return [
            'link.required' => 'Please Enter Information.',
-            'url_img.required' => 'Please Enter Information.',
-            'display_order.required' => 'Please Enter Information.'
+            'url_img.required' => 'Please Enter Information.', 
         ];
     }
 }

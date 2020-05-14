@@ -50,8 +50,7 @@ class SlideController extends Controller
         $url_img=$request->url_img->getClientOriginalName();
         $request->url_img->move('images', $url_img);
         $slide = new Slide;
-        $slide->link = $request->link;;
-        $slide->display_order = $request->display_order;
+        $slide->link = $request->link;
         $slide->url_img = $url_img;
         $slide->updated_at = null;
         $slide->isdelete = false;
@@ -109,8 +108,7 @@ class SlideController extends Controller
                 $url = $request->url_img;
             } 
             $slide->link = $request->link;
-            $slide->url_img = $url;
-            $slide->display_order = $request->display_order;
+            $slide->url_img = $url; 
             $slide->updated_at = Carbon::now()->toDateTimeString();
             $slide->isdelete = false;
             $slide->isdisplay = false;

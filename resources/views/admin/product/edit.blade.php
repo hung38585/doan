@@ -88,7 +88,7 @@
 									<td>{{ ++$key }}</td>
 									<td>{{ $product_detail->size }}</td>
 									<td>{{ $product_detail->color }}</td>
-									<td><button type="button" class="fa fa-trash deleteUser text-danger btn" data-id="{{$product_detail->id}}" data-toggle="modal" data-target="#Modal" style="width: 40px; padding: 2px 5px;">
+									<td><button type="button" class="fas fa-trash-alt deleteUser text-danger btn" data-id="{{$product_detail->id}}" data-toggle="modal" data-target="#Modal" style="width: 40px; padding: 2px 5px;">
 									</button></td>
 								</tr>
 								@endforeach
@@ -119,7 +119,7 @@
 		</div>
 		{{ Form::close() }}
 	</div>
-</div>
+</div> 
 {{Form::open(['route' => 'product_detail_delete_modal', 'method' => 'POST', 'class'=>'col-md-5'])}}
 {{ method_field('DELETE') }}
 {{ csrf_field() }}
@@ -191,7 +191,7 @@
 					}
 				});
 			}
-		$('.color').select2();
+			$('.color').select2();
 		}
 	});
 	$('.update').click(function(){
