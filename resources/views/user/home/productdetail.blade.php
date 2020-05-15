@@ -79,7 +79,7 @@
 	</div>
 </div>
 @if(session('success'))
-<div class="alert alert-success text-center" >
+<div class="alert alert-success text-center notification" >
 	{{ session('success') }}
 </div>
 @endif

@@ -10,9 +10,9 @@
 @include('admin.modal.addquantity')
 <div class="row ml-1">
 	@if (Session::has('message'))
-	<p class="alert alert-success">{{ Session::get('message')}}</p> 
+	<p class="alert alert-success notification">{{ Session::get('message')}}</p> 
 	@elseif(Session::has('err'))    
-	<p class="alert alert-danger">{{ Session::get('err')}}</p>
+	<p class="alert alert-danger notification">{{ Session::get('err')}}</p>
 	@endif
 </div>
 <div class="card">

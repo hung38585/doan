@@ -91,11 +91,11 @@
 				</div>
 				<div class="cart-wrapper table-responsive">
 					@if(session('success'))
-					<div class="alert alert-success">
+					<div class="alert alert-success notification">
 						{{ session('success') }}
 					</div>
 					@elseif(Session::has('err')) 
-					<div class="alert alert-danger">
+					<div class="alert alert-danger notification">
 						{{ session('err') }}
 					</div>
 					@endif
@@ -115,8 +115,8 @@
 							<?php $total += $details['price'] * $details['quantity'] ?>
 							<tr class="cart_item">
 								<td class="remove-product col-md-1">
-									<button class="btn btn-danger btn-sm remove-from-cart" data-id="{{ $id }}"><span class="icon-close"></span></button>
-									<button class="btn btn-success btn-sm update-cart" data-id="{{ $id }}"><i class="fa fa-refresh"></i></button>
+									<button class="btn btn-danger btn-sm remove-from-cart" data-id="{{ $id }}" data-toggle="modal" data-target="#exampleModal"><span class="icon-close"></span></button>
+									<button class="btn btn-success btn-sm update-cart" data-id="{{ $id }}"><i class="fa fa-refresh"></i></button> 
 								</td>
 								<td class=" col-md-3">
 									<?php  $image = explode(',',$details['image']);	?>
@@ -188,6 +188,21 @@
 		</div>
 	</div>
 </div>
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="exampleModalLabel">Delete product form cart!</h4>
+        </button>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn" data-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-danger delete">Delete</button>
+      </div>
+    </div>
+  </div>
+</div>
 <!--page-checkout AREA END -->
 @foreach($abouts as $key => $about)
 <input type="hidden" value="{{$about->title}}" id="titlevalue">
@@ -215,7 +230,7 @@
 	$(".remove-from-cart").click(function (e) {
 		e.preventDefault();
 		var ele = $(this);
-		if(confirm("Are you sure")) {
+		$(".delete").click(function(){
 			$.ajax({
 				url: '{{ url('remove-from-cart') }}',
 				method: "DELETE",
@@ -224,7 +239,7 @@
 					window.location.reload();
 				}
 			});
-		}
+		});
 	});
 </script>
 @endsection

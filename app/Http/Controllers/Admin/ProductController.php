@@ -27,7 +27,8 @@ class ProductController extends Controller
     
     public function getCategory()
     {
-        return Category::all();
+        $categories = Category::orderBy('created_at', 'desc')->where('isdelete',false)->get();
+        return $categories;
     }
     /**
      * Display a listing of the resource.
@@ -37,12 +38,12 @@ class ProductController extends Controller
     public function index(Request $request)
     {
         $products = Product::orderBy('created_at', 'desc')->where('isdelete',false);
-        //$categories = $this->getCategory();
+        $categories = Category::where('isdelete',false)->pluck('name','name')->toArray();
         if ($request->name) {
             $products = $products->where('name','like','%'.$request->name.'%'); 
-        }
+        } 
         $products = $products->paginate(10)->appends(request()->query());
-        return view('admin.product.index',compact('products'));
+        return view('admin.product.index',compact('products','categories'));
     }
 
     /**

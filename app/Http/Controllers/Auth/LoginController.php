@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use App\Models\About;
+use App\Models\Product;
 use Auth;
 use Session;
 
@@ -60,7 +61,7 @@ class LoginController extends Controller
 
         if (Auth::guard('admin')->attempt(['username' => $request->username, 'password' => $request->password, 'level' => 1], $request->get('remember'))) {
 
-            return redirect('/admin/home');
+            return redirect()->intended('/admin/home');
         }
         Session::flash('err','Username or Password incorrect!');
         return back()->withInput($request->only('username', 'remember'))->with('err','Username or Password incorrect!');
@@ -82,9 +83,17 @@ class LoginController extends Controller
             'password' => 'required|min:6'
         ]);
 
-        if (Auth::guard('client')->attempt(['username' => $request->username, 'password' => $request->password, 'level' => 2], $request->get('remember'))) {
-
-            return redirect('/');
+        if (Auth::guard('client')->attempt(['username' => $request->username, 'password' => $request->password, 'level' => 2], $request->get('remember'))) {   
+            //Kiem tra url truoc do co phai POST add-to-cart k?
+            $start = strpos($request->session()->get('url.intended'),'add-to-cart');
+            if ($start) {
+                //GET id product 
+                $end = strpos($request->session()->get('url.intended'),'?');
+                $id = substr($request->session()->get('url.intended'), $start+12,$end-$start-12);
+                $product = Product::findOrfail($id);
+                return redirect('products/'.$product->name);
+            } 
+            return redirect()->intended('/');
         }
         Session::flash('err','Username or Password incorrect!');
         return back()->withInput($request->only('username', 'remember'))->with('err','Username or Password incorrect!');

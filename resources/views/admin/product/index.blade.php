@@ -10,7 +10,7 @@
 		<li class="breadcrumb-item"><a href="">Admin</a></li>
 		<li class="breadcrumb-item active">Product</li>
 	</ol>
-</div>
+</div> 
 <div class='notifications top-left'></div>
 <div class="row ml-1 col-md-12">
 	@if (Session::has('message'))
@@ -21,17 +21,20 @@
 </div>
 <div class="card">
 	<div class="card-body col-md-12">
-		<div class="row">
-			<div class="col-md-9">
+		<div class="row"> 
+			<div class="col-md-6">
 				<a href="{{route('product.create')}}" class="btn btn-outline-success mb-2 mt-2">Create New</a>
-			</div>
-			<div class="col-md-3">
-				<div class="form-group">
-					{{ Form::open(['route' => ['product.index' ],'method' => 'get']) }}
-					{{ Form::text('name','',['class'=>'form-control ','style'=>'float: left','placeholder'=>'Search Name']) }}
-					{{ Form::close() }}
+			</div> 
+			<form action="{{ route('product.index') }}" method="GET" onsubmit="return sort();">
+				<div class="col-md-3">
+					<div class="form-group"> 
+						{{ Form::text('name','',['class'=>'form-control ','id'=>'search','style'=>'float: left','placeholder'=>'Search Name']) }} 
+					</div>
 				</div>
-			</div>
+				<div class="col-md-3">
+					{{Form::select('category',$categories,'',['class' => 'form-control','id'=>'category', 'placeholder'=>'Choose a category'])}}
+				</div>
+			</form>
 		</div>
 		<table class="table table-striped table-sm">
 			<thead class="">
@@ -231,6 +234,15 @@
 	}); 
 	function notify(message) {
 		$.notify(message, "success");
+	}
+	$("#category").change(function(){
+		@if(!isset($_GET['name']))
+			document.getElementById("search").setAttribute("disabled", true);
+		@endif
+		this.form.submit();
+	}); 
+	function sort() {
+		document.getElementById("category").setAttribute("disabled", true);
 	}
 </script>
 @endsection

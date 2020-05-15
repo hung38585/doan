@@ -79,4 +79,7 @@
 	<!-- main js -->
 	<script src="{{asset('client/js/main.js')}}"></script>
 	<script src="{{asset('client/js/setabout.js')}}"></script>
+	<script>
+        setTimeout(function(){$(".notification").hide();},2500);
+    </script>
 </html>
