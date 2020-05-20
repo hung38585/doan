@@ -1,7 +1,6 @@
 @extends('admin.layout.main')
 @section('title','Product')
 @section('content')
-<meta name="csrf-token" content="{{ csrf_token() }}" />
 <script src="https://cdnjs.cloudflare.com/ajax/libs/notify/0.4.2/notify.min.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/notify/0.4.2/styles/metro/notify-metro.css" />
  

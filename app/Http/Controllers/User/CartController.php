@@ -196,7 +196,8 @@ class CartController extends Controller
             return redirect($vnp_Url) ;
         }else{
             $abouts = About::take(1)->get();
-        return redirect('/cart')->with('success', 'Order complete. Thanks you!');
+            $request->session()->forget('cart');
+            return redirect('/cart')->with('success', 'Order complete. Thanks you!');
         } 
     }
     public function return(Request $request)

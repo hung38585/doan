@@ -57,6 +57,7 @@ Route::post('/move_image', 'Admin\ProductController@moveImage');
 Route::post('/get_list_image', 'Admin\ProductController@getListImage');
 Route::post('/save_image', 'Admin\ProductController@saveImage');
 Route::post('/delete_image', 'Admin\ProductController@deleteImage');
+Route::post('/get_order_detail', 'Admin\OrderController@getOrderDetail');
 //END ajax
 // -------------------------------------------------------------------------------
 // END ADMIN

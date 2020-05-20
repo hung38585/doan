@@ -11,7 +11,9 @@
 <div class="card">
 	<div class="card-body col-md-12">
 		<p><b>Name : </b>{{$brand->name}}</p>
-		<p style="width: 1000px;"><b>Description : </b>{!! $brand->description !!}</p>
+		<p><b>Description : </b>{!! $brand->description !!}</p>
+		<p><b>Created at : </b>{{$brand->created_at}}</p>
+		<p><b>Updated at : </b>{{$brand->updated_at}}</p>
 	</div>
 </div>
 @endsection

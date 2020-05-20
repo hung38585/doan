@@ -10,6 +10,7 @@ use App\Http\Requests\BrandRequest;
 use DB;
 use Carbon\Carbon;
 use Illuminate\Support\Str; 
+use Auth;
 
 class BrandController extends Controller
 {
@@ -61,6 +62,7 @@ class BrandController extends Controller
         $brand->slug = Str::slug($request->slug ? $request->slug : $request->name);
         $brand->isdelete = false;
         $brand->isdisplay = false;
+        $brand->created_by = Auth::guard('admin')->user()->id;
         $brand->updated_at = null;
         $brand->save();
         Session::flash('message','Save successfully!');
@@ -114,7 +116,8 @@ class BrandController extends Controller
             $brand->slug = $request->slug ? $request->slug : $request->name;
             $brand->isdelete = false;
             $brand->isdisplay = $request->isdisplay;
-            $brand->updated_at = Carbon::now()->toDateTimeString() ;
+            $brand->updated_at = Carbon::now()->toDateTimeString();
+            $brand->updated_by = Auth::guard('admin')->user()->id;
             $brand->update();
         }else{
             return back()->with('err','Save error!');

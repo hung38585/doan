@@ -9,6 +9,7 @@ use App\Http\Requests\CategoryRequest;
 use DB;
 use Carbon\Carbon;
 use Illuminate\Support\Str;
+use Auth;
 
 class CategoryController extends Controller
 {
@@ -60,6 +61,7 @@ class CategoryController extends Controller
         $category->isdelete = false;
         $category->isdisplay = false;
         $category->updated_at = null;
+        $category->created_by = Auth::guard('admin')->user()->id;
         $category->save();
         if ($category){
             return redirect('/admin/category')->with('message','Create successfully!');
@@ -111,7 +113,8 @@ class CategoryController extends Controller
             $category->slug = $request->slug ? $request->slug : $request->name; 
             $category->isdelete = false;
             $category->isdisplay = $request->isdisplay;
-            $category->updated_at = Carbon::now()->toDateTimeString() ;
+            $category->updated_at = Carbon::now()->toDateTimeString();
+            $category->updated_by = Auth::guard('admin')->user()->id;
             $category->update();
         }else{
             return back()->with('err','Save error!');

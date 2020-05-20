@@ -34,9 +34,22 @@ class HomeController extends Controller
      */
     public function index(Request $request)
     {
-        $products = Product::where('isdelete','0')->where('isdisplay','1')->orderBy('created_at', 'desc');
+        $products = Product::where('products.isdelete','0')->where('products.isdisplay','1');
         $abouts = About::take(1)->get(); 
-        $categories = Category::where('isdelete','0')->where('isdisplay','1')->get(); 
+        $categories = Category::where('isdelete','0')->where('isdisplay','1')->get();
+        //Get list color 
+        $colors = Product_Detail::select('color')->where('isdelete',false)->get();
+        $list = array();
+        foreach ($colors as $key => $color) {
+            $list[] = $color->color;
+        }
+        $list = array_unique($list);
+        //count product by color
+        $listcolorquantity = array();
+        foreach ($list as $key => $value) {
+            $quantity = Product::join('product_details','products.id','product_details.product_id')->where('product_details.color',$value)->where('products.isdelete',false)->where('product_details.isdelete',false)->where('products.isdisplay',true)->count();
+            $listcolorquantity += array($value => $quantity);
+        }
         foreach ($categories as $key => $value) {
             $listquantity[] = $this->countProduct($value->id);
         }
@@ -50,11 +63,19 @@ class HomeController extends Controller
         if ($request->price) {
             
         }
+        if ($request->color) {
+            $products = $products->join('product_details','products.id','product_details.product_id')->where('product_details.color',$request->color);
+        }
         if ($request->sale) {
             $products = $products->where('promotion','<>','0');
         }
-        $products = $products->paginate(8)->appends(request()->query());
-        return view('user.home.product',compact('products','abouts','categories','listquantity'));
+        if ($request->orderby) {
+            $products = $products->orderBy('price',$request->orderby);
+        }else{
+            $products = $products->orderBy('products.created_at','desc');
+        }
+        $products = $products->paginate(12)->appends(request()->query());
+        return view('user.home.product',compact('products','abouts','categories','listquantity','listcolorquantity'));
     }
 
     /**

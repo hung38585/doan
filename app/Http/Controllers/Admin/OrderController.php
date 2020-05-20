@@ -9,6 +9,7 @@ use App\Models\Store;
 use App\Models\Order_detail;
 use App\Models\Product_Detail;
 use App\Models\Product;
+use App\User;
 use Carbon\Carbon;
 use Auth;
 
@@ -150,5 +151,21 @@ class OrderController extends Controller
             $quantity = Store::select('quantity')->where('isdelete',false)->where('productdetail_id',$request->product_detail_id)->first();
             return Response($quantity->quantity);
         }
+    }
+    public function getOrderDetail(Request $request)
+    {
+        $order = Order::findOrfail($request->id);
+        $order_details = Order_detail::orderBy('created_at', 'desc')->where('order_id',$request->id)->get();
+        $user = '';
+        if ($order->user_id) {
+            $user = User::findOrfail($order->user_id);
+        } 
+        $name = array();
+        $product_details = array();
+        foreach ($order_details as $key => $value) {
+            $name[] = Product::select('products.name')->join('product_details','product_details.product_id','=','products.id')->join('order_details','order_details.product_detail_id','=','product_details.id')->where('product_details.id',$value->product_detail_id)->first();
+            $product_details[] = Product_Detail::select('product_details.size','product_details.color')->join('order_details','order_details.product_detail_id','=','product_details.id')->where('order_details.product_detail_id',$value->product_detail_id)->first(); 
+        }
+        return response()->json(array('success'=> true, 'names' => $name,'order_details'=> $order_details, 'product_details' => $product_details, 'users'=> $user,'orders'=>$order)); 
     }
 }

@@ -11,7 +11,9 @@
 <div class="card mt-3">
 	<div class="card-body col-md-12">
 		<p><b>Name : </b>{{$category->name}}</p>
-		<p style="width: 1000px;"><b>Description : </b>{!! $category->description !!}</p>
+		<p><b>Description : </b>{!! $category->description !!}</p>
+		<p><b>Created at : </b>{{$category->created_at}}</p>
+		<p><b>Updated at : </b>{{$category->updated_at}}</p>
 	</div>
 </div>
 @endsection

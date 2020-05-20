@@ -151,19 +151,19 @@
 							<ul class="product-categories">
 								<li class="col-md-12">
 									<input type="radio" name="price" id="price1" class="col-md-1" value="<100" style="margin-top: 7px;">
-									<label for="price1" class="col-md-9">>$200</label>
+									<label for="price1" class="col-md-9"><1000000</label>
 								</li>
 								<li class="col-md-12">
 									<input type="radio" name="price" id="price2" class="col-md-1" value="200-400" style="margin-top: 7px;">
-									<label for="price2" class="col-md-9">$200-$400</label>
+									<label for="price2" class="col-md-9">1000000-2000000</label>
 								</li>
 								<li class="col-md-12">
 									<input type="radio" name="price" id="price3" class="col-md-1" value="400-700" style="margin-top: 7px;">
-									<label for="price3" class="col-md-9">$400-$700</label>
+									<label for="price3" class="col-md-9">2000000-5000000</label>
 								</li>
 								<li class="col-md-12">
 									<input type="radio" name="price" id="price4" class="col-md-1" value=">700" style="margin-top: 7px;">
-									<label for="price4" class="col-md-9">>$700</label>
+									<label for="price4" class="col-md-9">>5000000</label>
 								</li>
 							</ul>
 						</div>
@@ -173,127 +173,112 @@
 								<h2>Filter by color</h2>
 							</div>
 							<ul class="product-categories">
+								@foreach($listcolorquantity as $key => $value)
 								<li class="col-md-12">
-									<input type="radio" name="color" id="color1" class="cate col-md-1" value="black" style="margin-top: 7px;">
-									<label for="color1" class="col-md-9">Black</label>
-									<span class="count col-md-1">(0)</span>
+									<input type="radio" name="color" id="{{$key}}" class="cate col-md-1" value="{{$key}}" style="margin-top: 7px;">
+									<label for="{{$key}}" class="col-md-9"><?php echo ucwords($key); ?></label>
+									<span class="count col-md-1">({{$value}})</span>
 								</li>
-								<li class="col-md-12">
-									<input type="radio" name="color" id="color2" class="cate col-md-1" value="white" style="margin-top: 7px;">
-									<label for="color2" class="col-md-9">White</label>
-									<span class="count col-md-1">(0)</span>
-								</li>	
-							</li><li class="col-md-12">
-								<input type="radio" name="color" id="color3" class="cate col-md-1" value="blue" style="margin-top: 7px;">
-								<label for="color3" class="col-md-9">Blue</label>
-								<span class="count col-md-1">(0)</span>
-							</li>	
-						</li><li class="col-md-12">
-							<input type="radio" name="color" id="color4" class="cate col-md-1" value="yellow" style="margin-top: 7px;">
-							<label for="color4" class="col-md-9">Yellow</label>
-							<span class="count col-md-1">(0)</span>
-						</li>
-					</ul>
-				</div>
-				<input type="hidden" value="{{ isset($_GET['productname']) ? $_GET['productname']: ''}}" name="productname" id="productname">
-			</form>
-			<!-- single widget -->
-			<div class="info_widget">
-				<div class="small_slider">
-					<!-- single_slide -->
-					<div class="single_slide">
-						<img src="{{asset('client/img/slider/8.jpg')}}" alt="" />
-						<div class="s_slider_text">
-							<h2>MEET <br />THE <br />MARKET</h2>
-						</div>
-					</div> 
-					<!-- single_slide -->
-					<div class="single_slide">
-						<img src="{{asset('client/img/slider/7.jpg')}}" alt="" />
-						<div class="s_slider_text another">
-							<h2>AWESOME <br />BANNER</h2>
-						</div>
-					</div> 
-				</div>
-			</div>
-
-		</div>
-	</div>
-	<div class="col-lg-9 col-md-9 col-sm-9 ">
-		<div class="row">
-			<!--product category right sidebar -->
-			<div class="category_right_area">
-				<div class="view_sort_area">
-					<div class="col-lg-4 col-md-4 col-sm-6 ">
-						<div class="sort_section">
-							<ul class="sort-bar">
-								<li class="sort-bar-text">Sort by: </li>
-								<li>
-									<form method="get" class="custom">
-										<div class="select-wrapper">
-											<select class="orderby" name="orderby">
-												<option selected="selected" value="menu_order">Default</option>
-												<option value="popularity">Popularity</option>
-												<option value="rating">Average rating</option>
-												<option value="date">Newness</option>
-												<option value="price">Price: low to high</option>
-												<option value="price-desc">Price: high to low</option>	
-											</select>
-										</div>
-									</form>
-								</li>
+								@endforeach 
 							</ul>
 						</div>
-					</div>
-					<div class="col-lg-4 col-md-4 col-sm-4 ">
-					</div>
-				</div>
-				<!-- PRODUCTS -->
-				<div class="cat_all_aitem">
-					<div class = 'short-width-slider'>
-						<div class = 'cat_slider'>
-							@foreach($products as $key => $product)
-							<div class="single_item">
-								<!-- product Item -->
-								<a href="{{route('products.show',$product->slug)}}">
-									<div class = 'item' style="position: relative;">
-										<div class="product_img"> 
-											<img src="{{asset('images/'.$product->image)}}" alt="" style="height: 200px;" />
-										</div>
+						<input type="hidden" value="{{ isset($_GET['productname']) ? $_GET['productname']: ''}}" name="productname" id="productname">
+						<input type="hidden" value="{{ isset($_GET['orderby']) ? $_GET['orderby']: ''}}"   id="getsort">
+						<!-- single widget -->
+						<div class="info_widget">
+							<div class="small_slider">
+								<!-- single_slide -->
+								<div class="single_slide">
+									<img src="{{asset('client/img/slider/8.jpg')}}" alt="" />
+									<div class="s_slider_text">
+										<h2>MEET <br />THE <br />MARKET</h2>
 									</div>
-								</a>
-								<!-- product info -->
-								<div class="info ">
-									<p class="name"><a href="{{route('products.show',$product->id)}}">{{ $product->name }}</a></p>
-									<div  class="star-rating two_star ">
-										<span style="width:80%"><strong class="rating"> </strong> </span>
+								</div> 
+								<!-- single_slide -->
+								<div class="single_slide">
+									<img src="{{asset('client/img/slider/7.jpg')}}" alt="" />
+									<div class="s_slider_text another">
+										<h2>AWESOME <br />BANNER</h2>
 									</div>
-									@if ($product->promotion)
-									<del><span class="amount nrb">${{ $product->price }}</span></del>
-									<span class="price"><span class="amount">${{ $product->price - intval(($product->price * $product->promotion)/100) }}</span></span>
-									@else    
-									<span class="price"><span class="amount">${{ $product->price }}</span></span>
-									@endif
-								</div>
-								@if ($product->promotion)
-								<div class="inner">
-									<div class="inner-text">Sale!</div>
-								</div>
-								@endif
+								</div> 
 							</div>
-							@endforeach
 						</div>
 					</div>
 				</div>
+				<div class="col-lg-9 col-md-9 col-sm-9 ">
+					<div class="row">
+						<!--product category right sidebar -->
+						<div class="category_right_area">
+							<div class="view_sort_area">
+								<div class="col-lg-4 col-md-4 col-sm-6 ">
+									<div class="sort_section">
+										<ul class="sort-bar">
+											<li class="sort-bar-text">Sort by: </li>
+											<li> 
+												<div class="select-wrapper">
+													<select class="orderby form-control" name="orderby" id="orderbyprice"> 
+														<option value="">Default</option>
+														<option value="asc">Price: low to high</option>
+														<option value="desc">Price: high to low</option>	
+													</select>
+												</div>
+											</li>
+										</ul>
+									</form>
+								</div>
+							</div>
+							<div class="col-lg-4 col-md-4 col-sm-4 ">
+							</div>
+						</div>
+						<!-- PRODUCTS -->
+						<div class="cat_all_aitem">
+							<div class = 'short-width-slider'>
+								<div class = 'cat_slider'>
+									@if(count($products) == 0)
+									<p>No products!</p>
+									@endif
+									@foreach($products as $key => $product)
+									<div class="single_item">
+										<!-- product Item -->
+										<a href="{{route('products.show',$product->slug)}}">
+											<div class = 'item' style="position: relative;">
+												<div class="product_img"> 
+													<img src="{{asset('images/'.$product->image)}}" alt="" style="height: 200px;" />
+												</div>
+											</div>
+										</a>
+										<!-- product info -->
+										<div class="info ">
+											<p class="name"><a href="{{route('products.show',$product->id)}}">{{ $product->name }}</a></p>
+											<div  class="star-rating two_star ">
+												<span style="width:80%"><strong class="rating"> </strong> </span>
+											</div>
+											@if ($product->promotion)
+											<del><span class="amount nrb">{{ $product->price }}đ</span></del>
+											<span class="price"><span class="amount">{{ $product->price - intval(($product->price * $product->promotion)/100) }}đ</span></span>
+											@else    
+											<span class="price"><span class="amount">{{ $product->price }}đ</span></span>
+											@endif
+										</div>
+										@if ($product->promotion)
+										<div class="inner">
+											<div class="inner-text">Sale!</div>
+										</div>
+										@endif
+									</div>
+									@endforeach
+								</div>
+							</div>
+						</div>
+					</div>	
+				</div>
+				<!-- paginate -->
+				<div class="">
+					{{$products->links()}}	
+				</div>
 			</div>	
-		</div>
-		<!-- paginate -->
-		<div class="">
-			{{$products->links()}}	
-		</div>
+		</div>	
 	</div>	
-</div>	
-</div>	
 </div>
 @foreach($abouts as $key => $about)
 <input type="hidden" value="{{$about->title}}" id="titlevalue">
@@ -305,22 +290,36 @@
 @endforeach
 <script src="{{asset('client/js/setabout.js')}}"></script>	
 <script type="text/javascript">
-	$("input[name='category']").change(function(){
-		var productname = $("#productname").val();
+	var orderby = $("#getsort").val();
+	var productname = $("#productname").val();
+	$("input[name='category']").change(function(){ 
 		if (!productname) {
 			document.getElementById("productname").setAttribute("disabled", true);
 		}
-		this.form.submit();
-	});
-	$("input[name='price']").change(function(){
-		var productname = $("#productname").val();
-		if (!productname) {
-			document.getElementById("productname").setAttribute("disabled", true);
+		if (!orderby) {
+			document.getElementById("orderbyprice").setAttribute("disabled", true);
 		}
 		this.form.submit();
 	});
-	$("input[name='color']").change(function(){
-		var productname = $("#productname").val();
+	$("input[name='price']").change(function(){ 
+		if (!productname) {
+			document.getElementById("productname").setAttribute("disabled", true);
+		}
+		if (!orderby) {
+			document.getElementById("orderbyprice").setAttribute("disabled", true);
+		}
+		this.form.submit();
+	});
+	$("input[name='color']").change(function(){ 
+		if (!productname) {
+			document.getElementById("productname").setAttribute("disabled", true);
+		}
+		if (!orderby) {
+			document.getElementById("orderbyprice").setAttribute("disabled", true);
+		}
+		this.form.submit();
+	});
+	$("#orderbyprice").change(function(){
 		if (!productname) {
 			document.getElementById("productname").setAttribute("disabled", true);
 		}

@@ -138,8 +138,8 @@
 											<div  class="star-rating two_star ">
 												<span style="width:80%"><strong class="rating"> </strong> </span>
 											</div>
-											<del><span class="amount nrb">${{ $product->price }}</span></del>
-											<span class="price"><span class="amount">${{ $product->price - intval(($product->price * $product->promotion)/100) }}</span></span>
+											<del><span class="amount nrb">{{ $product->price }}đ</span></del>
+											<span class="price"><span class="amount">{{ $product->price - intval(($product->price * $product->promotion)/100) }}đ</span></span>
 										</div>
 										<div class="inner">
 											<div class="inner-text">Sale!</div>

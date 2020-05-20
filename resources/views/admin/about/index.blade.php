@@ -49,11 +49,7 @@
 						<td>{{$about->email}}</td>
 						<td><img src="{{ asset('images/'.$about->logo) }}" width="80" height=></img>
 						</td>
-						<td colspan="5">
-							<!-- Button trigger modal -->
-							<!-- Tạo data-id để chưa giá trị id -->
-							<button type="button" class="fa fa-trash deleteUser text-danger btn" data-id="{{$about->id}}" data-toggle="modal" data-target="#Modal" style="width: 40px; padding: 7px 5px;">
-							</button>
+						<td colspan="5"> 
 							<a href="{{route('about.edit',$about->id)}}" class="ml-1 btn" style="width:40px; padding: 5px;"><i class="fa fa-edit "></i></a>
 						</td>
 					</tr>
@@ -63,10 +59,4 @@
 		</table>
 	</div>
 </div>
-{{Form::open(['route' => 'about_delete_modal', 'method' => 'POST', 'class'=>'col-md-5'])}}
-{{ method_field('DELETE') }}
-{{ csrf_field() }}
-<!-- Modal -->
-@include('admin.modal.delete')
-{{ Form::close() }}
 @endsection

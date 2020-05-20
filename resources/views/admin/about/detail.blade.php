@@ -18,6 +18,8 @@
 			<p><b>Content: </b>{!! $about->content !!}</p>
 			<p><b>Email: </b>{{$about->email}}</p>
 			<p><b>Adress: </b>{{$about->address}}</p>
+			<p><b>Created at: </b>{{$about->created_at}}</p>
+			<p><b>Updated at: </b>{{$about->updated_at}}</p>
 			<a class="btn btn-outline-secondary" href="{{route('about.index')}}">Back</a>
 		</div>
 	</div>

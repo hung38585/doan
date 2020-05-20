@@ -7,6 +7,7 @@ use Session;
 use App\Http\Requests\AboutRequest;
 use Carbon\Carbon;
 use DB;
+use Auth;
 class AboutController extends Controller
 {
     // Kiem tra xac thuc khi admin chua dang nhap
@@ -56,6 +57,7 @@ class AboutController extends Controller
             $about->email = $request->email;
             $about->logo = $logo;
             $about->address = $request->address;
+            $about->created_by = Auth::guard('admin')->user()->id;
             $about->save();
             if ($about){
                 return redirect('/admin/about')->with('message','Create New successfully!');
@@ -110,7 +112,8 @@ class AboutController extends Controller
         $about->email = $request->email;
         $about->logo = $logo;
         $about->address = $request->address;
-        $about->updated_at = Carbon::now()->toDateTimeString() ;
+        $about->updated_at = Carbon::now()->toDateTimeString();
+        $about->updated_by = Auth::guard('admin')->user()->id;
         $about->update();
         return redirect('admin/about')->with('message','Edit successfully!'); 
     }
