@@ -31,17 +31,17 @@ Route::delete('brand_delete_modal', 'Admin\BrandController@destroy')->name('bran
 Route::delete('category_delete_modal', 'Admin\CategoryController@destroy')->name('category_delete_modal');
 Route::delete('product_delete_modal', 'Admin\ProductController@destroy')->name('product_delete_modal');
 Route::delete('slide_delete_modal', 'Admin\SlideController@destroy')->name('slide_delete_modal');
-Route::delete('product_detail_delete_modal', 'Admin\Product_DetailController@destroy')->name('product_detail_delete_modal');
+Route::delete('product_detail_delete_modal', 'Admin\ProductDetailController@destroy')->name('product_detail_delete_modal');
 //End Destroy
 // -------------------------------------------------------------------------------
 Route::resource('admin/about','Admin\AboutController');
 Route::resource('admin/brand','Admin\BrandController');
 Route::resource('admin/category','Admin\CategoryController');
-Route::resource('admin/comment','Admin\CommentController');
-Route::resource('admin/image','Admin\ImageController');
+Route::resource('admin/comment','Admin\CommentController'); 
 Route::resource('admin/order','Admin\OrderController');
 Route::resource('admin/orderdetail','Admin\OrderDetailController');
 Route::resource('admin/product','Admin\ProductController');
+Route::resource('admin/productdetail','Admin\ProductDetailController');
 Route::resource('admin/slide','Admin\SlideController');
 Route::resource('admin/store','Admin\StoreController');
 // function ajax
@@ -63,6 +63,9 @@ Route::post('/delete_image', 'Admin\ProductController@deleteImage');
 // --------------------------------------------
 
 // USER 
+// Thanh toan online 
+Route::get('/return-vnpay','User\CartController@return');
+// End thanh toan online
 // Xu ly Login Logout CLIENTS
 Route::get('/login', 'Auth\LoginController@showClientLoginForm');
 Route::post('/login', 'Auth\LoginController@clientLogin');
@@ -76,7 +79,8 @@ Route::post('/checkout','User\CartController@checkout');
 Route::post('/placeorder','User\CartController@placeorder');
 Route::resource('products','User\HomeController');
 Route::resource('cart','User\CartController');
-Route::get('profile','User\ClientController@index');
+Route::get('/profile','User\ClientController@index');  
+Route::get('/feedback','User\ClientController@feedback');  
 // ---------------------------------------------
 // CART
 Route::patch('update-cart', 'User\CartController@update');
@@ -85,3 +89,5 @@ Route::delete('remove-from-cart', 'User\CartController@remove');
 // END CART
 // ----------------------------------------------
 // END USER
+//BOT MAN
+//Route::match(['get', 'post'], '/botman', 'User\BotManController@handle');

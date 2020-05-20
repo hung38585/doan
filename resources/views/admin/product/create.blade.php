@@ -3,7 +3,7 @@
 @section('content')
 <div class="page-header">
 	<ol class="breadcrumb">
-		<li class="breadcrumb-item"><a href="">Admin</a></li>
+		<li class="breadcrumb-item"><a href="/admin/home">Admin</a></li>
 		<li class="breadcrumb-item" ><a href="{{route('product.index')}}" title="Sản phẩm">Product</a></li>
 		<li class="breadcrumb-item active">Create</li>
 	</ol>
@@ -38,30 +38,34 @@
 					{{ Form::file('image',['class' => 'form-control', 'id' => 'filename']) }}
 					<span class="text-danger">{{ $errors->first('image')}}<br> </span>
 				</div>	
-				<div class="form-group">
-					{{ Form::label('Price : ')}}
-					{{ Form::number('price','',['class'=>'form-control'])}}
-					<span class="text-danger">{{ $errors->first('price')}}</span>
-				</div>
-				<div class="form-group">
-					{{ Form::label('Promotion(%) : ')}}
-					{{ Form::number('promotion',0,['class'=>'form-control', 'min'=>'0', 'max'=>'99'])}}
-					<span class="text-danger">{{ $errors->first('promotion')}}</span>
-				</div>
-				<div class="form-group">
-					{{Form::label('Brand:')}}
-					{{Form::select('brand_id',$brand,null,['class' => 'form-control','placeholder'=>'Choose a brand'])}}
-					@if ($errors->has('brand_id'))
-					<div class="text-danger">{{ $errors->first('brand_id') }}</div>
-					@endif
-				</div>
-				<div class="form-group">
-					{{Form::label('Category:')}}
-					{{Form::select('category_id',$category,null,['class' => 'form-control','placeholder'=>'Choose a category'])}}
-					@if ($errors->has('category_id'))
-					<div class="text-danger">{{ $errors->first('category_id') }}</div>
-					@endif
-				</div>
+				<div class="form-group row">
+					<div class="col-md-6">
+						{{ Form::label('Price : ')}}
+						{{ Form::number('price','',['class'=>'form-control'])}}
+						<span class="text-danger">{{ $errors->first('price')}}</span>
+					</div>
+					<div class="col-md-6">
+							{{ Form::label('Promotion(%) : ')}}
+						{{ Form::number('promotion',0,['class'=>'form-control', 'min'=>'0', 'max'=>'99'])}}
+						<span class="text-danger">{{ $errors->first('promotion')}}</span>
+					</div> 
+				</div> 
+				<div class="form-group row">
+					<div class="col-md-6">
+						{{Form::label('Brand:')}}
+						{{Form::select('brand_id',$brand,null,['class' => 'form-control','placeholder'=>'Choose a brand'])}}
+						@if ($errors->has('brand_id'))
+						<div class="text-danger">{{ $errors->first('brand_id') }}</div>
+						@endif
+					</div>
+					<div class="col-md-6">
+						{{Form::label('Category:')}}
+						{{Form::select('category_id',$category,null,['class' => 'form-control','placeholder'=>'Choose a category'])}}
+						@if ($errors->has('category_id'))
+						<div class="text-danger">{{ $errors->first('category_id') }}</div>
+						@endif
+					</div> 
+				</div> 
 			</div>
 			<div class="col-md-4">
 				<div class="form-group">

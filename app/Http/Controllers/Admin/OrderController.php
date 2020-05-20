@@ -60,6 +60,7 @@ class OrderController extends Controller
             'order_code' => $request->product_code,
             'total_amount' => $total_amount,
             'status' => 'delivered',
+            'payment' => 'transfer',
             'transaction_date' => Carbon::now()->toDateTimeString(),
             'notes' => $request->notes,
             'user_id' => null,

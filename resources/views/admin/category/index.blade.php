@@ -3,7 +3,7 @@
 @section('content')
 <div class="page-header">
 	<ol class="breadcrumb">
-		<li class="breadcrumb-item"><a href="">Admin</a></li>
+		<li class="breadcrumb-item"><a href="/admin/home">Admin</a></li>
 		<li class="breadcrumb-item active" >Category</li>
 	</ol>
 </div>
@@ -23,7 +23,7 @@
 			<div class="col-md-3">
 				<div class="form-group">
 					{{ Form::open(['route' => ['category.index' ],'method' => 'get']) }}
-					{{ Form::text('seachname','',['class'=>'form-control ','style'=>'float: left','placeholder'=>'Search Name']) }}
+					{{ Form::text('searchname','',['class'=>'form-control ','style'=>'float: left','placeholder'=>'Search Name']) }}
 				</div>
 				{{ Form::close() }}	
 			</div>
@@ -34,6 +34,7 @@
 					<th >#</th>
 					<th >Name</th>
 					<th>Slug</th>
+					<th>IsDisplay</th>
 					<th >Action</th>
 				</tr>
 			</thead>
@@ -44,6 +45,7 @@
 						<td >{{ ++$key }}</td>
 						<td ><a href="{{route('category.show',$category->id)}}" style="text-decoration: none;color: black;">{{ $category->name }}</a> </td>
 						<td>{{$category->slug}}</td>
+						<td>{{$category->isdisplay}}</td>
 						<td colspan="5">
 							<!-- Button trigger modal -->
 							<!-- Tạo data-id để chưa giá trị id -->

@@ -177,7 +177,7 @@ class ProductController extends Controller
             $product->category_id = $request->category_id;
             $product->updated_at = Carbon::now()->toDateTimeString();
             $product->isdelete = false;
-            $product->isdisplay = false;
+            $product->isdisplay = $request->isdisplay;
             $product->updated_at = Carbon::now()->toDateTimeString();
             $product->updated_by = Auth::guard('admin')->user()->id;
             $product->update();

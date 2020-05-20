@@ -111,7 +111,7 @@ class SlideController extends Controller
             $slide->url_img = $url; 
             $slide->updated_at = Carbon::now()->toDateTimeString();
             $slide->isdelete = false;
-            $slide->isdisplay = false;
+            $slide->isdisplay = $request->isdisplay;
             $slide->update();
         }else{
             return back()->with('err','Save error!');

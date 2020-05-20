@@ -12,8 +12,9 @@
                             <li><a href="{{route('category.index')}}" class="">Category</a></li>
                             <li><a href="{{route('comment.index')}}" class="">Comment</a></li>
                             <li><a href="{{route('order.index')}}" class="">Order</a></li>
-                            <li><a href="{{route('orderdetail.index')}}" class="">Order_detail</a></li>
+                            <li><a href="{{route('orderdetail.index')}}" class="">Order Detail</a></li>
                             <li><a href="{{route('product.index')}}" class="">Product</a></li>
+                            <li><a href="{{route('productdetail.index')}}" class="">Product Detail</a></li>
                             <li><a href="{{route('store.index')}}" class="">Store</a></li>
                             <li><a href="{{route('slide.index')}}" class="">Slide</a></li>
                         </ul>

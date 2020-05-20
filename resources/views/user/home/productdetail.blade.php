@@ -234,6 +234,7 @@
 												<input type="number" name="quantity" min="1" max="100" value="1" class="text-center"  id="quantity">
 												<button type="button" class="btn" onclick="document.getElementById('quantity').stepUp();">+</button>
 												<span style="margin-left: 10px;">  Products available: <span id="quantityava" class="text-danger">{{ $quantity }}</span></span>
+												<input type="hidden" id="quantitystore" value="{{ $quantity }}">
 											</li>
 										</ul>
 										<p class="checkerr text-danger"></p>
@@ -357,15 +358,15 @@
 		var size = $('#size').val();
 		var color = $('#color').val();
 		var result = true;
-		var quantityava = $('#quantityava').html();
-		var quantity = $('#quantity').val();
+		var quantitystore = $('#quantitystore').val();
+		var quantity = $('#quantity').val(); 
 		if (!size || !color) {
 			$('.checkerr').html('Please select Size and Color!');
 			result = false;
-		}else{
-			if (quantity > quantityava) {
+		}else{ 
+			if (parseInt(quantity) > parseInt(quantitystore)) { 
 				result = false;
-				$('.checkerr').html('Quantity must be less than '+quantityava+'!');
+				$('.checkerr').html('Quantity must be less than '+quantitystore+'!');
 			}
 		}
 		return result;
@@ -393,6 +394,7 @@
 		}else{
 			$('#color').html('<option value="">Selcet color!</option>');
 			$('#quantityava').html({{$quantity}});
+			$('#quantitystore').val({{$quantity}});
 		}
 	});
 	$('select#color').change(function(){
@@ -412,6 +414,7 @@
 				},
 				success:function(data){
 					$('#quantityava').html(data);
+					$('#quantitystore').val(data);
 				}
 			});
 	}

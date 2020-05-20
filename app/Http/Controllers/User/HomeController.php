@@ -34,9 +34,9 @@ class HomeController extends Controller
      */
     public function index(Request $request)
     {
-        $products = Product::where('isdelete','0')->orderBy('created_at', 'desc');
+        $products = Product::where('isdelete','0')->where('isdisplay','1')->orderBy('created_at', 'desc');
         $abouts = About::take(1)->get(); 
-        $categories = Category::where('isdelete','0')->get(); 
+        $categories = Category::where('isdelete','0')->where('isdisplay','1')->get(); 
         foreach ($categories as $key => $value) {
             $listquantity[] = $this->countProduct($value->id);
         }
@@ -137,15 +137,15 @@ class HomeController extends Controller
     public function homepage()
     {
         $abouts = About::take(1)->get();
-        $categories = Category::where('isdelete','0')->get(); 
+        $categories = Category::where('isdelete','0')->where('isdisplay','1')->get(); 
         $listquatity = array();
-        $product_promotions = Product::where('promotion','<>','')->where('isdelete','0')->get(); 
-        $slides = Slide::where('isdelete','0')->get(); 
+        $product_promotions = Product::where('promotion','<>','')->where('isdelete','0')->where('isdisplay','1')->get(); 
+        $slides = Slide::where('isdelete','0')->where('isdisplay','1')->get(); 
         return view('user.home.home',compact('abouts','product_promotions','categories','slides'));
     }
     public function countProduct($id)
     {
-        $quantity = Product::where('category_id',$id)->count(); 
+        $quantity = Product::where('category_id',$id)->where('isdisplay','1')->count(); 
         return $quantity;
     }
     public function getQuantity(Request $request)

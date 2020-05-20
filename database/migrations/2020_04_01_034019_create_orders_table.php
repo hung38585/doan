@@ -18,6 +18,7 @@ class CreateOrdersTable extends Migration
             $table->string('order_code')->unique();
             $table->integer('total_amount');
             $table->string('status');
+            $table->string('payment');
             $table->date('transaction_date');
             $table->text('notes')->nullable();
             $table->bigInteger('user_id')->unsigned()->nullable();;

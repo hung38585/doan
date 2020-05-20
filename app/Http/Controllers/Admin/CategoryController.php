@@ -26,6 +26,9 @@ class CategoryController extends Controller
     public function index(Request $request)
     {
         $categories = Category::orderBy('created_at', 'desc')->where('isdelete',false)->get();
+        if ($request->searchname) {
+            $categories = Category::orderBy('created_at', 'desc')->where('isdelete',false)->where('name','like','%'.$request->searchname.'%')->get(); 
+        } 
         return view('admin.category.index',compact('categories'));
     }
 
@@ -107,7 +110,7 @@ class CategoryController extends Controller
             $category->description = $request->description;
             $category->slug = $request->slug ? $request->slug : $request->name; 
             $category->isdelete = false;
-            $category->isdisplay = false;
+            $category->isdisplay = $request->isdisplay;
             $category->updated_at = Carbon::now()->toDateTimeString() ;
             $category->update();
         }else{

@@ -28,6 +28,9 @@ class BrandController extends Controller
     {
         //1.Lay du lieu trong Model
         $brands = Brand::orderBy('created_at', 'desc')->where('isdelete',false)->get();
+        if ($request->searchname) {
+            $brands = Brand::orderBy('created_at', 'desc')->where('isdelete',false)->where('name','like','%'.$request->searchname.'%')->get(); 
+        } 
         //2.Do du lieu ra view
         return view('admin.brand.index',compact('brands'));
     }
@@ -110,7 +113,7 @@ class BrandController extends Controller
             $brand->description = $request->description;
             $brand->slug = $request->slug ? $request->slug : $request->name;
             $brand->isdelete = false;
-            $brand->isdisplay = false;
+            $brand->isdisplay = $request->isdisplay;
             $brand->updated_at = Carbon::now()->toDateTimeString() ;
             $brand->update();
         }else{

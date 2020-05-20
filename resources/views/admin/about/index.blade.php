@@ -3,7 +3,7 @@
 @section('content')
 <div class="page-header">
 <ol class="breadcrumb">
-	<li class="breadcrumb-item"><a href="">Admin</a></li>
+	<li class="breadcrumb-item"><a href="/admin/home">Admin</a></li>
 	<li class="breadcrumb-item active">About</li>
 </ol>
 <!-- <h1 style=" font-family: 'Open Sans', sans-serif; font-size: 50px; font-weight: 300; text-transform: uppercase;">About</h1> -->

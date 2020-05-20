@@ -3,7 +3,7 @@
 @section('content')
 <div class="page-header">
     <ol class="breadcrumb">
-		<li class="breadcrumb-item"><a href="">Admin</a></li>
+		<li class="breadcrumb-item"><a href="/admin/home">Admin</a></li>
 		<li class="breadcrumb-item" ><a href="{{route('product.index')}}" title="Danh mục">product</a></li>
 		<li class="breadcrumb-item active">Detail</li>
 	</ol>

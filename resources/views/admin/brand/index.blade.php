@@ -3,7 +3,7 @@
 @section('content')
 <div class="page-header">
 	<ol class="breadcrumb">
-		<li class="breadcrumb-item"><a href="">Admin</a></li>
+		<li class="breadcrumb-item"><a href="/admin/home">Admin</a></li>
 		<li class="breadcrumb-item active" >Brand</li>
 	</ol>
 </div>
@@ -23,9 +23,9 @@
 			<div class="col-md-3">
 				<div class="form-group">
 					{{ Form::open(['route' => ['brand.index' ],'method' => 'get']) }}
-					{{ Form::text('seachname','',['class'=>'form-control ','style'=>'float: left','placeholder'=>'Search Name']) }}
-				</div>
-				{{ Form::close() }}	
+						{{ Form::text('searchname','',['class'=>'form-control ','style'=>'float: left','placeholder'=>'Search Name']) }}
+					{{ Form::close() }}	
+				</div> 
 			</div>
 		</div>
 		<table class="table table-striped table-sm">
@@ -34,7 +34,8 @@
 					<th >#</th>
 					<th >Name</th>
 					<th>Slug</th>
-					<th colspan="5">Action</th>
+					<th>IsDisplay</th>
+					<th>Action</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -44,7 +45,8 @@
 						<td >{{ ++$key }}</td>
 						<td ><a href="{{route('brand.show',$brand->id)}}" style="text-decoration: none;color: black;">{{ $brand->name }}</a> </td>
 						<td>{{$brand->slug}}</td>
-						<td colspan="5">
+						<td>{{$brand->isdisplay}}</td>
+						<td >
 							<!-- Button trigger modal -->
 							<!-- Tạo data-id để chưa giá trị id -->
 							<button type="button" class="fas fa-trash-alt deleteUser text-danger btn" data-id="{{$brand->id}}" data-toggle="modal" data-target="#Modal" style="width: 40px; padding: 7px 5px;">

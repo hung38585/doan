@@ -7,7 +7,7 @@
  
 <div class="page-header">
 	<ol class="breadcrumb">
-		<li class="breadcrumb-item"><a href="">Admin</a></li>
+		<li class="breadcrumb-item"><a href="/admin/home">Admin</a></li>
 		<li class="breadcrumb-item active">Product</li>
 	</ol>
 </div> 
@@ -44,6 +44,7 @@
 					<th scope="col">Name</th>
 					<th scope="col">Image</th>
 					<th scope="col">Price</th>
+					<th scope="col">IsDisplay</th>
 					<th >Action</th>
 				</tr>
 			</thead>
@@ -59,6 +60,7 @@
 						</td> 
 						<td><img src="{{ asset('images/'.$product->image) }}" width="50" height="50"></img></td>
 						<td class="">{{$product->price}}</td>
+						<td class="">{{$product->isdisplay}}</td>
 						<td colspan="5">
 							<!-- Button trigger modal -->
 							<!-- Tạo data-id để chưa giá trị id -->

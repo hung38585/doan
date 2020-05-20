@@ -1,1 +1,0 @@
-<h2>Create image</h2>

@@ -5,8 +5,9 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use App\Models\Product_Detail;
+use App\Models\Product;
 
-class Product_DetailController extends Controller
+class ProductDetailController extends Controller
 {
     // Kiem tra xac thuc khi admin chua dang nhap
     public function __construct()
@@ -18,9 +19,14 @@ class Product_DetailController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $product_details = Product_Detail::orderBy('product_details.created_at', 'desc')->where('product_details.isdelete',false);
+        if ($request->name) {
+            $product_details = $product_details->join('products','product_details.product_id','=','products.id')->where('products.name','like','%'.$request->name.'%'); 
+        } 
+        $product_details = $product_details->paginate(10)->appends(request()->query());
+        return view('admin.productdetail.index',compact('product_details'));
     }
 
     /**

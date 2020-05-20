@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Order_detail;
 
 class OrderDetailController extends Controller
 {
@@ -19,7 +20,8 @@ class OrderDetailController extends Controller
      */
     public function index()
     {
-        //
+        $order_details = Order_detail::orderBy('created_at', 'desc')->get();
+        return view('admin.orderdetail.index',compact('order_details'));
     }
 
     /**

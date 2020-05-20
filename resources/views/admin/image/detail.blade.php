@@ -1,1 +1,0 @@
-<h2>Detail image</h2>
