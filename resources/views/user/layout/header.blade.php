@@ -59,12 +59,15 @@
 					<a href="/"><img src="{{asset('client/img/logo.png')}}" alt="" id="logo" style="width: 70%; height: 40px;" /></a>
 				</div>			
 			</div>
-			<div class="col-lg-3 col-md-3 col-sm-3 ">							
-				<div class="search">
-					<form action="/products" method="GET">
-						<input type="text" class="form-control" name="productname" placeholder="Search…" />
-					</form>	
-				</div>		
+			<div class="col-lg-3 col-md-3 col-sm-3 ">	
+				<form action="/products" method="GET">	 
+						<div class="col-md-9">
+							<input type="text" class="form-control" name="productname" placeholder="Search…" />
+						</div>
+						<div class="col-md-3"> 
+							<button type="submit" class="btn"><i class="fas fa-search"></i></button> 
+						</div>  
+				</form>			
 			</div>
 			<div class="col-lg-3 col-md-3 col-sm-4 ">
 				<div class="cart-wishlist">

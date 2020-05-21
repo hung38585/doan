@@ -1,5 +1,5 @@
 @extends('user.layout.main')
-@section('title','Product Detail')
+@section('title',$product->name)
 @section('content')
 <style>
 	input#quantity{
@@ -28,7 +28,7 @@
 				<a href="">Contact</a>
 			</li>
 			<li>
-				<a href="">Sale</a>
+				<a href="{{route('products.index')}}?sale=sale">Sale</a>
 			</li>
 		</ul>						
 	</nav>
@@ -56,7 +56,7 @@
 								<a href="">Contact</a>
 							</li>
 							<li >
-								<a href="">Sale</a>
+								<a href="{{route('products.index')}}?sale=sale">Sale</a>
 							</li>
 						</ul>						
 					</nav>
@@ -183,7 +183,7 @@
 									<div class="star-rating  ">
 										<span style="width:80%"><strong class="rating"> </strong> </span>
 									</div>
-									<span class="price"><span class="amount">{{$product->price}}$</span></span>
+									<span class="price"><span class="amount">{{$product->price}}đ</span></span>
 									<br><br>
 								</div>
 								<div class="sort_section">
@@ -300,43 +300,37 @@
 					<div class="section_title">
 						<h2>Related Products</h2>
 					</div>
-					<div class = 'slider8'>
+					<div class = 'slider8'> 
+						@foreach($productbycategories as $key => $productbycategory)
 						<!-- product Item -->
-						<div class="single_item">
-							<!-- product Item -->
+						<div class=" single_item"> 
 							<div class = 'item' >
-								<div class="product_img">
-									<img src="{{asset('client/img/products/1.jpg')}}" alt="" />
-								</div>
-							</div>
-							<!-- product info -->
-							<div class="info">
-								<p class="name"><a href="#">Split Side Pink Crepe</a></p>
-								<div class="star-rating">
-									<span style="width:80%"><strong class="rating"> </strong> </span>
-								</div>
-								<span class="price"><span class="amount">$20.00</span></span>
-							</div>
-						</div>
-						<!-- product Item -->
-						<div class=" single_item">
-							<div class = 'item' >
-								<div class="product_img">
-									<img src="{{asset('client/img/products/1.jpg')}}" alt="" />
-								</div>
+								<a href="{{route('products.show',$productbycategory->slug)}}">
+									<div class="product_img">
+										<img src="{{asset('images/'.$productbycategory->image)}}" alt="" style="height: 200px;" />
+									</div>
+								</a>
 							</div>
 							<!-- product info -->
 							<div class="info ">
-								<p class="name"><a href="#">Striped Asymmetric</a></p>
+								<p class="name"><a href="{{route('products.show',$productbycategory->slug)}}">{{$productbycategory->name}}</a></p>
 								<div  class="star-rating fullstr ">
 									<span style="width:80%"><strong class="rating "> </strong> </span>
 								</div>
-								<span class="price"><span class="amount">$36.00</span></span>
+								@if($productbycategory->promotion)
+								<del><span class="amount nrb">{{ $productbycategory->price }}đ</span></del>
+								<span class="price"><span class="amount">{{ $productbycategory->price - intval(($productbycategory->price * $productbycategory->promotion)/100) }}đ</span></span>
+								@else
+								<span class="price"><span class="amount">{{ $productbycategory->price }}đ</span></span>
+								@endif 
 							</div>
+							@if($productbycategory->promotion)
 							<div class="inner">
 								<div class="inner-text">Sale!</div>
 							</div>
+							@endif 
 						</div>
+						@endforeach
 					</div>
 				</div>
 				<!-- Related Products PRODUCS END  -->
@@ -405,18 +399,18 @@
 	});
 	function getquantity(product_id,size,color) {
 		$.ajax({
-				type: 'get',
-				url: '{{ URL::to('get_quantity_in_productdetail') }}',
-				data: {
-					product_id: product_id,
-					size: size,
-					color: color
-				},
-				success:function(data){
-					$('#quantityava').html(data);
-					$('#quantitystore').val(data);
-				}
-			});
+			type: 'get',
+			url: '{{ URL::to('get_quantity_in_productdetail') }}',
+			data: {
+				product_id: product_id,
+				size: size,
+				color: color
+			},
+			success:function(data){
+				$('#quantityava').html(data);
+				$('#quantitystore').val(data);
+			}
+		});
 	}
 	$.ajaxSetup({ headers: { 'csrftoken' : '{{ csrf_token() }}' } });
 </script>

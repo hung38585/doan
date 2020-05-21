@@ -136,8 +136,8 @@
 							<ul class="product-categories">
 								@foreach($categories as $key => $category)
 								<li class="col-md-12">
-									<input type="radio" name="category" id="cate{{$key}}" value="{{$category->name}}" class="col-md-1" style="margin-top: 7px;">
-									<label for="cate{{$key}}" class="col-md-9">{{ $category->name }}</label>
+									<input type="radio" name="category" id="cate{{$key}}" value="{{$category->slug}}" class="col-md-1" style="margin-top: 7px;">
+									<label for="cate{{$key}}" class="col-md-9">{{ $category->slug }}</label>
 									<span class="count col-md-2">({{ $listquantity[$key] }})</span>
 								</li>
 								@endforeach
@@ -150,21 +150,21 @@
 							</div>
 							<ul class="product-categories">
 								<li class="col-md-12">
-									<input type="radio" name="price" id="price1" class="col-md-1" value="<100" style="margin-top: 7px;">
+									<input type="radio" name="price" id="price1" class="col-md-1" value="<?php echo htmlspecialchars('<1000000'); ?>" style="margin-top: 7px;">
 									<label for="price1" class="col-md-9"><1000000</label>
 								</li>
 								<li class="col-md-12">
-									<input type="radio" name="price" id="price2" class="col-md-1" value="200-400" style="margin-top: 7px;">
+									<input type="radio" name="price" id="price2" class="col-md-1" value="1000000-2000000" style="margin-top: 7px;">
 									<label for="price2" class="col-md-9">1000000-2000000</label>
 								</li>
 								<li class="col-md-12">
-									<input type="radio" name="price" id="price3" class="col-md-1" value="400-700" style="margin-top: 7px;">
+									<input type="radio" name="price" id="price3" class="col-md-1" value="2000000-5000000" style="margin-top: 7px;">
 									<label for="price3" class="col-md-9">2000000-5000000</label>
 								</li>
 								<li class="col-md-12">
-									<input type="radio" name="price" id="price4" class="col-md-1" value=">700" style="margin-top: 7px;">
+									<input type="radio" name="price" id="price4" class="col-md-1" value=">5000000" style="margin-top: 7px;">
 									<label for="price4" class="col-md-9">>5000000</label>
-								</li>
+								</li> 
 							</ul>
 						</div>
 						<!-- single widget -->
@@ -326,13 +326,20 @@
 		this.form.submit();
 	});
 	@if(isset($_GET['category']))
-	$('input:radio[name=category]').val(['{{$_GET['category']}}']);
+		$('input:radio[name=category]').val(['{{$_GET['category']}}']);
 	@endif
 	@if(isset($_GET['price']))
-	$('input:radio[name=price]').val(['{{$_GET['price']}}']);
+		var price = '{{$_GET['price']}}';
+		if (price.indexOf('&gt;') != -1) {
+			price = price.replace('&gt;','>');
+		}
+		if (price.indexOf('&lt;') != -1) {
+			price = price.replace('&lt;','<');
+		} 
+		$('input:radio[name=price]').val([price]);   
 	@endif
 	@if(isset($_GET['color']))
-	$('input:radio[name=color]').val(['{{$_GET['color']}}']);
+		$('input:radio[name=color]').val(['{{$_GET['color']}}']);
 	@endif
 </script>
 <!--PRODUCT CATEGORY START -->

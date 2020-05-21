@@ -116,7 +116,7 @@
 													<strong class="product-quantity">× {{ $product['quantity'] }}</strong>
 												</td>
 												<td class="product-total">
-													<span class="amount">${{ $product['quantity'] * $product['price'] }}</span>
+													<span class="amount">{{ $product['quantity'] * $product['price'] }}đ</span>
 												</td> 
 											</tr>
 											<input type="hidden" value="{{ $product['price'] }}" name="price[]">
@@ -126,7 +126,7 @@
 										<tfoot>
 											<tr class="cart-subtotal">
 												<th>Cart Subtotal</th>
-												<td><span class="amount">${{ $total }}</span></td>
+												<td><span class="amount">{{ $total }}đ</span></td>
 											</tr>
 											<tr class="shipping">
 												<th>Shipping</th>
@@ -135,7 +135,7 @@
 											<tr class="order-total">
 												<th>Order Total</th>
 												<td>
-													<strong><span class="amount">${{ $total }}</span></strong>
+													<strong><span class="amount">{{ $total }}đ</span></strong>
 													<input type="hidden" value="{{ $total }}" name="total_amount">
 												</td>
 											</tr>
@@ -149,15 +149,18 @@
 									<h2>Payment</h2>
 								</div>
 								<input type="radio" name="payment" value="cod" id="cod" checked>
-								<label for="cod">Ship CoD</label> 
+								<label for="cod">Ship CoD</label>
+								<br>
+								<input type="radio" name="payment" value="momo" id="momo" style="margin-top: 8px;">
+								<label for="momo" >MoMo </label> 
 								<div class="card_area calcul">
 									<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true"> 
 										<div class="panel panel-default">
 											<div class="panel-heading" role="tab" id="headingThree">
 												<p> 
-													<input type="radio" name="payment" id="transfer" value="transfer"> 
+													<input type="radio" name="payment" id="transfer" value="vnpay"> 
 													<a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree" id="online" style="font-weight: 700;color:#666666; text-decoration: none;"> 
-														Direct Bank Transfer: VNPAY <img src="{{ asset('images/vnpay.jpg')}}" alt="AM_mc_vs_ms_ae_UK.png" style="margin-top: 5px;" />
+														Direct Bank Transfer: VNPAY 
 													</a> 
 												</p>
 											</div>
@@ -191,8 +194,8 @@
 												</div>
 											</div>
 										</div>
-									</div>
-								</div>
+									</div>  
+								</div> 
 							</div>		
 						</div>
 						<div class="col-lg-6 col-md-6 col-sm-6">

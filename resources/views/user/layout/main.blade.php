@@ -70,12 +70,12 @@
         fjs.parentNode.insertBefore(js, fjs);
       }(document, 'script', 'facebook-jssdk'));</script>
 
-    <!-- Your customer chat code -->
-    <div class="fb-customerchat"
+      <!-- Your Chat Plugin code -->
+      <div class="fb-customerchat"
         attribution=setup_tool
         page_id="1387478951510015"
-  		theme_color="#6699cc">
-     </div>
+  theme_color="#13cf13">
+      </div>
     <!--Chatbot-Botman  -->
     <script>
         // var botmanWidget = {

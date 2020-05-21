@@ -34,9 +34,9 @@ class HomeController extends Controller
      */
     public function index(Request $request)
     {
-        $products = Product::where('products.isdelete','0')->where('products.isdisplay','1');
+        $products = Product::where('products.isdelete',false)->where('products.isdisplay',true);
         $abouts = About::take(1)->get(); 
-        $categories = Category::where('isdelete','0')->where('isdisplay','1')->get();
+        $categories = Category::where('isdelete',false)->where('isdisplay',true)->get();
         //Get list color 
         $colors = Product_Detail::select('color')->where('isdelete',false)->get();
         $list = array();
@@ -54,14 +54,20 @@ class HomeController extends Controller
             $listquantity[] = $this->countProduct($value->id);
         }
         if ($request->category) {
-            $category_id = Category::where('name',$request->category)->take(1)->get();
+            $category_id = Category::where('slug',$request->category)->take(1)->get();
             $products = $products->where('category_id',$category_id[0]->id);
         }
         if ($request->productname) {
-            $products = $products->where('name', 'like', '%'.$request->productname.'%')->where('isdelete','0');
+            $products = $products->where('name', 'like', '%'.$request->productname.'%');
         }
-        if ($request->price) {
-            
+        if ($request->price) { 
+            preg_match_all('!\d+!', $request->price, $matches); 
+            if (count($matches[0]) == 2) {
+                $products = $products->where('price', '>',$matches[0][0])->where('price', '<',$matches[0][1]);
+            }else{
+                $condition = substr($request->price,0,1); 
+                $products = $products->where('price',$condition,$matches[0][0]);
+            }
         }
         if ($request->color) {
             $products = $products->join('product_details','products.id','product_details.product_id')->where('product_details.color',$request->color);
@@ -109,6 +115,7 @@ class HomeController extends Controller
     {
         $categories = Category::where('isdelete','0')->get(); 
         $product = Product::where('slug',$slug)->first();
+        $productbycategories = Product::where('category_id',$product->category_id)->where('id','<>',$product->id)->orderBy('created_at','desc')->take(10)->get();
         $colors = DB::table('product_details')->where('product_id',$product->id)->get();
         $sizes = DB::table('product_details')->where('product_id',$product->id)->get();
         $abouts = About::take(1)->get(); 
@@ -118,7 +125,7 @@ class HomeController extends Controller
         foreach ($quantities as $key => $value) {
             $quantity += $value->quantity;
         }
-        return view('user.home.productdetail',compact('product','categories','abouts','colors','sizes','quantity','images'));
+        return view('user.home.productdetail',compact('product','categories','abouts','colors','sizes','quantity','images','productbycategories'));
     }
 
     /**
@@ -158,11 +165,12 @@ class HomeController extends Controller
     public function homepage()
     {
         $abouts = About::take(1)->get();
+        $newproducts = Product::where('isdelete',false)->where('isdisplay',true)->orderBy('created_at','desc')->take(10)->get();
         $categories = Category::where('isdelete','0')->where('isdisplay','1')->get(); 
         $listquatity = array();
         $product_promotions = Product::where('promotion','<>','')->where('isdelete','0')->where('isdisplay','1')->get(); 
         $slides = Slide::where('isdelete','0')->where('isdisplay','1')->get(); 
-        return view('user.home.home',compact('abouts','product_promotions','categories','slides'));
+        return view('user.home.home',compact('abouts','product_promotions','categories','slides','newproducts'));
     }
     public function countProduct($id)
     {

@@ -114,12 +114,11 @@ class CartController extends Controller
         return view('user.cart.checkout',compact('abouts'));
     }
     public function placeorder(Request $request)
-    {
-        //dd($request->all());
+    { 
         $order = new Order([
             'order_code' => uniqid(),
             'total_amount' => $request->total_amount,
-            'status' => 'unconfimred',
+            'status' => 'cancel',
             'payment' => $request->payment,
             'transaction_date' => Carbon::now()->toDateTimeString(),
             'notes' => $request->notes,
@@ -143,7 +142,8 @@ class CartController extends Controller
         // $user = Auth::guard('client')->user();
         // if ($request->first_name != $user->first_name || $request->last_name != $user->last_name || $request->address != $user->address || $request->email != $user->email || $request->phone != $user->phone) {
         // } 
-        if ($request->payment == 'transfer') { 
+        //VNPAY
+        if ($request->payment == 'vnpay') { 
             $vnp_TmnCode = "2HULBQDO"; //Mã website tại VNPAY 
             $vnp_HashSecret = "CQBSBRQYSPMAZJSNTOUVNHGRBRFMUHLA"; //Chuỗi bí mật
             $vnp_Url = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
@@ -155,7 +155,6 @@ class CartController extends Controller
             $vnp_Locale = 'vn';
             $vnp_IpAddr = request()->ip();
             $vnp_BankCode = $request->input('bank_code');
-
             $inputData = array(
                 "vnp_Version" => "2.0.0",
                 "vnp_TmnCode" => $vnp_TmnCode,
@@ -185,8 +184,7 @@ class CartController extends Controller
                     $i = 1;
                 }
                 $query .= urlencode($key) . "=" . urlencode($value) . '&';
-            }
-
+            } 
             $vnp_Url = $vnp_Url . "?" . $query;
             if (isset($vnp_HashSecret)) {
                // $vnpSecureHash = md5($vnp_HashSecret . $hashdata);
@@ -194,22 +192,79 @@ class CartController extends Controller
                 $vnp_Url .= 'vnp_SecureHashType=SHA256&vnp_SecureHash=' . $vnpSecureHash;
             } 
             return redirect($vnp_Url) ;
-        }else{
-            $abouts = About::take(1)->get();
-            $request->session()->forget('cart');
-            return redirect('/cart')->with('success', 'Order complete. Thanks you!');
         } 
+        //MoMo
+        if ($request->payment == 'momo'){
+            $endpoint = "https://test-payment.momo.vn/gw_payment/transactionProcessor";
+            $partnerCode = "MOMOBKUN20180529";
+            $accessKey = "klm05TvNBzhg7h7j";
+            $serectkey = "at67qH6mk8w5Y1nAyMoYKMWACiEi2bsa";
+            $orderId = date("YmdHis").$order->id; // Mã đơn hàng
+            $orderInfo = "Thanh toán qua MoMo";
+            $amount = $request->total_amount;
+            $notifyurl = "http://myshop.vn/cart";
+            $returnUrl = "http://myshop.vn/return-vnpay";
+            $extraData = "merchantName=MoMo Partner";
+            $requestId = time() . "";
+            $requestType = "captureMoMoWallet";
+            $extraData = ($request->extraData ? $request->extraData : "");
+            //before sign HMAC SHA256 signature
+            $rawHash = "partnerCode=" . $partnerCode . "&accessKey=" . $accessKey . "&requestId=" . $requestId . "&amount=" . $amount . "&orderId=" . $orderId . "&orderInfo=" . $orderInfo . "&returnUrl=" . $returnUrl . "&notifyUrl=" . $notifyurl . "&extraData=" . $extraData;
+            $signature = hash_hmac("sha256", $rawHash, $serectkey);
+            $data = array('partnerCode' => $partnerCode,
+                'accessKey' => $accessKey,
+                'requestId' => $requestId,
+                'amount' => $amount,
+                'orderId' => $orderId,
+                'orderInfo' => $orderInfo,
+                'returnUrl' => $returnUrl,
+                'notifyUrl' => $notifyurl,
+                'extraData' => $extraData,
+                'requestType' => $requestType,
+                'signature' => $signature);
+            $result = $this->execPostRequest($endpoint, json_encode($data));
+            $jsonResult = json_decode($result, true);  // decode json
+            return redirect($jsonResult['payUrl']);
+        }  
+        $request->session()->forget('cart');
+        return redirect('/cart')->with('success', 'Order complete. Thanks you!');  
     }
     public function return(Request $request)
     {
-        if($request->vnp_ResponseCode == "00") { 
+        if($request->vnp_ResponseCode == "00") {
+            $id = substr($request->vnp_TxnRef, (14-strlen($request->vnp_TxnRef))); 
+            $order = Order::findOrFail($id);
+            $order->status = "unconfimred";
+            $order->update(); 
             $request->session()->forget('cart');
             return redirect('/cart')->with('success' ,'Payment success. Thanks you!');
         }
-        $id = substr($request->vnp_TxnRef, (14-strlen($request->vnp_TxnRef)));
-        Order_detail::where('order_id',$id)->delete();
-        Order::where('id',$id)->delete();
-        return redirect('/cart');
+        if ($request->errorCode == "0") {
+            $id = substr($request->orderId, (14-strlen($request->orderId)));
+            $order = Order::findOrFail($id);
+            $order->status = "unconfimred";
+            $order->update(); 
+            $request->session()->forget('cart');
+            return redirect('/cart')->with('success' ,'Payment success. Thanks you!');
+        }  
+    }
+    function execPostRequest($url, $data)
+    {
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+            'Content-Type: application/json',
+            'Content-Length: ' . strlen($data))
+    );
+        curl_setopt($ch, CURLOPT_TIMEOUT, 5);
+        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5);
+        //execute post
+        $result = curl_exec($ch);
+        //close connection
+        curl_close($ch);
+        return $result;
     }
     // public function createPayment(Request $request,$order)
     // {    
