@@ -50,19 +50,19 @@
 						<td>{{$order->total_amount}}</td>
 						@switch($order->status)
 						@case('unconfimred')
-						<td ><span class="label label-warning col-md-8 " style="font-size: 13px;" >{{$order->status}}</span></td>
+						<td ><span class="label label-warning col-md-9 " style="font-size: 13px;" >{{$order->status}}</span></td>
 						@break 
 						@case('confimred')
-						<td ><span class="label label-success col-md-8" style="font-size: 13px;" >{{$order->status}}</span></td>
+						<td ><span class="label label-success col-md-9" style="font-size: 13px;" >{{$order->status}}</span></td>
 						@break
 						@case('cancel')
-						<td ><span class="label label-danger col-md-8" style="font-size: 13px;" >{{$order->status}}</span></td>
+						<td ><span class="label label-danger col-md-9" style="font-size: 13px;" >{{$order->status}}</span></td>
 						@break
 						@case('delivery')
-						<td ><span class="label label-info col-md-8" style="font-size: 13px;" >{{$order->status}}</span></td>
+						<td ><span class="label label-info col-md-9" style="font-size: 13px;" >{{$order->status}}</span></td>
 						@break
 						@case('delivered')
-						<td ><span class="label label-primary col-md-8" style="font-size: 13px;" >{{$order->status}}</span></td>
+						<td ><span class="label label-primary col-md-9" style="font-size: 13px;" >{{$order->status}}</span></td>
 						@break          
 						@default
 

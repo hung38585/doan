@@ -12,83 +12,93 @@
 */
 // Authenticate
 Auth::routes(); 
-
-// Xu ly Login Logut ADMIN
-Route::get('/admin/login', 'Auth\LoginController@showAdminLoginForm');
-Route::post('/admin/login', 'Auth\LoginController@adminLogin');
-// Admin ko co register de tam day test thu
-Route::get('/admin/register', 'Auth\RegisterController@showAdminRegisterForm');
-Route::post('/admin/register', 'Auth\RegisterController@createAdmin');
-Route::get('/admin/logout', 'Auth\LoginController@adminLogout')->name('admin.logout');
-
-
-// ADMIN HERE
-Route::get('/admin/home', 'Admin\HomeController@index')->name('admin.home');
-
+Route::group(array('prefix'=>'admin','namespace'=>'Auth'),function(){
+	// Xu ly Login Logut ADMIN
+	Route::get('/login', 'LoginController@showAdminLoginForm');
+	Route::post('/login', 'LoginController@adminLogin');
+	// Admin ko co register de tam day test thu
+	Route::get('/register', 'RegisterController@showAdminRegisterForm');
+	Route::post('/register', 'RegisterController@createAdmin');
+	Route::get('/logout', 'LoginController@adminLogout')->name('admin.logout');
+});
+// -------------------------------------------------------------------------------
 //Dinh Dang Lai Destroy
-Route::delete('about_delete_modal', 'Admin\AboutController@destroy')->name('about_delete_modal');
-Route::delete('brand_delete_modal', 'Admin\BrandController@destroy')->name('brand_delete_modal');
-Route::delete('category_delete_modal', 'Admin\CategoryController@destroy')->name('category_delete_modal');
-Route::delete('product_delete_modal', 'Admin\ProductController@destroy')->name('product_delete_modal');
-Route::delete('slide_delete_modal', 'Admin\SlideController@destroy')->name('slide_delete_modal');
-Route::delete('product_detail_delete_modal', 'Admin\ProductDetailController@destroy')->name('product_detail_delete_modal');
+Route::group(array('namespace'=>'Admin','middleware'=>'auth:admin'),function(){
+	Route::delete('about_delete_modal', 'AboutController@destroy')->name('about_delete_modal');
+	Route::delete('brand_delete_modal', 'BrandController@destroy')->name('brand_delete_modal');
+	Route::delete('category_delete_modal', 'CategoryController@destroy')->name('category_delete_modal');
+	Route::delete('product_delete_modal', 'ProductController@destroy')->name('product_delete_modal');
+	Route::delete('slide_delete_modal', 'SlideController@destroy')->name('slide_delete_modal');
+	Route::delete('product_detail_delete_modal', 'ProductDetailController@destroy')->name('product_detail_delete_modal');
+});
 //End Destroy
 // -------------------------------------------------------------------------------
-Route::resource('admin/about','Admin\AboutController');
-Route::resource('admin/brand','Admin\BrandController');
-Route::resource('admin/category','Admin\CategoryController');
-Route::resource('admin/comment','Admin\CommentController'); 
-Route::resource('admin/order','Admin\OrderController');
-Route::resource('admin/orderdetail','Admin\OrderDetailController');
-Route::resource('admin/product','Admin\ProductController');
-Route::resource('admin/productdetail','Admin\ProductDetailController');
-Route::resource('admin/slide','Admin\SlideController');
-Route::resource('admin/store','Admin\StoreController');
+Route::group(array('prefix'=>'admin','namespace'=>'Admin','middleware'=>'auth:admin'),function(){
+	Route::resource('about','AboutController');
+	Route::resource('brand','BrandController');
+	Route::resource('category','CategoryController');
+	Route::resource('comment','CommentController'); 
+	Route::resource('order','OrderController');
+	Route::resource('orderdetail','OrderDetailController');
+	Route::resource('product','ProductController');
+	Route::resource('productdetail','ProductDetailController');
+	Route::resource('slide','SlideController');
+	Route::resource('store','StoreController');
+	Route::get('/home', 'HomeController@index')->name('admin.home');
+});
+// -------------------------------------------------------------------------------
 // function ajax
-Route::get('/setvalue', 'Admin\ProductController@setvalue');
-Route::get('/getcolor', 'Admin\ProductController@getcolor');
-Route::get('/get_list_size', 'Admin\StoreController@getListSize');
-Route::get('/get_list_color', 'Admin\StoreController@getListColor');
-Route::get('/get_quantity', 'Admin\StoreController@getQuantity');
+Route::group(array('namespace'=>'Admin','middleware'=>'auth:admin'),function(){
+	Route::get('/setvalue', 'ProductController@setvalue');
+	Route::get('/getcolor', 'ProductController@getcolor');
+	Route::get('/get_list_size', 'StoreController@getListSize');
+	Route::get('/get_list_color', 'StoreController@getListColor');
+	Route::get('/get_quantity', 'StoreController@getQuantity');
+	Route::get('/get_quantity_order', 'OrderController@getQuantity');
+	Route::post('/move_image', 'ProductController@moveImage');
+	Route::post('/get_list_image', 'ProductController@getListImage');
+	Route::post('/save_image', 'ProductController@saveImage');
+	Route::post('/delete_image', 'ProductController@deleteImage');
+	Route::post('/get_order_detail', 'OrderController@getOrderDetail');
+}); 
 Route::get('/get_color_in_productdetail', 'User\HomeController@getListColor');
 Route::get('/get_quantity_in_productdetail', 'User\HomeController@getQuantity');
-Route::get('/get_quantity_order', 'Admin\OrderController@getQuantity');
-Route::post('/move_image', 'Admin\ProductController@moveImage');
-Route::post('/get_list_image', 'Admin\ProductController@getListImage');
-Route::post('/save_image', 'Admin\ProductController@saveImage');
-Route::post('/delete_image', 'Admin\ProductController@deleteImage');
-Route::post('/get_order_detail', 'Admin\OrderController@getOrderDetail');
 //END ajax
 // -------------------------------------------------------------------------------
 // END ADMIN
-// --------------------------------------------
+// -------------------------------------------------------------------------------
 
 // USER 
-// Thanh toan online 
+// Thanh toan online return 
 Route::get('/return-vnpay','User\CartController@return');
 // End thanh toan online
 // Xu ly Login Logout CLIENTS
-Route::get('/login', 'Auth\LoginController@showClientLoginForm');
-Route::post('/login', 'Auth\LoginController@clientLogin');
-Route::get('/register', 'Auth\RegisterController@showClientRegisterForm');
-Route::post('/register', 'Auth\RegisterController@createClient');
-Route::get('/logout', 'Auth\LoginController@clientLogout')->name('logout');
+Route::group(array('namespace'=>'Auth'),function(){
+	Route::get('/login', 'LoginController@showClientLoginForm');
+	Route::post('/login', 'LoginController@clientLogin');
+	Route::get('/register', 'RegisterController@showClientRegisterForm');
+	Route::post('/register', 'RegisterController@createClient');
+	Route::get('/logout', 'LoginController@clientLogout')->name('logout');
+});
 // End Authenticate
 // -------------------------------------------------------------------------------
-Route::get('/','User\HomeController@homepage');
-Route::post('/checkout','User\CartController@checkout');
-Route::post('/placeorder','User\CartController@placeorder');
-Route::resource('products','User\HomeController');
-Route::resource('cart','User\CartController');
-Route::get('/profile','User\ClientController@index');  
-Route::get('/feedback','User\ClientController@feedback');  
-// ---------------------------------------------
-// CART
-Route::patch('update-cart', 'User\CartController@update');
-Route::get('add-to-cart/{id}', 'User\CartController@addToCart');
-Route::delete('remove-from-cart', 'User\CartController@remove');
-// END CART
-// ----------------------------------------------
+Route::group(array('namespace'=>'User'),function(){
+	//View client
+	Route::get('/','HomeController@homepage');
+	Route::post('/checkout','CartController@checkout');
+	Route::post('/placeorder','CartController@placeorder');
+	Route::resource('products','HomeController');
+	Route::resource('cart','CartController');
+	Route::get('/profile','ClientController@index');  
+	Route::get('/feedback','ClientController@feedback');  
+	//End view client
+	// CART
+	Route::patch('update-cart', 'CartController@update');
+	Route::get('add-to-cart/{id}', 'CartController@addToCart');
+	Route::delete('remove-from-cart', 'CartController@remove');
+	// END CART
+}); 
+// -------------------------------------------------------------------------------
 // END USER
 //BOT MAN
 //Route::match(['get', 'post'], '/botman', 'User\BotManController@handle');

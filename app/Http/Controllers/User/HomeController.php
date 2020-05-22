@@ -168,7 +168,7 @@ class HomeController extends Controller
         $newproducts = Product::where('isdelete',false)->where('isdisplay',true)->orderBy('created_at','desc')->take(10)->get();
         $categories = Category::where('isdelete','0')->where('isdisplay','1')->get(); 
         $listquatity = array();
-        $product_promotions = Product::where('promotion','<>','')->where('isdelete','0')->where('isdisplay','1')->get(); 
+        $product_promotions = Product::where('promotion','<>','')->where('isdelete','0')->where('isdisplay','1')->orderBy('created_at','desc')->get(); 
         $slides = Slide::where('isdelete','0')->where('isdisplay','1')->get(); 
         return view('user.home.home',compact('abouts','product_promotions','categories','slides','newproducts'));
     }

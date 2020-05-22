@@ -115,10 +115,14 @@ class CartController extends Controller
     }
     public function placeorder(Request $request)
     { 
+        $status = 'unconfimred';
+        if ($request->payment != 'cod') {
+            $status = 'cancel';
+        }
         $order = new Order([
             'order_code' => uniqid(),
             'total_amount' => $request->total_amount,
-            'status' => 'cancel',
+            'status' => $status,
             'payment' => $request->payment,
             'transaction_date' => Carbon::now()->toDateTimeString(),
             'notes' => $request->notes,
@@ -138,6 +142,9 @@ class CartController extends Controller
                 'updated_by' => null
             ]);
             $order_detail->save();
+            if ($status == 'unconfimred') {
+                $this->updateStore($order_detail->product_detail_id,$order_detail->quantity);
+            }
         }  
         // $user = Auth::guard('client')->user();
         // if ($request->first_name != $user->first_name || $request->last_name != $user->last_name || $request->address != $user->address || $request->email != $user->email || $request->phone != $user->phone) {
@@ -235,7 +242,12 @@ class CartController extends Controller
             $id = substr($request->vnp_TxnRef, (14-strlen($request->vnp_TxnRef))); 
             $order = Order::findOrFail($id);
             $order->status = "unconfimred";
+            $order->updated_by = Auth::guard('client')->user()->id;
             $order->update(); 
+            $order_details = Order_detail::select('product_detail_id','quantity')->where('order_id',$id)->get(); 
+            foreach ($order_details as $key => $order_detail) {
+                $this->updateStore($order_detail->product_detail_id,$order_detail->quantity);
+            }
             $request->session()->forget('cart');
             return redirect('/cart')->with('success' ,'Payment success. Thanks you!');
         }
@@ -243,10 +255,16 @@ class CartController extends Controller
             $id = substr($request->orderId, (14-strlen($request->orderId)));
             $order = Order::findOrFail($id);
             $order->status = "unconfimred";
+            $order->updated_by = Auth::guard('client')->user()->id;
             $order->update(); 
+            $order_details = Order_detail::select('product_detail_id','quantity')->where('order_id',$id)->get();  
+            foreach ($order_details as $key => $order_detail) {
+                $this->updateStore($order_detail->product_detail_id,$order_detail->quantity);
+            }
             $request->session()->forget('cart');
             return redirect('/cart')->with('success' ,'Payment success. Thanks you!');
         }  
+        return redirect('/cart');
     }
     function execPostRequest($url, $data)
     {
@@ -257,7 +275,7 @@ class CartController extends Controller
         curl_setopt($ch, CURLOPT_HTTPHEADER, array(
             'Content-Type: application/json',
             'Content-Length: ' . strlen($data))
-    );
+        );
         curl_setopt($ch, CURLOPT_TIMEOUT, 5);
         curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5);
         //execute post
@@ -265,59 +283,11 @@ class CartController extends Controller
         //close connection
         curl_close($ch);
         return $result;
-    }
-    // public function createPayment(Request $request,$order)
-    // {    
-    //     $vnp_TmnCode = "2HULBQDO"; //Mã website tại VNPAY 
-    //     $vnp_HashSecret = "CQBSBRQYSPMAZJSNTOUVNHGRBRFMUHLA"; //Chuỗi bí mật
-    //     $vnp_Url = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
-    //     $vnp_Returnurl = "http://myshop.vn/return-vnpay";
-    //     $vnp_TxnRef = date("YmdHis"); //Mã đơn hàng. Trong thực tế Merchant cần insert đơn hàng vào DB và gửi mã này sang VNPAY
-    //     $vnp_OrderInfo = "Thanh toán hóa đơn ";
-    //     $vnp_OrderType = 'billpayment';
-    //     $vnp_Amount = $request->total_amount * 100;
-    //     $vnp_Locale = 'vn';
-    //     $vnp_IpAddr = request()->ip();
-    //     $vnp_BankCode = $request->input('bank_code');
-
-    //     $inputData = array(
-    //         "vnp_Version" => "2.0.0",
-    //         "vnp_TmnCode" => $vnp_TmnCode,
-    //         "vnp_Amount" => $vnp_Amount,
-    //         "vnp_Command" => "pay",
-    //         "vnp_CreateDate" => date('YmdHis'),
-    //         "vnp_CurrCode" => "VND",
-    //         "vnp_IpAddr" => $vnp_IpAddr,
-    //         "vnp_Locale" => $vnp_Locale,
-    //         "vnp_OrderInfo" => $vnp_OrderInfo,
-    //         "vnp_OrderType" => $vnp_OrderType,
-    //         "vnp_ReturnUrl" => $vnp_Returnurl,
-    //         "vnp_TxnRef" => $vnp_TxnRef,
-    //     );
-    //     if (isset($vnp_BankCode) && $vnp_BankCode != "") {
-    //         $inputData['vnp_BankCode'] = $vnp_BankCode;
-    //     }
-    //     ksort($inputData);
-    //     $query = "";
-    //     $i = 0;
-    //     $hashdata = "";
-    //     foreach ($inputData as $key => $value) {
-    //         if ($i == 1) {
-    //             $hashdata .= '&' . $key . "=" . $value;
-    //         } else {
-    //             $hashdata .= $key . "=" . $value;
-    //             $i = 1;
-    //         }
-    //         $query .= urlencode($key) . "=" . urlencode($value) . '&';
-    //     }
-
-    //     $vnp_Url = $vnp_Url . "?" . $query;
-    //     if (isset($vnp_HashSecret)) {
-    //        // $vnpSecureHash = md5($vnp_HashSecret . $hashdata);
-    //         $vnpSecureHash = hash('sha256', $vnp_HashSecret . $hashdata);
-    //         $vnp_Url .= 'vnp_SecureHashType=SHA256&vnp_SecureHash=' . $vnpSecureHash;
-    //     } 
-    //     return redirect($vnp_Url) ;
-    // }  
-    
+    }  
+    public function updateStore($product_detail_id,$quantity)
+    {
+        $store = Store::where('productdetail_id',$product_detail_id)->first();  
+        $store->quantity -= $quantity;
+        $store->update();       
+   }   
 }
