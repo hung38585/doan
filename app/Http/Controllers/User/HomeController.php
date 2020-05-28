@@ -18,6 +18,7 @@ use Illuminate\Support\Str;
 use DB;
 use Carbon\Carbon;
 use Auth;
+use Mail;
 
 class HomeController extends Controller
 {
@@ -53,24 +54,44 @@ class HomeController extends Controller
         foreach ($categories as $key => $value) {
             $listquantity[] = $this->countProduct($value->id);
         }
-        if ($request->category) {
-            $category_id = Category::where('slug',$request->category)->take(1)->get();
-            $products = $products->where('category_id',$category_id[0]->id);
+        if ($request->category) { 
+            $listcate = $request->category;
+            $products = $products->where(function($query) use($listcate){
+                foreach ($listcate as $key => $value) {
+                    $category_id = Category::where('slug',$value)->take(1)->get();
+                    $query = $query->orwhere('category_id',$category_id[0]->id); 
+                } 
+            }); 
         }
         if ($request->productname) {
             $products = $products->where('name', 'like', '%'.$request->productname.'%');
         }
         if ($request->price) { 
-            preg_match_all('!\d+!', $request->price, $matches); 
-            if (count($matches[0]) == 2) {
-                $products = $products->where('price', '>',$matches[0][0])->where('price', '<',$matches[0][1]);
-            }else{
-                $condition = substr($request->price,0,1); 
-                $products = $products->where('price',$condition,$matches[0][0]);
-            }
+            $listprice = $request->price; 
+            $products = $products->where(function($query) use($listprice){
+                foreach ($listprice as $key => $value) {
+                    preg_match_all('!\d+!', $value, $matches); 
+                    if (count($matches[0]) == 2) {
+                        $query = $query->orwhere('price', '>',$matches[0][0])->where('price', '<',$matches[0][1]);
+                    }else{ 
+                        $condition = substr($value,0,3);
+                        if ($condition == 'max') {
+                            $condition = '<';
+                        }else{
+                            $condition = '>';
+                        } 
+                        $query = $query->orwhere('price',$condition,$matches[0][0]);
+                    }
+                } 
+            }); 
         }
         if ($request->color) {
-            $products = $products->join('product_details','products.id','product_details.product_id')->where('product_details.color',$request->color);
+            $listcolor = $request->color;
+            $products = $products->join('product_details','products.id','product_details.product_id')->where(function($query) use($listcolor){
+                foreach ($listcolor as $key => $value) { 
+                    $query = $query->orwhere('product_details.color',$value); 
+                } 
+            });  
         }
         if ($request->sale) {
             $products = $products->where('promotion','<>','0');
@@ -203,5 +224,32 @@ class HomeController extends Controller
             $list = array_unique($list);
             return Response($list);
         }
+    }
+    public function contact()
+    {
+        $abouts = About::take(1)->get(); 
+        return view('user.home.contact',compact('abouts'));
+    }
+    public function sendContact(Request $request)
+    {
+        $email = $request->email; 
+        $data = array(
+            'name' => $request->name,
+            'email' => $request->email,
+            'content' => $request->message
+        );
+        Mail::send('user.home.mail',$data, function($message) use ($data){
+            //form
+            //to
+            $message->to("hungth2301@gmail.com");
+            //subject
+            $message->subject($data['name']);
+        }); 
+        return redirect('/contact');
+    }
+    public function about()
+    {
+        $abouts = About::take(1)->get(); 
+        return view('user.home.about',compact('abouts'));
     }
 }

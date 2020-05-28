@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateStoreManagementsTable extends Migration
+class CreateStoreLogsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateStoreManagementsTable extends Migration
      */
     public function up()
     {
-        Schema::create('store_managements', function (Blueprint $table) {
+        Schema::create('store_logs', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->bigInteger('store_id')->unsigned();
             $table->foreign('store_id')
@@ -35,6 +35,6 @@ class CreateStoreManagementsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('store_managements');
+        Schema::dropIfExists('store_logs');
     }
 }

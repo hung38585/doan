@@ -41,7 +41,11 @@
 						<td>{{$slide->link}}</td>
 						<td><img src="{{ asset('images/'.$slide->url_img) }}" width="80" height=></img>
 						</td>
-						<td>{{$slide->isdisplay}}</td>
+						@if($slide->isdisplay)
+						<td><span class="label label-success" style="font-size: 13px;">Display</span></td>
+						@else
+						<td><span class="label label-danger" style="font-size: 13px;">Hidden</span></td>
+						@endif
 						<td colspan="5">
 							<!-- Button trigger modal -->
 							<!-- Tạo data-id để chưa giá trị id -->

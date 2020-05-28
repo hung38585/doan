@@ -45,7 +45,11 @@
 						<td >{{ ++$key }}</td>
 						<td ><a href="{{route('category.show',$category->id)}}" style="text-decoration: none;color: black;">{{ $category->name }}</a> </td>
 						<td>{{$category->slug}}</td>
-						<td>{{$category->isdisplay}}</td>
+						@if($category->isdisplay)
+						<td><span class="label label-success" style="font-size: 13px;">Display</span></td>
+						@else
+						<td><span class="label label-danger" style="font-size: 13px;">Hidden</span></td>
+						@endif
 						<td colspan="5">
 							<!-- Button trigger modal -->
 							<!-- Tạo data-id để chưa giá trị id -->

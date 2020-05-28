@@ -12,10 +12,10 @@
 				<a href="/products">Products</i></a>
 			</li>
 			<li>
-				<a href="">About</a>
+				<a href="/about">About</a>
 			</li>
 			<li>
-				<a href="">Contact</a>
+				<a href="/contact">Contact</a>
 			</li>
 			<li>
 				<a href="{{route('products.index')}}?sale=sale">Sale</a>
@@ -40,10 +40,10 @@
 								<a href="/products">Products</a>
 							</li>
 							<li>
-								<a href="">About</a>
+								<a href="/about">About</a>
 							</li>
 							<li>
-								<a href="">Contact</a>
+								<a href="/contact">Contact</a>
 							</li>
 							<li >
 								<a href="{{route('products.index')}}?sale=sale">Sale</a>
@@ -74,9 +74,8 @@
 <div class="add-slider-area banner-slider-area">
 	<div class="slider-container">
 		<!-- Slider Image -->
-		<div class="mainSlider nivoSlider slider-image">
-			<img src="{{asset('client/img/slider/16.jpg')}}" alt="main slider" title="#htmlcaption1" />
-			<img src="{{asset('client/img/slider/17.jpg')}}" alt="main slider" title="#htmlcaption2" />
+		<div class="mainSlider nivoSlider slider-image"> 
+			<img src="{{asset('images/shoe-background.jpg')}}" alt="main slider" title="#htmlcaption1" />
 		</div>
 		<!-- Slider Caption 1 -->
 		<div id="htmlcaption1" class="nivo-html-caption slider-caption-1">
@@ -84,34 +83,14 @@
 			<div class="slide1-text text-2">
 				<div class="middle-text">
 					<div class="cap-dec wow bounceInDown" data-wow-duration="0.9s" data-wow-delay="0s">
-						<h1>New Fashions</h1>
+						<h1 style="color: white;">New Fashions</h1>
 					</div>
 					<div class="cap-title wow bounceInRight" data-wow-duration="1.2s" data-wow-delay="0.2s">
-						<h2>Shoes & Bags</h2>
-					</div>
-					<div class="cap-readmore wow bounceInUp" data-wow-duration="1.3s" data-wow-delay=".5s">
-						<a href="#">shop now</a>
-					</div>
+						<h2 style="color: white;">Shoes </h2>
+					</div> 
 				</div>
 			</div>
-		</div>
-		<!-- Slider Caption 2 -->
-		<div id="htmlcaption2" class="nivo-html-caption slider-caption-2">
-			<div class="slider-progress"></div>
-			<div class="slide1-text text-3">
-				<div class="middle-text">
-					<div class="cap-dec wow bounceIn" data-wow-duration="0.7s" data-wow-delay="0s">
-						<h3>New Collection</h3>
-					</div>
-					<div class="cap-title wow bounceInLeft" data-wow-duration="1s" data-wow-delay="0.2s">
-						<h1>Fashionable Watch</h1>
-					</div>
-					<div class="cap-readmore wow bounceIn" data-wow-duration="1.1s" data-wow-delay=".5s">
-						<a href="#">shop now</a>
-					</div>
-				</div>
-			</div>
-		</div>
+		</div> 
 	</div>
 </div>
 <!-- banner slider end -->
@@ -128,16 +107,16 @@
 				<!--product category left sidebar -->
 				<div class="blog_right_sidebar_right_area">
 					<!-- single widget -->
-					<form action="" method="GET">
+					<form action="" method="GET" id="formsort">
 						<div class="info_widget">
 							<div class="section_title">
-								<h2>CATEGORIES</h2>
+								<h2>Filter by category</h2>
 							</div>
 							<ul class="product-categories">
 								@foreach($categories as $key => $category)
 								<li class="col-md-12">
-									<input type="radio" name="category" id="cate{{$key}}" value="{{$category->slug}}" class="col-md-1" style="margin-top: 7px;">
-									<label for="cate{{$key}}" class="col-md-9">{{ $category->slug }}</label>
+									<input type="checkbox" name="category[]" id="{{$category->slug}}" value="{{$category->slug}}" class="col-md-1 cate" style="margin-top: 7px;">
+									<label for="{{$category->slug}}" class="col-md-9">{{ $category->slug }}</label>
 									<span class="count col-md-2">({{ $listquantity[$key] }})</span>
 								</li>
 								@endforeach
@@ -150,22 +129,22 @@
 							</div>
 							<ul class="product-categories">
 								<li class="col-md-12">
-									<input type="radio" name="price" id="price1" class="col-md-1" value="<?php echo htmlspecialchars('<1000000'); ?>" style="margin-top: 7px;">
-									<label for="price1" class="col-md-9"><1000000</label>
+									<input type="checkbox" name="price[]" id="pmax1000000" value="max1000000" style="margin-top: 7px;">
+									<label for="pmax1000000"><1000000</label>
 								</li>
 								<li class="col-md-12">
-									<input type="radio" name="price" id="price2" class="col-md-1" value="1000000-2000000" style="margin-top: 7px;">
-									<label for="price2" class="col-md-9">1000000-2000000</label>
+									<input type="checkbox" name="price[]" id="p1000000-2000000" value="1000000-2000000" style="margin-top: 7px;">
+									<label for="p1000000-2000000">1000000-2000000</label>
 								</li>
 								<li class="col-md-12">
-									<input type="radio" name="price" id="price3" class="col-md-1" value="2000000-5000000" style="margin-top: 7px;">
-									<label for="price3" class="col-md-9">2000000-5000000</label>
+									<input type="checkbox" name="price[]" id="p2000000-5000000" value="2000000-5000000" style="margin-top: 7px;">
+									<label for="p2000000-5000000">2000000-5000000</label>
 								</li>
 								<li class="col-md-12">
-									<input type="radio" name="price" id="price4" class="col-md-1" value=">5000000" style="margin-top: 7px;">
-									<label for="price4" class="col-md-9">>5000000</label>
-								</li> 
-							</ul>
+									<input type="checkbox" name="price[]" id="pmin5000000" value="min5000000" style="margin-top: 7px;">
+									<label for="pmin5000000">>5000000</label>
+								</li>
+							</ul> 
 						</div>
 						<!-- single widget -->
 						<div class="info_widget">
@@ -175,7 +154,7 @@
 							<ul class="product-categories">
 								@foreach($listcolorquantity as $key => $value)
 								<li class="col-md-12">
-									<input type="radio" name="color" id="{{$key}}" class="cate col-md-1" value="{{$key}}" style="margin-top: 7px;">
+									<input type="checkbox" name="color[]" id="{{$key}}" class="cate col-md-1" value="{{$key}}" style="margin-top: 7px;">
 									<label for="{{$key}}" class="col-md-9"><?php echo ucwords($key); ?></label>
 									<span class="count col-md-1">({{$value}})</span>
 								</li>
@@ -189,14 +168,14 @@
 							<div class="small_slider">
 								<!-- single_slide -->
 								<div class="single_slide">
-									<img src="{{asset('client/img/slider/8.jpg')}}" alt="" />
+									<img src="{{asset('images/baner1.jpg')}}" alt="" />
 									<div class="s_slider_text">
 										<h2>MEET <br />THE <br />MARKET</h2>
 									</div>
 								</div> 
 								<!-- single_slide -->
 								<div class="single_slide">
-									<img src="{{asset('client/img/slider/7.jpg')}}" alt="" />
+									<img src="{{asset('images/baner2.png')}}" alt="" />
 									<div class="s_slider_text another">
 										<h2>AWESOME <br />BANNER</h2>
 									</div>
@@ -291,8 +270,17 @@
 <script src="{{asset('client/js/setabout.js')}}"></script>	
 <script type="text/javascript">
 	var orderby = $("#getsort").val();
-	var productname = $("#productname").val();
-	$("input[name='category']").change(function(){ 
+	var productname = $("#productname").val(); 
+	$("input[name='category[]']").change(function(){ 
+		if (!productname) {
+			document.getElementById("productname").setAttribute("disabled", true);
+		}
+		if (!orderby) {
+			document.getElementById("orderbyprice").setAttribute("disabled", true);
+		}
+		this.form.submit();
+	}); 
+	$("input[name='price[]']").change(function(){ 
 		if (!productname) {
 			document.getElementById("productname").setAttribute("disabled", true);
 		}
@@ -301,16 +289,7 @@
 		}
 		this.form.submit();
 	});
-	$("input[name='price']").change(function(){ 
-		if (!productname) {
-			document.getElementById("productname").setAttribute("disabled", true);
-		}
-		if (!orderby) {
-			document.getElementById("orderbyprice").setAttribute("disabled", true);
-		}
-		this.form.submit();
-	});
-	$("input[name='color']").change(function(){ 
+	$("input[name='color[]']").change(function(){ 
 		if (!productname) {
 			document.getElementById("productname").setAttribute("disabled", true);
 		}
@@ -320,27 +299,50 @@
 		this.form.submit();
 	});
 	$("#orderbyprice").change(function(){
+		if (!$(this).val()) {
+			document.getElementById("orderbyprice").setAttribute("disabled", true);
+		}
 		if (!productname) {
 			document.getElementById("productname").setAttribute("disabled", true);
 		}
 		this.form.submit();
-	});
-	@if(isset($_GET['category']))
-		$('input:radio[name=category]').val(['{{$_GET['category']}}']);
+	}); 
+	@if(isset($_GET['category']))  
+	<?php foreach ($_GET['category'] as $key => $value): ?> 
+		rates = document.getElementsByName('category[]');
+        rates.forEach((rate) => { 
+        	if (`${rate.value}` == '{{$value}}') {
+        		$("#"+'{{$value}}').prop("checked", true); 
+        	}
+                     
+        }); 
+	<?php endforeach ?>
 	@endif
 	@if(isset($_GET['price']))
-		var price = '{{$_GET['price']}}';
-		if (price.indexOf('&gt;') != -1) {
-			price = price.replace('&gt;','>');
-		}
-		if (price.indexOf('&lt;') != -1) {
-			price = price.replace('&lt;','<');
-		} 
-		$('input:radio[name=price]').val([price]);   
+		@foreach($_GET['price'] as $key => $value) 
+		rates = document.getElementsByName('price[]');
+        var	price = '{{$value}}';  
+        rates.forEach((rate) => {  
+        	if (`${rate.value}` == price) {
+        		$("#p"+price).prop("checked", true); 
+
+        	}       
+        });  
+		@endforeach  
 	@endif
 	@if(isset($_GET['color']))
-		$('input:radio[name=color]').val(['{{$_GET['color']}}']);
+		@foreach($_GET['color'] as $key => $value)
+		rates = document.getElementsByName('color[]');
+        rates.forEach((rate) => { 
+        	if (`${rate.value}` == '{{$value}}') {
+        		$("#"+'{{$value}}').prop("checked", true); 
+        	}
+                     
+        }); 
+		@endforeach
 	@endif
-</script>
-<!--PRODUCT CATEGORY START -->
+	@if(isset($_GET['orderby']))
+		$("#orderbyprice").val('{{$_GET['orderby']}}');
+	@endif
+</script> 
 @endsection

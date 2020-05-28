@@ -87,12 +87,7 @@ class ClientController extends Controller
     public function destroy($id)
     {
         //
-    } 
-    public function vnpay( )
-    {
-        $abouts = About::take(1)->get(); 
-        return view('user.vnpay.index',compact('abouts'));
-    }
+    }  
     public function feedback()
     {
         return view('user.profile.feedback');

@@ -12,7 +12,7 @@
 					<div class="header_top_right_menu pull-right ">
 						<ul>
 							<li><a href="/">Shop</a></li>
-							<li><a href="">Contact Us</a></li> 
+							<li><a href="/contact">Contact Us</a></li> 
 							@auth('client')
 							<li><a href="{{ url('/profile') }}" style="color: white;">{{ Auth::guard('client')->user()->username}}</a></li>
 							<li>
@@ -23,17 +23,17 @@
 							<form id="logout-form" action="{{ url('/logout') }}" method="GET" style="display: none;">
 								@csrf
 							</form>
-							</li>
-							@else
-							<li><a href="{{ url('/login') }}">Login</a></li>
-							<li><a href="{{ url('/register') }}">Register</a></li>
-							@endauth
-						</ul>
-					</div>
+						</li>
+						@else
+						<li><a href="{{ url('/login') }}">Login</a></li>
+						<li><a href="{{ url('/register') }}">Register</a></li>
+						@endauth
+					</ul>
 				</div>
-			</div>				
-		</div>
+			</div>
+		</div>				
 	</div>
+</div>
 </div>
 </div>
 <!--END HEADER TOP AREA  -->
@@ -56,17 +56,17 @@
 						<a id="mobile-menu" href="#sidr"><i class="fa fa-bars"></i></a>
 					</div>
 					<!--MOBILE MENU TRIGER-->
-					<a href="/"><img src="{{asset('client/img/logo.png')}}" alt="" id="logo" style="width: 70%; height: 40px;" /></a>
+					<a href="/"><img src="{{asset('client/img/logo.png')}}" alt="" id="logo" style="width: 70%; height: 40px; margin-bottom: 5px;" /></a>
 				</div>			
 			</div>
-			<div class="col-lg-3 col-md-3 col-sm-3 ">	
+			<div class="col-lg-3 col-md-3 col-sm-3" >	
 				<form action="/products" method="GET">	 
-						<div class="col-md-9">
-							<input type="text" class="form-control" name="productname" placeholder="Search…" />
-						</div>
-						<div class="col-md-3"> 
-							<button type="submit" class="btn"><i class="fas fa-search"></i></button> 
-						</div>  
+					<div class="search">
+						<input type="text" placeholder="Search…" name="productname" style="border: 1px solid #ddd; width: 100%; height: 38px; padding-left: 10px;"/>
+						<button type="submit">
+							<i class="fa fa-search"></i>
+						</button>
+					</div> 
 				</form>			
 			</div>
 			<div class="col-lg-3 col-md-3 col-sm-4 ">

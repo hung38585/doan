@@ -59,7 +59,11 @@
 						</td> 
 						<td><img src="{{ asset('images/'.$product->image) }}" width="50" height="50"></img></td>
 						<td class="">{{$product->price}}</td>
-						<td class="">{{$product->isdisplay}}</td>
+						@if($product->isdisplay)
+						<td><span class="label label-success" style="font-size: 13px;">Display</span></td>
+						@else
+						<td><span class="label label-danger" style="font-size: 13px;">Hidden</span></td>
+						@endif
 						<td colspan="5">
 							<!-- Button trigger modal -->
 							<!-- Tạo data-id để chưa giá trị id -->

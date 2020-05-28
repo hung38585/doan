@@ -90,7 +90,10 @@ Route::group(array('namespace'=>'User'),function(){
 	Route::resource('products','HomeController');
 	Route::resource('cart','CartController');
 	Route::get('/profile','ClientController@index');  
-	Route::get('/feedback','ClientController@feedback');  
+	Route::get('/feedback','ClientController@feedback'); 
+	Route::get('/contact','HomeController@contact'); 
+	Route::post('/sendcontact','HomeController@sendContact');
+	Route::get('/about','HomeController@about');   
 	//End view client
 	// CART
 	Route::patch('update-cart', 'CartController@update');
@@ -101,4 +104,4 @@ Route::group(array('namespace'=>'User'),function(){
 // -------------------------------------------------------------------------------
 // END USER
 //BOT MAN
-//Route::match(['get', 'post'], '/botman', 'User\BotManController@handle');
+Route::match(['get', 'post'], '/botman', 'User\BotManController@handle');
