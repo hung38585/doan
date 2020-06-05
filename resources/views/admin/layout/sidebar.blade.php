@@ -15,6 +15,8 @@
                             <li><a href="{{route('orderdetail.index')}}" class="">Order Detail</a></li>
                             <li><a href="{{route('product.index')}}" class="">Product</a></li>
                             <li><a href="{{route('productdetail.index')}}" class="">Product Detail</a></li>
+                            <li><a href="{{route('user.index')}}" class="">User</a></li>
+                            <li><a href="{{route('role.index')}}" class="">Role</a></li>
                             <li><a href="{{route('store.index')}}" class="">Store</a></li>
                             <li><a href="{{route('slide.index')}}" class="">Slide</a></li>
                         </ul>

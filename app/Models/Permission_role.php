@@ -4,9 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Role_user extends Model
+class Permission_role extends Model
 {
-    protected $table = 'role_user';
+    protected $table = 'permission_roles';
     protected $guarded = ['id']; //Tat ca tru id
     protected $timestamp = true;
 }

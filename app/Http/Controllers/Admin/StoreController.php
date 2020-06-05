@@ -119,7 +119,7 @@ class StoreController extends Controller
         $request->validated();
         $store = Store::findOrFail($id);
         $store->quantity = $request->quantity;
-        $store->updated_at = Carbon::now()->toDateTimeString() ;
+        $store->updated_at = Carbon::now()->toDateTimeString();
         $store->update();
         if ($store){
             return redirect('/admin/store')->with('message','Update successfully!');
@@ -134,9 +134,15 @@ class StoreController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        //
+        $store = Store::findOrFail($request->id);
+        $store->delete($request->id); 
+        if ($store){
+            return redirect('/admin/store')->with('message','Delete successfully!');
+        }else{
+            return back()->with('err','Delete error!');
+        }
     }
     public function getListSize(Request $request)
     {

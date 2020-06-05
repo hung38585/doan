@@ -1,5 +1,5 @@
 @extends('admin.layout.main')
-@section('title','Create slide')
+@section('title','Create Slide')
 @section('content')
 <div class="page-header">
 	<ol class="breadcrumb">

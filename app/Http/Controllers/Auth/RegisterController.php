@@ -62,7 +62,7 @@ class RegisterController extends Controller
             'last_name' => 'required|string|max:255',
             'address' => 'required|string|max:255',
             'phone' => 'required|string|max:255',
-            'username' => 'required|string|max:255',
+            'username' => 'required|string|max:255|unique:users',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6',
             'confirm_password' => 'required|required_with:password|same:password',
@@ -72,7 +72,7 @@ class RegisterController extends Controller
     // Admin ko co register de tam day test thu
     protected function createAdmin(Request $request)
     {
-        $this->validator($request->all())->validate();
+        $this->validator($request->all())->validate(); 
         $admin = User::create([
             'first_name' => $request['first_name'],
             'last_name' => $request['last_name'],
@@ -84,8 +84,10 @@ class RegisterController extends Controller
             'password' => bcrypt($request['password']),
             'confirm_password' => bcrypt($request['confirm_password']),
             'isdelete' => false,
+            'updated_at' => null
         ]);
-        return redirect()->intended('/admin/login');
+        $admin->role()->attach($request->role_id);
+        return redirect()->intended('/admin/user');
     }
 
     // Register Client
@@ -103,6 +105,7 @@ class RegisterController extends Controller
             'password' => bcrypt($request['password']),
             'confirm_password' => bcrypt($request['confirm_password']),
             'isdelete' => false,
+            'updated_at' => null
         ]);
         return redirect('/login');
     }

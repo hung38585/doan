@@ -47,7 +47,9 @@
 						<td>{{$store->product_detail->size}}</td>
 						<td>{{$store->product_detail->color}}</td>
 						<td>{{$store->quantity}}</td>
-						<td><a href="{{route('store.edit',$store->id)}}" class="ml-1 btn" style="width:40px; padding: 5px;"><i class="fa fa-edit "></i></a></td>
+						<td><a href="{{route('store.edit',$store->id)}}" class="ml-1 btn" style="width:40px; padding: 5px;"><i class="fa fa-edit "></i></a>
+							<button type="button" class="fas fa-trash-alt deleteUser text-danger btn" data-id="{{$store->id}}" data-toggle="modal" data-target="#Modal" style="width: 40px; padding: 7px 5px;">
+							</button></td>
 					</tr>
 					@endforeach
 				</tr>
@@ -59,7 +61,7 @@
 		</div>
 	</div>	
 </div>
-{{Form::open(['route' => 'slide_delete_modal', 'method' => 'POST', 'class'=>'col-md-5'])}}
+{{Form::open(['route' => 'store_delete_modal', 'method' => 'POST', 'class'=>'col-md-5'])}}
 {{ method_field('DELETE') }}
 {{ csrf_field() }}
 <!-- Modal -->
