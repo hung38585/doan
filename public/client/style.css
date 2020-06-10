@@ -3532,5 +3532,53 @@ width: 100%;}
   margin-bottom: 20px;
 }
 
+/* New rule */
 
+.mx-auto {
+  margin: 0 auto;
+}
+input {
+  margin-bottom: 10px;
+}
 
+.line_green,
+.line_green_center {
+  border-bottom: 2px solid #5cb85c;
+  margin-bottom: 15px;
+  max-width: 35%;
+}
+
+.line_green_center {
+  margin: 0 auto;
+}
+
+.line_col_green {
+  border-right: 2px solid #5cb85c;
+} 
+
+.info_user,
+.edit_user_info {
+  padding: 20px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.info_user h2,
+.info_user .info_user_inner {
+  margin-bottom: 30px;
+}
+
+.info_user h4 {
+  margin-bottom: 5px;
+}
+
+.info_user h6 {
+  font-size: 14px;
+}
+
+.f_right {
+  float: right;
+}
+
+.pt_15 {
+  padding-top: 15px
+}

@@ -61,11 +61,11 @@ class RegisterController extends Controller
             'first_name' => 'required|string|max:255',
             'last_name' => 'required|string|max:255',
             'address' => 'required|string|max:255',
-            'phone' => 'required|string|max:255',
+            'phone' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|size:10',
             'username' => 'required|string|max:255|unique:users',
             'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:6',
-            'confirm_password' => 'required|required_with:password|same:password',
+            'password' => 'required|min:8|same:confirm_password',
+            'confirm_password' => 'required',
         ]);
     }
 

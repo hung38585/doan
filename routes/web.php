@@ -407,7 +407,7 @@ Route::group(array('namespace'=>'User'),function(){
 	Route::post('/placeorder','CartController@placeorder');
 	Route::resource('products','HomeController');
 	Route::resource('cart','CartController');
-	Route::get('/profile','ClientController@index');  
+	Route::resource('/profile','ClientController');  
 	Route::get('/feedback','ClientController@feedback'); 
 	Route::get('/contact','HomeController@contact'); 
 	Route::post('/sendcontact','HomeController@sendContact');

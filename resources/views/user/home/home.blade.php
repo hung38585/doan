@@ -71,7 +71,7 @@
 					<div class="r_menu" style="overflow-x: auto; height: 450px;">
 						<ul>
 							@foreach($categories as $key => $category)
-								<li><a href="{{route('products.index')}}?category={{$category->name}}">{{ $category->name }}</a></li>
+								<li><a href="{{route('products.index')}}?category[]={{$category->name}}">{{ $category->name }}</a></li>
 							@endforeach
 						</ul>
 					</div>

@@ -56,10 +56,10 @@ class LoginController extends Controller
     {
         $this->validate($request, [
             'username'   => 'required',
-            'password' => 'required|min:6'
+            'password' => 'required'
         ]);
 
-        if (Auth::guard('admin')->attempt(['username' => $request->username, 'password' => $request->password, 'level' => 1], $request->get('remember'))) {
+        if (Auth::guard('admin')->attempt(['username' => $request->username, 'password' => $request->password, 'level' => 1, 'isdelete' => false], $request->get('remember'))) {
 
             return redirect()->intended('/admin/home');
         }
@@ -80,10 +80,10 @@ class LoginController extends Controller
     {
         $this->validate($request, [
             'username'   => 'required',
-            'password' => 'required|min:6'
+            'password' => 'required'
         ]);
 
-        if (Auth::guard('client')->attempt(['username' => $request->username, 'password' => $request->password, 'level' => 2], $request->get('remember'))) {   
+        if (Auth::guard('client')->attempt(['username' => $request->username, 'password' => $request->password, 'level' => 2, 'isdelete' => false], $request->get('remember'))) {   
             //Kiem tra url truoc do co phai POST add-to-cart k?
             $start = strpos($request->session()->get('url.intended'),'add-to-cart');
             if ($start) {

@@ -1,30 +1,20 @@
 @extends('user.layout.main')
-@section('title','Clients Login')
+@section('title','Login')
 @section('content')
 <div class="container">
 	<div class="row">
 		<div class="client_login_form col-sm-5 col-sm-offset-4">
 			<div class="card-body">
 				<form method="POST" action="{{ url('/login') }}">
-					<div class="card-header"><h2> Clients Login </h2></div>
+					<div class="card-header"><h2> Login </h2></div>
 					@csrf
 					<div class="form-group">							
-						<input id="username" type="text" class="form-control{{ $errors->has('username') ? ' is-invalid' : '' }}" placeholder="User name" name="username" value="{{ old('username') }}" required autofocus>
-
-						@if ($errors->has('username'))
-						<span class="invalid-feedback" role="alert">
-							<strong>{{ $errors->first('username') }}</strong>
-						</span>
-						@endif
+						<input id="username" type="text" class="form-control{{ $errors->has('username') ? ' is-invalid' : '' }}" placeholder="User name" name="username" value="{{ old('username') }}" autofocus>
+						<strong class="text-danger">{{ $errors->first('username') }}</strong>
 					</div>
 					<div class="form-group">
-						<input id="password" type="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" placeholder="Password" name="password" required style="margin-bottom: 10px;">
-
-						@if ($errors->has('password'))
-						<span class="invalid-feedback text-danger" role="alert" >
-							<strong>{{ $errors->first('password') }}</strong>
-						</span>
-						@endif
+						<input id="password" type="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" placeholder="Password" name="password" style="margin-bottom: 10px;">
+						<strong class="text-danger">{{ $errors->first('password') }}</strong>
 						@if (Session::has('err'))
 						<span class="invalid-feedback text-danger"><strong>{{ Session::get('err')}}</strong></span>
 						@endif

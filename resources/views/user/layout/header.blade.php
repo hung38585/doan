@@ -63,7 +63,7 @@
 				<form action="/products" method="GET">	 
 					<div class="search">
 						<input type="text" placeholder="Search…" name="productname" style="border: 1px solid #ddd; width: 100%; height: 38px; padding-left: 10px;"/>
-						<button type="submit">
+						<button type="submit" style="height: 35px;">
 							<i class="fa fa-search"></i>
 						</button>
 					</div> 

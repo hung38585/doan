@@ -117,3 +117,27 @@
     table#cart tfoot td .btn{display:block;}
 
 }
+
+/* new rule */
+.admin_login_form {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  padding: 30px;
+  margin-top: 50px;
+}
+
+.admin_login_form input{
+  border-radius: 0;
+}
+.admin_login_form .card-header {
+    color: #676a6d;
+    margin-bottom: 30px;
+}
+
+.admin_login_form .login_button {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-radius: 0;
+    background-color: #00AAFF;
+    border-color: #00AAFF;
+    color: #fff;
+}
