@@ -21,7 +21,7 @@ class CreateOrdersTable extends Migration
             $table->string('payment');
             $table->date('transaction_date');
             $table->text('notes')->nullable();
-            $table->bigInteger('user_id')->unsigned()->nullable();;
+            $table->bigInteger('user_id')->unsigned()->nullable();
             $table->foreign('user_id')
             ->references('id')
             ->on('users')

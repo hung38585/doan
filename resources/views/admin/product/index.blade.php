@@ -54,7 +54,7 @@
 					<tr>
 						<td class="">{{ ++$key }}</td>
 						<td class="">{{ $product->product_code }}</td>
-						<td class=""><a href="{{route('product.show',$product->id)}}" style="text-decoration: none;color: black;">
+						<td class="" width="400"><a href="{{route('product.show',$product->id)}}" style="text-decoration: none;color: black;">
 							{{ $product->name }}</a>
 						</td> 
 						<td><img src="{{ asset('images/'.$product->image) }}" width="50" height="50"></img></td>

@@ -682,7 +682,7 @@ ALL OPACITY WILL BE HERE
   width: 100%;
 }
 .first_collection a:hover::before, .second_collection a:hover::before, .three_collection a:hover::before, .single_item:hover .item .product_img::before {
-  opacity: 0.29;
+  opacity: 0.1;
   visibility: visible;
   z-index: 999;
 }
@@ -2565,7 +2565,7 @@ background: #6fc138;
   width: 270px;
 }
 .cat_all_aitem  .addtocart_area {
-  bottom: 92px;
+  bottom: 0px;
 }   
 .view_sort_area.bottom_view {
   margin-bottom: 75px;

@@ -17,7 +17,7 @@ class CreateCommentsTable extends Migration
             $table->bigIncrements('id');
             $table->text('content');
             $table->integer('star');
-            $table->integer('reply');
+            $table->integer('reply')->nullable();
 
             $table->bigInteger('user_id')->unsigned();
             $table->foreign('user_id')

@@ -138,6 +138,7 @@ class CartController extends Controller
                 'total_amount' => $request->price[$key] * $value,
                 'order_id' => $order->id,
                 'product_detail_id' => $request->product_detail_id[$key],
+                'isfeedback' => false,
                 'created_by' => Auth::guard('client')->user()->id,
                 'updated_by' => null
             ]);

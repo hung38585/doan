@@ -1,11 +1,80 @@
 @extends('user.layout.main')
 @section('title','Register')
 @section('content')
+<!--MOBILE MENU START -->
+<div id="sidr">
+    <nav>
+        <ul>
+            <li>
+                <a href="/">HOME</a>
+            </li>
+            <li>
+                <a href="/products">Products</i></a>
+            </li>
+            <li>
+                <a href="/about">About</a>
+            </li>
+            <li>
+                <a href="/contact">Contact</a>
+            </li>
+            <li>
+                <a href="{{route('products.index')}}?sale=sale">Sale</a>
+            </li>
+        </ul>                       
+    </nav>
+</div>
+<!--MOBILE MENU END -->
+<!--MAIN MENU AREA  START-->
+<div class="main_menu_area">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 ">
+                <!--DESKTOP MENU START -->
+                <div class="mainmenu">
+                    <nav>
+                        <ul id="nav">
+                            <li>
+                                <a href="/">HOME </a>
+                            </li>
+                            <li>
+                                <a href="/products">Products</a>
+                            </li>
+                            <li>
+                                <a href="/about">About</a>
+                            </li>
+                            <li>
+                                <a href="/contact">Contact</a>
+                            </li>
+                            <li >
+                                <a href="{{route('products.index')}}?sale=sale">Sale</a>
+                            </li>
+                        </ul>                       
+                    </nav>
+                </div>
+                <!--DESKTOP MENU END -->
+            </div>
+        </div>
+    </div>
+</div>
+<!--MAIN MENU AREA  END-->
+<!--BREADCRUMB AREA START -->
+<div class="breadcrumb_area">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12"> 
+                <div class="breadcrumb-row">
+                    <h3 class="breadcrumb"><a href="/" class="home">Home</a><span>/</span>Register</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--BREADCRUMB AREA END -->
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-sm-6 col-sm-offset-3">
             <div class="card">
-                <div class="row card-header line_green"><h2>Register</h2></div>
+                <div class="row card-header"><h2 class="">Register</h2></div>
                 <div class="card-body">
                     <form method="POST" action="{{ url('/register') }}">
                         @csrf

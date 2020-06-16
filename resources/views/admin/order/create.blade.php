@@ -107,7 +107,7 @@
 				data: {
 					product_detail_id: product_detail_id,
 				},
-				success:function(data){
+				success:function(data){ 
 					$('.'+max).html(data);
 					var quantity = max.slice(max.length-1);
 					$('.quantity'+quantity).attr({"max" : data});

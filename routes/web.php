@@ -411,7 +411,9 @@ Route::group(array('namespace'=>'User'),function(){
 	Route::get('/feedback','ClientController@feedback'); 
 	Route::get('/contact','HomeController@contact'); 
 	Route::post('/sendcontact','HomeController@sendContact');
-	Route::get('/about','HomeController@about');   
+	Route::get('/about','HomeController@about');
+	Route::get('/order/{id}','ClientController@orderdetail');   
+	Route::post('/comment','ClientController@comment');
 	//End view client
 	// CART
 	Route::patch('update-cart', 'CartController@update');

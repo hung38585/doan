@@ -1,12 +1,81 @@
 @extends('user.layout.main')
 @section('title','Login')
 @section('content')
+<!--MOBILE MENU START -->
+<div id="sidr">
+	<nav>
+		<ul>
+			<li>
+				<a href="/">HOME</a>
+			</li>
+			<li>
+				<a href="/products">Products</i></a>
+			</li>
+			<li>
+				<a href="/about">About</a>
+			</li>
+			<li>
+				<a href="/contact">Contact</a>
+			</li>
+			<li>
+				<a href="{{route('products.index')}}?sale=sale">Sale</a>
+			</li>
+		</ul>						
+	</nav>
+</div>
+<!--MOBILE MENU END -->
+<!--MAIN MENU AREA  START-->
+<div class="main_menu_area">
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-12 col-md-12 col-sm-12 ">
+				<!--DESKTOP MENU START -->
+				<div class="mainmenu">
+					<nav>
+						<ul id="nav">
+							<li>
+								<a href="/">HOME </a>
+							</li>
+							<li>
+								<a href="/products">Products</a>
+							</li>
+							<li>
+								<a href="/about">About</a>
+							</li>
+							<li>
+								<a href="/contact">Contact</a>
+							</li>
+							<li >
+								<a href="{{route('products.index')}}?sale=sale">Sale</a>
+							</li>
+						</ul>						
+					</nav>
+				</div>
+				<!--DESKTOP MENU END -->
+			</div>
+		</div>
+	</div>
+</div>
+<!--MAIN MENU AREA  END-->
+<!--BREADCRUMB AREA START -->
+<div class="breadcrumb_area">
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-12 col-md-12 col-sm-12">	
+				<div class="breadcrumb-row">
+					<h3 class="breadcrumb"><a href="/" class="home">Home</a><span>/</span>Login</h3>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!--BREADCRUMB AREA END -->
 <div class="container">
 	<div class="row">
 		<div class="client_login_form col-sm-5 col-sm-offset-4">
 			<div class="card-body">
 				<form method="POST" action="{{ url('/login') }}">
-					<div class="card-header"><h2> Login </h2></div>
+					<div class="card-header"><h2 class="text-center"> Login </h2></div>
 					@csrf
 					<div class="form-group">							
 						<input id="username" type="text" class="form-control{{ $errors->has('username') ? ' is-invalid' : '' }}" placeholder="User name" name="username" value="{{ old('username') }}" autofocus>

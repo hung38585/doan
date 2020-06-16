@@ -1,6 +1,6 @@
 <!--FOOTER AREA START -->
 <div class="footer_area">
-	<div class="container">
+	<div class="container-fluid">
 		<div class="row">
 			<div class="col-lg-3 col-md-3 col-sm-4 col-xs-12 ">	
 				<div class="address">
@@ -27,11 +27,11 @@
 					</ul>
 				</div>
 			</div>
-			<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 ">	
+			<div class="col-lg-3 col-md-3 col-sm-3 col-xs-6 ">	
 				<div class="block">
 					<h2 class="ft_widget_title">CUSTOM BLOCK</h2>
 					<ul>
-						<li><a href="">About us</a></li>
+						<li><a href="/about">About us</a></li>
 						<li><a href="">Privacy Policy</a></li>
 						<li><a href="">Terms &amp; Condition</a></li>
 						<li><a href="">Best Seller</a></li>
@@ -39,7 +39,7 @@
 					</ul>
 				</div>
 			</div>
-			<div class="col-lg-3 col-md-3 hidden-sm col-xs-12">	
+			<div class="col-lg-3 col-md-3 hidden-sm col-xs-6">	
 				<div class="block">
 					<h2 class="ft_widget_title">INFORMATION</h2>
 					<ul>
@@ -73,7 +73,7 @@
 		<div class="row">
 			<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">	
 				<div class="copy_text ">
-					<p>Copyright &copy; 2016 by my team.</p>
+					<p>Copyright &copy; 2020 by my team.</p>
 				</div>
 			</div>
 			<div class="col-lg-4 col-md-4 hidden-sm hidden-xs ">	

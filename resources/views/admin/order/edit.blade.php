@@ -21,7 +21,7 @@
 	    </li>
 	    <li class="list-group-item" style="height: 70px;"><span class="col-md-2">Status</span>
 	    	<div class="col-md-4">
-	    		{{ Form::select('status', array('unconfimred' => 'Unconfimred', 'confimred' => 'Confimred', 'delivered' => 'Delivered', 'delivery' => 'Delivery', 'cancel' => 'Cancel'),$order->status,['class' => 'form-control'])}}
+	    		{{ Form::select('status', array('unconfimred' => 'Unconfimred', 'confimred' => 'Confimred', 'delivery' => 'Delivery', 'delivered' => 'Delivered', 'cancel' => 'Cancel'),$order->status,['class' => 'form-control'])}}
 	    	</div>
 	    </li>
   	</ul>

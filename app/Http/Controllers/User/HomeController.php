@@ -12,6 +12,7 @@ use App\Models\Image;
 use App\Models\Product_Detail;
 use App\Models\About;
 use App\Models\Slide;
+use App\Models\Comment;
 use Session;
 use Validator;
 use Illuminate\Support\Str; 
@@ -102,7 +103,8 @@ class HomeController extends Controller
             $products = $products->orderBy('products.created_at','desc');
         }
         $products = $products->paginate(12)->appends(request()->query());
-        return view('user.home.product',compact('products','abouts','categories','listquantity','listcolorquantity'));
+        $star = Comment::select('star','product_id')->where('isdisplay',true)->where('isdelete',false)->get();
+        return view('user.home.product',compact('products','abouts','categories','listquantity','listcolorquantity','star'));
     }
 
     /**
@@ -146,7 +148,14 @@ class HomeController extends Controller
         foreach ($quantities as $key => $value) {
             $quantity += $value->quantity;
         }
-        return view('user.home.productdetail',compact('product','categories','abouts','colors','sizes','quantity','images','productbycategories'));
+        $comments = Comment::where('isdisplay',true)->where('isdelete',false)->where('product_id',$product->id)->get();
+        //Top rating
+        $list_product_vote_id = $this->topVote();
+        $list_product_votes = array();
+        foreach ($list_product_vote_id as $key => $value) { 
+            $list_product_votes[] = Product::where('isdelete',false)->where('isdisplay',true)->where('id',$key)->get()->toArray();
+        }  
+        return view('user.home.productdetail',compact('product','categories','abouts','colors','sizes','quantity','images','productbycategories','comments','list_product_votes','list_product_vote_id'));
     }
 
     /**
@@ -191,7 +200,13 @@ class HomeController extends Controller
         $listquatity = array();
         $product_promotions = Product::where('promotion','<>','')->where('isdelete','0')->where('isdisplay','1')->orderBy('created_at','desc')->get(); 
         $slides = Slide::where('isdelete','0')->where('isdisplay','1')->get(); 
-        return view('user.home.home',compact('abouts','product_promotions','categories','slides','newproducts'));
+        //Top rating
+        $list_product_vote_id = $this->topVote();
+        $list_product_votes = array();
+        foreach ($list_product_vote_id as $key => $value) { 
+            $list_product_votes[] = Product::where('isdelete',false)->where('isdisplay',true)->where('id',$key)->get()->toArray();
+        }  
+        return view('user.home.home',compact('abouts','product_promotions','categories','slides','newproducts','list_product_votes','list_product_vote_id'));
     }
     public function countProduct($id)
     {
@@ -251,5 +266,17 @@ class HomeController extends Controller
     {
         $abouts = About::take(1)->get(); 
         return view('user.home.about',compact('abouts'));
+    }
+    public function topVote()
+    {  
+        $product_ids =Comment::select('product_id')->where('isdelete',false)->where('isdisplay',true)->distinct()->get(); 
+        $stars = array(); 
+        foreach ($product_ids as $key => $id) {
+            $star = Comment::where('isdelete',false)->where('isdisplay',true)->where('product_id',$id->product_id)->sum('star');
+            $quantity = Comment::where('isdelete',false)->where('isdisplay',true)->where('product_id',$id->product_id)->count();
+            $stars += array($id->product_id => round($star/$quantity));  
+        } 
+        arsort($stars);
+        return $stars;
     }
 }

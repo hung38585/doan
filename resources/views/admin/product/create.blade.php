@@ -96,7 +96,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="form-group row">
+		<div class="form-group ">
 			{{ Form::submit('Save',['class'=>'btn btn-success','id'=>'save']) }}
 			<a class="btn btn-danger" href="{{route('product.index')}}">Back</a>
 		</div>

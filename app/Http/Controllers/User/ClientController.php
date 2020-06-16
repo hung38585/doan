@@ -5,6 +5,9 @@ namespace App\Http\Controllers\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\About;
+use App\Models\Order;
+use App\Models\Order_detail;
+use App\Models\Comment;
 use App\User;
 use Auth;
 
@@ -19,9 +22,22 @@ class ClientController extends Controller
     {
         $this->middleware('auth:client');
     }
-    public function index()
+    public function index(Request $request)
     {
-        return view('user.profile.info');
+        $abouts = About::take(1)->get();
+        $user_id = Auth::guard('client')->user()->id; 
+        $orders = Order::orderBy('created_at','desc')->where('user_id',$user_id);
+        if ($request->status) {
+            $orders = $orders->where('status',$request->status);            
+        }
+        $orders = $orders->get();
+        $quantity = array();
+        $quantity[] = Order::count();
+        $quantity[] = Order::where('status','unconfimred')->count();
+        $quantity[] = Order::where('status','delivery')->count();
+        $quantity[] = Order::where('status','delivered')->count();
+        $quantity[] = Order::where('status','cancel')->count(); 
+        return view('user.profile.info',compact('abouts','orders','quantity'));
     }
 
     /**
@@ -65,7 +81,8 @@ class ClientController extends Controller
     public function edit($username)
     {
         $users = User::where('username', $username)->first();
-        return view('user.profile.edit',compact('users'));
+        $abouts = About::take(1)->get(); 
+        return view('user.profile.edit',compact('users','abouts'));
     }
 
     /**
@@ -124,5 +141,32 @@ class ClientController extends Controller
     public function feedback()
     {
         return view('user.profile.feedback');
+    }
+    public function orderdetail($id)
+    { 
+
+        $abouts = About::take(1)->get(); 
+        $user_id = Auth::guard('client')->user()->id;
+        $order = Order::select('status')->where('id',$id)->first();
+        $order_details = Order_detail::select('order_details.*')->join('orders','orders.id','order_details.order_id')->where('orders.user_id',$user_id)->where('order_details.order_id',$id)->orderBy('order_details.created_at','desc')->get();   
+        return view('user.profile.orderdetail',compact('abouts','order_details','order'));
+    }
+    public function comment(Request $request)
+    { 
+        $user_id = Auth::guard('client')->user()->id;
+        $comment = new Comment([
+            'content' => $request->comment,
+            'star' => $request->star,
+            'user_id' => $user_id, 
+            'product_id' => $request->product_id, 
+            'isdelete' => false,
+            'isdisplay' => false,
+            'updated_at' => null
+        ]); 
+        $order_detail= Order_detail::findOrfail($request->order_detail_id);
+        $order_detail->isfeedback = true;
+        $order_detail->update();
+        $comment->save();
+        return back();
     }
 }

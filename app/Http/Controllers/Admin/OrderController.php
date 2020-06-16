@@ -78,6 +78,7 @@ class OrderController extends Controller
                 'total_amount' => $request->quantity[$key] * $price->price,
                 'order_id' => $order->id,
                 'product_detail_id' => $value,
+                'isfeedback' => false,
                 'created_by' => Auth::guard('admin')->user()->id,
                 'updated_by' => null
             ]);
@@ -148,8 +149,11 @@ class OrderController extends Controller
     public function getQuantity(Request $request)
     {
         if ($request->ajax()) {
-            $quantity = Store::select('quantity')->where('isdelete',false)->where('productdetail_id',$request->product_detail_id)->first();
-            return Response($quantity->quantity);
+            $quantity = Store::select('quantity')->where('isdelete',false)->where('productdetail_id',$request->product_detail_id)->first(); 
+            if ($quantity) {
+                return Response($quantity->quantity);
+            }
+            return Response(0);
         }
     }
     public function getOrderDetail(Request $request)

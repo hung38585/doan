@@ -103,53 +103,43 @@
 						</div>
 					</div>
 					<div class="info_widget">
-					<div class="section_title">
-						<h2 class="" style="float: left;">Top Rated Products</h2>
-					</div>
-					<div style="clear: both;"></div>
-					<div class="top_single_prodct">
-						<a href="#"><img src="{{asset('client/img/top-rated-prouducts/1.jpg')}}" alt="" /></a>
-						<div class="info">
-							<p class="name"><a href="#">Iphone 5S</a></p>
-							<div class="star-rating fullstr  ">
-								<span style="width:80%"><strong class="rating"> </strong> </span>
-							</div>
-							<span class="price"><span class="amount">$199.00</span></span>
+						<div class="section_title">
+							<h2 class="" style="float: left;">Top Rated Products</h2>
 						</div>
-					</div>
-					<div class="top_single_prodct">
-						<a href="#"><img src="{{asset('client/img/top-rated-prouducts/1.jpg')}}" alt="" /></a>
-						<div class="info">
-							<p class="name"><a href="#">Samsung Galaxy S5</a></p>
-							<div class="star-rating fullstr  ">
-								<span style="width:80%"><strong class="rating"> </strong> </span>
+						<div style="clear: both;"></div>
+						@foreach($list_product_votes as $key => $list_product_vote)
+						@if($key < 4) 
+						<div class="top_single_prodct">
+							<a href="{{route('products.show',$list_product_vote[0]['slug'])}}" title="{{$list_product_vote[0]['name']}}"><img src="{{asset('images/'.$list_product_vote[0]['image'])}}" alt="" style="width: 30%;" /></a>
+							<div class="">
+								<p class="name"><a href="{{route('products.show',$list_product_vote[0]['slug'])}}" title="{{$list_product_vote[0]['name']}}">{{ str_limit($list_product_vote[0]['name'],24) }}</a></p>
+								<div class="star-rating fullstr  ">
+									@for($i = 0; $i < 5; $i++)
+									@if($i < $list_product_vote_id[$list_product_vote[0]['id']])
+									<i class="fa fa-star" style="color: #ffcc00;"></i>
+									@else
+									<i class="far fa-star" style="color: #ffcc00;"></i>
+									@endif
+									@endfor
+								</div>
+								<span class="price"><span class="amount">{{$list_product_vote[0]['price']}}đ</span></span>
 							</div>
-							<span class="price"><span class="amount">$299.00</span></span>
 						</div>
-					</div>
-					<div class="top_single_prodct">
-						<a href="#"><img src="{{asset('client/img/top-rated-prouducts/1.jpg')}}" alt="" /></a>
-						<div class="info">
-							<p class="name"><a href="#">HTC one</a></p>
-							<div class="star-rating fullstr  ">
-								<span style="width:80%"><strong class="rating"> </strong> </span>
-							</div>
-							<span class="price"><span class="amount">$199.00</span></span>
-						</div>
-					</div>
-				</div>		
+						@endif
+						@endforeach 
+					</div>		
 					<div class="info_widget">
 						<div class="small_slider">
 							<!-- single_slide -->
 							<div class="single_slide">
-								<img src="img/slider/8.jpg" alt="" />
+								<img src="{{asset('client/img/slider/8.jpg')}}" alt="" />
 								<div class="s_slider_text">
 									<h2>MEET <br />THE <br />MARKET</h2>
 								</div>
 							</div> 
 							<!-- single_slide -->
 							<div class="single_slide">
-								<img src="img/slider/7.jpg" alt="" />
+								<img src="{{asset('client/img/slider/7.jpg')}}" alt="" />
 								<div class="s_slider_text another">
 									<h2>AWESOME <br />BANNER</h2>
 								</div>
@@ -190,83 +180,100 @@
 						</div>
 					</div>	
 					<div class="col-lg-5 col-md-5 col-sm-5 ">
-						<div class="product_info">
-								<div class="info">
-									<p class="name">{{$product->name}}</p>
-									<input type="hidden" value="{{ $product->id }}" id="productid">
-									<div class="star-rating  ">
-										<span style="width:80%"><strong class="rating"> </strong> </span>
-									</div>
-									<span class="price"><span class="amount">{{$product->price}}đ</span></span>
-									<br><br>
+						<div class="product_info col-md-12">
+							<div class="col-md-12">
+								<p class="name" style="color: black; font-size: 30px;line-height: 30px;">{{$product->name}}</p>
+								<input type="hidden" value="{{ $product->id }}" id="productid">
+								<div class="star-rating  ">
+									<?php $star = 0; ?>
+									@foreach($comments as $key => $comment)
+									<?php $star += $comment->star; ?>
+									@endforeach
+									<?php
+									if (count($comments)) {
+										$star = round($star/count($comments));
+									}else{
+										$star = 5;
+									} 
+									?>
+									@for ($i = 0; $i < 5; $i++)
+									@if($i < $star)
+									<i class="fa fa-star" style="color: #ffcc00;"></i>
+									@else
+									<i class="far fa-star" style="color: #ffcc00;"></i>
+									@endif
+									@endfor
 								</div>
-								<div class="sort_section">
-									<form action="{{ url('add-to-cart/'.$product->id) }}" onsubmit="return checkform();">
-										<!-- size -->
-										<ul class="sort-bar">
-											<li class="sort-bar-text">Size: </li>
-											<li></li>
-											<li  class="customform" >
-												<?php
-												if (isset($sizes)) {
-													$list = array();
-													foreach ($sizes as $key => $size) {
-														$list[] = $size->size;
-													}
-													$list = array_unique($list);
-												}
-												?>
-												<div class="select-wrapper">
-													<select name="size" class="orderby" id="size">
-														<option value="" selected="selected">
-														Select size!</option>
-														@foreach($list as $key => $size)
-														<option value="{{$size}}">{{$size}}</option>
-														@endforeach
-													</select>
-												</div>
-											</li>
-										</ul>
-										<!-- color -->
-										<ul class="sort-bar">
-											<li class="sort-bar-text">Color: </li>
-											<li></li>
-											<li  class="customform" >
-												<div class="select-wrapper">
-													<select name="color" class="orderby" id="color">
-														<option value="">Selcet color!</option>
-													</select>
-												</div>
-											</li>
-										</ul> 
-										<!-- quantity -->
-										<ul class="sort-bar">
-											<li class="sort-bar-text">Quantity: </li>
-											<li></li>
-											<li class="customform" >
-												<button type="button" class="btn" onclick="document.getElementById('quantity').stepDown();" style="float: left;">-</button>
-												<input type="number" name="quantity" min="1" max="100" value="1" class="text-center"  id="quantity">
-												<button type="button" class="btn" onclick="document.getElementById('quantity').stepUp();">+</button>
-												<span style="margin-left: 10px;">  Products available: <span id="quantityava" class="text-danger">{{ $quantity }}</span></span>
-												<input type="hidden" id="quantitystore" value="{{ $quantity }}">
-											</li>
-										</ul>
-										<p class="checkerr text-danger"></p>
-										<button type="submit" class="btn btn-success"><i class="fas fa-cart-plus" style="font-size: 20px;"></i> <b>ADD TO CART</b></button>
-									</form>	
-								</div>
-								<div class="product_meta">
-									<span class="sku_wrapper">Brand: {{$product->brand->name}}</span>
-									<span class="posted_in">Category: <a rel="tag" href="{{route('products.index')}}?category={{$product->category->name}}">{{$product->category->name}}</a></span>
-								</div>
+								<span class="price"><span class="amount">{{$product->price}}đ</span></span>
+								<br><br>
 							</div>
+							<div class="sort_section">
+								<form action="{{ url('add-to-cart/'.$product->id) }}" onsubmit="return checkform();">
+									<!-- size -->
+									<ul class="sort-bar">
+										<li class="sort-bar-text">Size: </li>
+										<li></li>
+										<li  class="customform" >
+											<?php
+											if (isset($sizes)) {
+												$list = array();
+												foreach ($sizes as $key => $size) {
+													$list[] = $size->size;
+												}
+												$list = array_unique($list);
+											}
+											?>
+											<div class="select-wrapper">
+												<select name="size" class="orderby" id="size">
+													<option value="" selected="selected">
+													Select size!</option>
+													@foreach($list as $key => $size)
+													<option value="{{$size}}">{{$size}}</option>
+													@endforeach
+												</select>
+											</div>
+										</li>
+									</ul>
+									<!-- color -->
+									<ul class="sort-bar">
+										<li class="sort-bar-text">Color: </li>
+										<li></li>
+										<li  class="customform" >
+											<div class="select-wrapper">
+												<select name="color" class="orderby" id="color">
+													<option value="">Selcet color!</option>
+												</select>
+											</div>
+										</li>
+									</ul> 
+									<!-- quantity -->
+									<ul class="sort-bar">
+										<li class="sort-bar-text">Quantity: </li>
+										<li></li>
+										<li class="customform" >
+											<button type="button" class="btn" onclick="document.getElementById('quantity').stepDown();" style="float: left;">-</button>
+											<input type="number" name="quantity" min="1" max="100" value="1" class="text-center"  id="quantity">
+											<button type="button" class="btn" onclick="document.getElementById('quantity').stepUp();">+</button>
+											<span style="margin-left: 10px;">  Products available: <span id="quantityava" class="text-danger">{{ $quantity }}</span></span>
+											<input type="hidden" id="quantitystore" value="{{ $quantity }}">
+										</li>
+									</ul>
+									<p class="checkerr text-danger"></p>
+									<button type="submit" class="btn btn-success"><i class="fas fa-cart-plus" style="font-size: 20px;"></i> <b>ADD TO CART</b></button>
+								</form>	
+							</div>
+							<div class="product_meta">
+								<span class="sku_wrapper">Brand: {{$product->brand->name}}</span>
+								<span class="posted_in">Category: <a rel="tag" href="{{route('products.index')}}?category={{$product->category->name}}">{{$product->category->name}}</a></span>
+							</div>
+						</div>
 					</div>
 					<!--PRODUCT TAB COLLECTION AREA   START -->
 					<div class="tab_collection_area product_tab ">
 						<div id="tab-container" class='tab-container'>
 							<ul class='etabs '>
 								<li class='tab'><a href="#description">Description</a></li>
-								<li class='tab'><a href="#reviews">Reviews (1)</a></li> 
+								<li class='tab'><a href="#reviews">Comments ({{count($comments)}})</a></li> 
 							</ul>
 							<div class='panel-container'>
 								<!-- first_collection -->
@@ -274,34 +281,29 @@
 									<p>Tail sed sausage magna quis commodo swine. Aliquip strip steak esse ex in ham hock fugiat in. Labore velit pork belly eiusmod ut shank doner capicola consectetur landjaeger fugiat excepteur short loin. Pork belly laboris mollit in leberkas qui. Pariatur swine aliqua pork chop venison veniam. Venison sed cow short loin bresaola shoulder cupidatat capicola drumstick dolore magna shankle.</p>
 								</div>
 								<!-- second_collection -->
-								<div id="reviews">
-									<div class="contact_from">
-										<form action="#">
-											<p class="comment-form-author">
-												<label>Name</label> 
-												<input type="text"  placeholder="Type Your Name Here" >
-											</p>
-											<p class="comment-form-author">
-												<label>Email</label> 
-												<input type="text"  placeholder="Type Your Email Here" >
-											</p>
-											<p class="reviewstar">
-												<label>Your Rating</label>
-												<a href="#"><i class="fa fa-star"></i></a>
-												<a href="#"><i class="fa fa-star"></i></a>
-												<a href="#"><i class="fa fa-star"></i></a>
-												<a href="#"><i class="fa fa-star"></i></a>
-												<a href="#"><i class="fa fa-star"></i></a>
-											</p>
-											<p class="comment-form-textarea">
-												<label>Your Review</label> 
-												<textarea >  </textarea> 
-											</p>
-											<p class="form-submit">
-												<input type="submit" value="Submit">
-											</p>
-										</form>
+								<div id="reviews" style="background: #f5f5f5;"> 
+									<hr style="margin: 0;">
+									@foreach($comments as $key => $comment)
+									<div class="bg-light" style="margin-bottom: 15px; background: white;border-radius: 4px;">
+										<div class="row no-gutters" style="margin: 10px 0px;"> 
+											<div class="col-xs-12 col-md-12">
+												<div class="card-body"> 
+													<h4 style="margin: 5px 0;">{{$comment->user->first_name.' '.$comment->user->last_name}}</h4>
+													@for ($i = 0; $i < 5; $i++)
+													@if($i < $comment->star)
+													<i class="fa fa-star" style="color: #ffcc00;"></i>
+													@else
+													<i class="far fa-star" style="color: #ffcc00;"></i>
+													@endif
+													@endfor 
+													<p style="margin: 5px 0px 0px 0px;">{{$comment->content}}</p> 
+													<p class="card-text "><small class="text-muted">{{$comment->created_at}}</small></p>
+												</div>
+											</div>  
+										</div>
 									</div>
+									@endforeach 
+									<hr style="margin: 0;">
 								</div> 
 							</div>
 						</div>
@@ -322,14 +324,20 @@
 									<div class="product_img">
 										<img src="{{asset('images/'.$productbycategory->image)}}" alt="" style="height: 200px;" />
 									</div>
+									<div class="addtocart_area">
+										<a href="{{route('products.show',$productbycategory->slug)}}">
+											<div class="cart-icons">
+												<strong><span class="fa fa-shopping-cart"></span></strong>
+												<span class="cart-icon-handle"></span>
+												<span class="add-to-cart-text">ADD TO CART</span>
+											</div>
+										</a>
+									</div>
 								</a>
 							</div>
 							<!-- product info -->
 							<div class="info ">
-								<p class="name"><a href="{{route('products.show',$productbycategory->slug)}}">{{$productbycategory->name}}</a></p>
-								<div  class="star-rating fullstr ">
-									<span style="width:80%"><strong class="rating "> </strong> </span>
-								</div>
+								<p class="name" style="height: 40px;"><a href="{{route('products.show',$productbycategory->slug)}}" title="{{$productbycategory->name}}">{{str_limit($productbycategory->name, 34)}}</a></p> 
 								@if($productbycategory->promotion)
 								<del><span class="amount nrb">{{ $productbycategory->price }}đ</span></del>
 								<span class="price"><span class="amount">{{ $productbycategory->price - intval(($productbycategory->price * $productbycategory->promotion)/100) }}đ</span></span>

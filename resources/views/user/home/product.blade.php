@@ -75,7 +75,7 @@
 	<div class="slider-container">
 		<!-- Slider Image -->
 		<div class="mainSlider nivoSlider slider-image"> 
-			<img src="{{asset('images/shoe-background.jpg')}}" alt="main slider" title="#htmlcaption1" />
+			<img src="{{asset('images/background.jpg')}}" alt="main slider" title="#htmlcaption1" />
 		</div>
 		<!-- Slider Caption 1 -->
 		<div id="htmlcaption1" class="nivo-html-caption slider-caption-1">
@@ -86,7 +86,7 @@
 						<h1 style="color: white;">New Fashions</h1>
 					</div>
 					<div class="cap-title wow bounceInRight" data-wow-duration="1.2s" data-wow-delay="0.2s">
-						<h2 style="color: white;">Shoes </h2>
+						<h2 style="color: white;">All Shoes </h2>
 					</div> 
 				</div>
 			</div>
@@ -217,21 +217,27 @@
 									<p>No products!</p>
 									@endif
 									@foreach($products as $key => $product)
-									<div class="single_item">
+									<div class="col-md-4 col-xs-6 single_item">
 										<!-- product Item -->
 										<a href="{{route('products.show',$product->slug)}}">
 											<div class = 'item' style="position: relative;">
 												<div class="product_img"> 
 													<img src="{{asset('images/'.$product->image)}}" alt="" style="height: 200px;" />
 												</div>
+												<div class="addtocart_area">
+													<a href="{{route('products.show',$product->slug)}}">
+														<div class="cart-icons">
+															<strong><span class="fa fa-shopping-cart"></span></strong>
+															<span class="cart-icon-handle"></span>
+															<span class="add-to-cart-text">ADD TO CART</span>
+														</div>
+													</a>
+												</div>
 											</div>
 										</a>
 										<!-- product info -->
 										<div class="info ">
-											<p class="name"><a href="{{route('products.show',$product->id)}}">{{ $product->name }}</a></p>
-											<div  class="star-rating two_star ">
-												<span style="width:80%"><strong class="rating"> </strong> </span>
-											</div>
+											<p class="name" style="height: 40px;"><a href="{{route('products.show',$product->id)}}" title="{{$product->name}}">{{ str_limit($product->name,60) }}</a></p> 
 											@if ($product->promotion)
 											<del><span class="amount nrb">{{ $product->price }}đ</span></del>
 											<span class="price"><span class="amount">{{ $product->price - intval(($product->price * $product->promotion)/100) }}đ</span></span>
