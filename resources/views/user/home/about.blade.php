@@ -1,62 +1,6 @@
 @extends('user.layout.main')
 @section('title','About')
 @section('content')
-<!--MOBILE MENU START -->
-<div id="sidr">
-	<nav>
-		<ul>
-			<li>
-				<a href="/">HOME</a>
-			</li>
-			<li>
-				<a href="/products">Products</i></a>
-			</li>
-			<li>
-				<a href="/about">About</a>
-			</li>
-			<li>
-				<a href="/contact">Contact</a>
-			</li>
-			<li>
-				<a href="{{route('products.index')}}?sale=sale">Sale</a>
-			</li>
-		</ul>						
-	</nav>
-</div>
-<!--MOBILE MENU END -->
-<!--MAIN MENU AREA  START-->
-<div class="main_menu_area">
-	<div class="container">
-		<div class="row">
-			<div class="col-lg-12 col-md-12 col-sm-12 ">
-				<!--DESKTOP MENU START -->
-				<div class="mainmenu">
-					<nav>
-						<ul id="nav">
-							<li>
-								<a href="/">HOME </a>
-							</li>
-							<li>
-								<a href="/products">Products</a>
-							</li>
-							<li>
-								<a href="/about">About</a>
-							</li>
-							<li>
-								<a href="/contact">Contact</a>
-							</li>
-							<li >
-								<a href="{{route('products.index')}}?sale=sale">Sale</a>
-							</li>
-						</ul>						
-					</nav>
-				</div>
-				<!--DESKTOP MENU END -->
-			</div>
-		</div>
-	</div>
-</div>
-<!--MAIN MENU AREA  END-->
 <!--BREADCRUMB AREA START -->
 <div class="breadcrumb_area">
 	<div class="container">
@@ -71,15 +15,18 @@
 </div>
 <!--BREADCRUMB AREA END -->
 @foreach($abouts as $key => $about)
-<div class="container" style="margin-top: 10px;">
-	<h3 class="font-weight-bold">Name: <span style="font-size: 20px;">{{$about->name}}</span></h3>
-	<h3 class="font-weight-bold">Title: <span style="font-size: 20px;">{{$about->title}}</span></h3>
-	<h3 class="font-weight-bold">Discription: <span style="font-size: 20px;">{!! $about->content !!}</span></h3>
-	<h3 class="font-weight-bold">Address: <span style="font-size: 20px;">{{$about->address}}</span></h3>
-	<h3 class="font-weight-bold">Contact: </h3>
-	<p style="font-size: 20px;">Email: {{$about->email}}</p>
-	<p style="font-size: 20px;">Phone: {{$about->phone}}</p>
-</div>
+<div class="card-body row col-md-12">
+	<div class="col-md-12">
+		<ul class="list-group list-group-flush"> 
+			<li class="list-group-item"><span class="h4 ">Title:</span> {{$about->title}}</li>
+			<li class="list-group-item"><span class="h4 ">Name:</span> {{$about->name}}</li>
+			<li class="list-group-item"><span class="h4 ">Phone:</span> {{$about->phone}}</li>
+			<li class="list-group-item"><span class="h4 ">Email:</span> {{$about->email}}</li>
+			<li class="list-group-item"><span class="h4 ">Address:</span> {{$about->address}}</li> 
+			<li class="list-group-item"><span class="h4 ">Content:</span> {!! $about->content !!}</li> 
+		</ul>
+	</div>   
+</div> 
 <input type="hidden" value="{{$about->title}}" id="titlevalue">
 <input type="hidden" value="{{$about->name}}" id="namevalue">
 <input type="hidden" value="{{$about->address}}" id="addressvalue">

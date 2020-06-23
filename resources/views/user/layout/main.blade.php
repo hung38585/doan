@@ -51,8 +51,8 @@
 		<div>
 			@include('user.layout.footer')
 		</div>
-	</body>
-	<!-- Load Facebook SDK for JavaScript -->
+	</body> 
+      <!-- Load Facebook SDK for JavaScript -->
       <div id="fb-root"></div>
       <script>
         window.fbAsyncInit = function() {

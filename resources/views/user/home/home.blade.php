@@ -1,64 +1,6 @@
 @extends('user.layout.main')
 @section('title','Home')
 @section('content')
-<!--MOBILE MENU START -->
-<div id="sidr">
-	<nav>
-		<ul>
-			<li>
-				<a href="/">HOME</a>
-			</li>
-			<li>
-				<a href="/products">Products</i></a>
-			</li>
-			<li>
-				<a href="/about">About</a>
-			</li>
-
-			<li>
-				<a href="/contact">Contact</a>
-			</li>
-
-			<li>
-				<a href="{{route('products.index')}}?sale=sale">Sale</a>
-			</li>
-		</ul>						
-	</nav>
-</div>
-<!--MOBILE MENU END -->
-<!--MAIN MENU AREA  START-->
-<div class="main_menu_area">
-	<div class="container">
-		<div class="row">
-			<div class="col-lg-12 col-md-12 col-sm-12 ">
-				<!--DESKTOP MENU START -->
-				<div class="mainmenu">
-					<nav>
-						<ul id="nav">
-							<li>
-								<a href="/">HOME</a>
-							</li>
-							<li>
-								<a href="/products">Products</i></a>
-							</li>
-							<li>
-								<a href="/about">About</a>
-							</li>
-							<li>
-								<a href="/contact">Contact</a>
-							</li>
-							<li >
-								<a href="{{route('products.index')}}?sale=sale">Sale</a>
-							</li>
-						</ul>						
-					</nav>
-				</div>
-				<!--DESKTOP MENU END -->
-			</div>
-		</div>
-	</div>
-</div>
-<!--MAIN MENU AREA  END-->
 <!-- RIGHT SIDEBAR MENU AREA START -->
 <div class="right_sidebar_menu_area">
 	<div class="container-fluid">
@@ -134,7 +76,12 @@
 						@endif
 						@endfor
 					</div>
-					<span class="price"><span class="amount">{{$list_product_vote[0]['price']}}đ</span></span>
+					@if ($list_product_vote[0]['promotion'])
+						<del><span class="amount nrb">{{ $list_product_vote[0]['price'] }}đ</span></del>
+						<span class="price"><span class="amount">{{ $list_product_vote[0]['price'] - intval(($list_product_vote[0]['price'] * $list_product_vote[0]['promotion'])/100) }}đ</span></span>
+					@else    
+						<span class="price"><span class="amount">{{$list_product_vote[0]['price']}}đ</span></span>
+					@endif  
 				</div>
 			</div>
 			@endif
@@ -162,11 +109,11 @@
 		</div>
 	</div>
 	<div class="col-md-9">
-		<div class="tab_collection_area">
+		<div class="tab_collection_area" style="clear: both;">
 			<div class="container-fluid">
 				<div class="row">
 					<div class="col-lg-12 col-md-12 col-sm-12 ">
-						<div class="section_title row">
+						<div class="section_title row"> 
 							<hr class="col-md-4" style="margin-left: 1.1%;">
 							<h2 class="text-center col-md-3"><a href="{{route('products.index')}}?sale=sale" style="text-decoration: none; color: black;">Sale</a></h2>
 							<hr class="col-md-4">
@@ -196,7 +143,7 @@
 												</a>
 												<!-- product info -->
 												<div class="info ">
-													<p class="name" style="height: 40px; line-height: 20px;" title="{{$product->name}}"><a href="{{route('products.show',$product->slug)}}">{{ str_limit($product->name,40) }}</a></p> 
+													<p class="name" style="height: 40px; line-height: 20px;" title="{{$product->name}}"><a href="{{route('products.show',$product->slug)}}">{{ str_limit($product->name,50) }}</a></p> 
 													<del><span class="amount nrb">{{ $product->price }}đ</span></del>
 													<span class="price"><span class="amount">{{ $product->price - intval(($product->price * $product->promotion)/100) }}đ</span></span>
 												</div>
@@ -248,7 +195,7 @@
 												</a>
 												<!-- product info -->
 												<div class="info ">
-													<p class="name" style="line-height: 20px; height: 40px;"><a href="{{route('products.show',$newproduct->slug)}}">{{ str_limit($newproduct->name,40) }}</a></p> 
+													<p class="name" style="line-height: 20px; height: 40px;"><a href="{{route('products.show',$newproduct->slug)}}" title="{{$newproduct->slug}}">{{ str_limit($newproduct->name,50) }}</a></p> 
 													@if($newproduct->promotion)
 													<del><span class="amount nrb">{{ $newproduct->price }}đ</span></del>
 													<span class="price"><span class="amount">{{ $newproduct->price - intval(($newproduct->price * $newproduct->promotion)/100) }}đ</span></span>

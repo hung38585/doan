@@ -105,4 +105,60 @@
 		</div>
 	</div>
 </div>
-	<!--END HEADER TOP AREA -->
+<!--END HEADER TOP AREA -->
+<!--MOBILE MENU START -->
+<div id="sidr">
+	<nav>
+		<ul>
+			<li>
+				<a href="{{url('/')}}">HOME</a>
+			</li>
+			<li>
+				<a href="{{url('products')}}">Products</i></a>
+			</li>
+			<li>
+				<a href="{{url('about')}}">About</a>
+			</li>
+			<li>
+				<a href="{{url('contact')}}">Contact</a>
+			</li>
+			<li>
+				<a href="{{route('products.index')}}?sale=sale">Sale</a>
+			</li>
+		</ul>						
+	</nav>
+</div>
+<!--MOBILE MENU END -->
+<!--MAIN MENU AREA  START-->
+<div class="main_menu_area">
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-12 col-md-12 col-sm-12 ">
+				<!--DESKTOP MENU START -->
+				<div class="mainmenu">
+					<nav>
+						<ul id="nav">
+							<li>
+								<a href="{{url('/')}}">HOME </a>
+							</li>
+							<li>
+								<a href="{{url('products')}}">Products</a>
+							</li>
+							<li>
+								<a href="{{url('about')}}">About</a>
+							</li>
+							<li>
+								<a href="{{url('contact')}}">Contact</a>
+							</li>
+							<li >
+								<a href="{{route('products.index')}}?sale=sale">Sale</a>
+							</li>
+						</ul>						
+					</nav>
+				</div>
+				<!--DESKTOP MENU END -->
+			</div>
+		</div>
+	</div>
+</div>
+<!--MAIN MENU AREA  END-->

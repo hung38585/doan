@@ -26,7 +26,7 @@ class ClientController extends Controller
     {
         $abouts = About::take(1)->get();
         $user_id = Auth::guard('client')->user()->id; 
-        $orders = Order::orderBy('created_at','desc')->where('user_id',$user_id);
+        $orders = Order::orderBy('updated_at','desc')->where('user_id',$user_id);
         if ($request->status) {
             $orders = $orders->where('status',$request->status);            
         }
@@ -142,13 +142,13 @@ class ClientController extends Controller
     {
         return view('user.profile.feedback');
     }
-    public function orderdetail($id)
+    public function orderdetail($order_code)
     { 
 
         $abouts = About::take(1)->get(); 
         $user_id = Auth::guard('client')->user()->id;
-        $order = Order::select('status')->where('id',$id)->first();
-        $order_details = Order_detail::select('order_details.*')->join('orders','orders.id','order_details.order_id')->where('orders.user_id',$user_id)->where('order_details.order_id',$id)->orderBy('order_details.created_at','desc')->get();   
+        $order = Order::select('status','id')->where('order_code',$order_code)->first(); 
+        $order_details = Order_detail::select('order_details.*')->join('orders','orders.id','order_details.order_id')->where('orders.user_id',$user_id)->where('order_details.order_id',$order->id)->orderBy('order_details.created_at','desc')->get();   
         return view('user.profile.orderdetail',compact('abouts','order_details','order'));
     }
     public function comment(Request $request)
@@ -167,6 +167,13 @@ class ClientController extends Controller
         $order_detail->isfeedback = true;
         $order_detail->update();
         $comment->save();
+        return back();
+    }
+    public function received(Request $request)
+    { 
+        $order = Order::findOrFail($request->order_id);
+        $order->status = 'delivered';
+        $order->update();
         return back();
     }
 }

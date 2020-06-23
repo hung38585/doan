@@ -32,10 +32,10 @@
 					<h2 class="ft_widget_title">CUSTOM BLOCK</h2>
 					<ul>
 						<li><a href="/about">About us</a></li>
-						<li><a href="">Privacy Policy</a></li>
-						<li><a href="">Terms &amp; Condition</a></li>
-						<li><a href="">Best Seller</a></li>
-						<li><a href="">Manufactures</a></li>
+						<li><a href="#">Privacy Policy</a></li>
+						<li><a href="#">Terms &amp; Condition</a></li>
+						<li><a href="#">Best Seller</a></li>
+						<li><a href="#">Manufactures</a></li>
 					</ul>
 				</div>
 			</div>
@@ -43,11 +43,11 @@
 				<div class="block">
 					<h2 class="ft_widget_title">INFORMATION</h2>
 					<ul>
-						<li><a href="">Delivery Information</a></li>
-						<li><a href="">Privacy Policy</a></li>
-						<li><a href="">Terms &amp; Condition</a></li>
-						<li><a href="">Search Terms</a></li>
-						<li><a href="">Order &amp; Return</a></li>
+						<li><a href="#">Delivery Information</a></li>
+						<li><a href="#">Privacy Policy</a></li>
+						<li><a href="#">Terms &amp; Condition</a></li>
+						<li><a href="#">Search Terms</a></li>
+						<li><a href="#">Order &amp; Return</a></li>
 					</ul>
 				</div>
 			</div>

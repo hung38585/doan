@@ -12,6 +12,44 @@
 */
 // Authenticate
 Auth::routes(); 
+// USER 
+// Thanh toan online return 
+Route::get('/return-vnpay','User\CartController@return');
+// End thanh toan online
+// Xu ly Login Logout CLIENTS
+Route::group(array('namespace'=>'Auth'),function(){
+	Route::get('/login', 'LoginController@showClientLoginForm');
+	Route::post('/login', 'LoginController@clientLogin');
+	Route::get('/register', 'RegisterController@showClientRegisterForm');
+	Route::post('/register', 'RegisterController@createClient');
+	Route::get('/logout', 'LoginController@clientLogout')->name('logout');
+});
+// End Authenticate
+// -------------------------------------------------------------------------------
+Route::group(array('namespace'=>'User'),function(){
+	//View client
+	Route::get('/','HomeController@homepage');
+	Route::post('/checkout','CartController@checkout');
+	Route::post('/placeorder','CartController@placeorder');
+	Route::resource('products','HomeController');
+	Route::resource('cart','CartController');
+	Route::resource('/profile','ClientController');   
+	Route::get('/contact','HomeController@contact'); 
+	Route::post('/sendcontact','HomeController@sendContact');
+	Route::get('/about','HomeController@about');
+	Route::get('/order/{id}','ClientController@orderdetail');   
+	Route::post('/comment','ClientController@comment');
+	Route::post('/received','ClientController@received');
+	//End view client
+	// CART
+	Route::patch('update-cart', 'CartController@update');
+	Route::get('add-to-cart/{id}', 'CartController@addToCart');
+	Route::delete('remove-from-cart', 'CartController@remove');
+	// END CART
+}); 
+// -------------------------------------------------------------------------------
+// END USER
+//ADMIN
 Route::group(array('prefix'=>'admin','namespace'=>'Auth'),function(){
 	// Xu ly Login Logut ADMIN
 	Route::get('/login', 'LoginController@showAdminLoginForm');
@@ -21,6 +59,24 @@ Route::group(array('prefix'=>'admin','namespace'=>'Auth'),function(){
 	Route::post('/register', 'RegisterController@createAdmin');
 	Route::get('/logout', 'LoginController@adminLogout')->name('admin.logout');
 });
+// function ajax
+Route::group(array('namespace'=>'Admin','middleware'=>'auth:admin'),function(){
+	Route::get('/setvalue', 'ProductController@setvalue');
+	Route::get('/getcolor', 'ProductController@getcolor');
+	Route::get('/get_list_size', 'StoreController@getListSize');
+	Route::get('/get_list_color', 'StoreController@getListColor');
+	Route::get('/get_quantity', 'StoreController@getQuantity');
+	Route::get('/get_quantity_order', 'OrderController@getQuantity');
+	Route::post('/move_image', 'ProductController@moveImage');
+	Route::post('/get_list_image', 'ProductController@getListImage');
+	Route::post('/save_image', 'ProductController@saveImage');
+	Route::post('/delete_image', 'ProductController@deleteImage');
+	Route::post('/get_order_detail', 'OrderController@getOrderDetail');
+}); 
+Route::get('/get_color_in_productdetail', 'User\HomeController@getListColor');
+Route::get('/get_quantity_in_productdetail', 'User\HomeController@getQuantity');
+//END ajax
+// -------------------------------------------------------------------------------
 // -------------------------------------------------------------------------------
 Route::group(array('prefix'=>'admin','namespace'=>'Admin'),function(){
 	Route::resource('about','AboutController'); 
@@ -365,63 +421,8 @@ Route::group(array('prefix'=>'admin','namespace'=>'Admin'),function(){
 	Route::get('/home', 'HomeController@index')->name('admin.home');
 });
 // -------------------------------------------------------------------------------
-// function ajax
-Route::group(array('namespace'=>'Admin','middleware'=>'auth:admin'),function(){
-	Route::get('/setvalue', 'ProductController@setvalue');
-	Route::get('/getcolor', 'ProductController@getcolor');
-	Route::get('/get_list_size', 'StoreController@getListSize');
-	Route::get('/get_list_color', 'StoreController@getListColor');
-	Route::get('/get_quantity', 'StoreController@getQuantity');
-	Route::get('/get_quantity_order', 'OrderController@getQuantity');
-	Route::post('/move_image', 'ProductController@moveImage');
-	Route::post('/get_list_image', 'ProductController@getListImage');
-	Route::post('/save_image', 'ProductController@saveImage');
-	Route::post('/delete_image', 'ProductController@deleteImage');
-	Route::post('/get_order_detail', 'OrderController@getOrderDetail');
-}); 
-Route::get('/get_color_in_productdetail', 'User\HomeController@getListColor');
-Route::get('/get_quantity_in_productdetail', 'User\HomeController@getQuantity');
-//END ajax
-// -------------------------------------------------------------------------------
 // END ADMIN
 // -------------------------------------------------------------------------------
 
-// USER 
-// Thanh toan online return 
-Route::get('/return-vnpay','User\CartController@return');
-// End thanh toan online
-// Xu ly Login Logout CLIENTS
-Route::group(array('namespace'=>'Auth'),function(){
-	Route::get('/login', 'LoginController@showClientLoginForm');
-	Route::post('/login', 'LoginController@clientLogin');
-	Route::get('/register', 'RegisterController@showClientRegisterForm');
-	Route::post('/register', 'RegisterController@createClient');
-	Route::get('/logout', 'LoginController@clientLogout')->name('logout');
-});
-// End Authenticate
-// -------------------------------------------------------------------------------
-Route::group(array('namespace'=>'User'),function(){
-	//View client
-	Route::get('/','HomeController@homepage');
-	Route::post('/checkout','CartController@checkout');
-	Route::post('/placeorder','CartController@placeorder');
-	Route::resource('products','HomeController');
-	Route::resource('cart','CartController');
-	Route::resource('/profile','ClientController');  
-	Route::get('/feedback','ClientController@feedback'); 
-	Route::get('/contact','HomeController@contact'); 
-	Route::post('/sendcontact','HomeController@sendContact');
-	Route::get('/about','HomeController@about');
-	Route::get('/order/{id}','ClientController@orderdetail');   
-	Route::post('/comment','ClientController@comment');
-	//End view client
-	// CART
-	Route::patch('update-cart', 'CartController@update');
-	Route::get('add-to-cart/{id}', 'CartController@addToCart');
-	Route::delete('remove-from-cart', 'CartController@remove');
-	// END CART
-}); 
-// -------------------------------------------------------------------------------
-// END USER
 //BOT MAN
 Route::match(['get', 'post'], '/botman', 'User\BotManController@handle');

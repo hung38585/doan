@@ -26,62 +26,6 @@
 		color:#FF912C;
 	} 
 </style>
-<!--MOBILE MENU START -->
-<div id="sidr">
-	<nav>
-		<ul>
-			<li>
-				<a href="/">HOME</a>
-			</li>
-			<li>
-				<a href="/products">Products</i></a>
-			</li>
-			<li>
-				<a href="/about">About</a>
-			</li>
-			<li>
-				<a href="/contact">Contact</a>
-			</li>
-			<li>
-				<a href="{{route('products.index')}}?sale=sale">Sale</a>
-			</li>
-		</ul>						
-	</nav>
-</div>
-<!--MOBILE MENU END -->
-<!--MAIN MENU AREA  START-->
-<div class="main_menu_area">
-	<div class="container">
-		<div class="row">
-			<div class="col-lg-12 col-md-12 col-sm-12 ">
-				<!--DESKTOP MENU START -->
-				<div class="mainmenu">
-					<nav>
-						<ul id="nav">
-							<li>
-								<a href="/">HOME </a>
-							</li>
-							<li>
-								<a href="/products">Products</a>
-							</li>
-							<li>
-								<a href="/about">About</a>
-							</li>
-							<li>
-								<a href="/contact">Contact</a>
-							</li>
-							<li >
-								<a href="{{route('products.index')}}?sale=sale">Sale</a>
-							</li>
-						</ul>						
-					</nav>
-				</div>
-				<!--DESKTOP MENU END -->
-			</div>
-		</div>
-	</div>
-</div>
-<!--MAIN MENU AREA  END-->
 <!--BREADCRUMB AREA START -->
 <div class="breadcrumb_area">
 	<div class="container">
@@ -143,7 +87,7 @@
 			@foreach($orders as $key => $order)
 			<div class="card col-md-12 bg-light" style="margin-bottom: 15px; background: white;border-radius: 4px;">
 				<div class="row no-gutters" style="margin: 10px 0px;">
-					<a href="{{ url('order/'.$order->id) }}">
+					<a href="{{ url('order/'.$order->order_code) }}">
 						<div class="col-xs-2 col-md-2">
 							<img src="{{asset('images/'.$order->order_detail[0]->product_detail->product->image)}}" class="card-img" style="width: 100%; height: 90px;">
 						</div>
@@ -160,7 +104,14 @@
 					<div class="col-xs-3 col-md-3">
 						<p>{{strtoupper($order->status)}}</p>
 						<p>Total amount: <span style="color: green; font-size: 20px;">{{$order->total_amount}}đ</span></p> 
-						<a href="{{ url('order/'.$order->id) }}" class="btn btn-success col-xs-12 col-md-5">Detail</a>
+						<a href="{{ url('order/'.$order->order_code) }}" class="btn btn-success col-xs-12 col-md-5" style="margin-right: 10px;">Detail</a>
+						<form action="{{ url('/received') }}" method="POST">
+							@csrf
+							<input type="hidden" name="order_id" value="{{$order->id}}">
+							@if($order->status == 'delivery')
+							<input type="submit" value="Received" class="btn btn-light col-xs-12 col-md-5" style="border: 1px solid gray; padding-left: 10px;">
+							@endif 
+						</form>	
 					</div>
 				</div>
 			</div>

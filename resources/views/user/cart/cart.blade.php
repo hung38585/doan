@@ -1,60 +1,6 @@
 @extends('user.layout.main')
 @section('title','Cart')
-@section('content')
-<div id="sidr">
-	<nav>
-		<ul>
-			<li>
-				<a href="/">HOME</a>
-			</li>
-			<li>
-				<a href="/products">Products</i></a>
-			</li>
-			<li>
-				<a href="">About</a>
-			</li>
-			<li>
-				<a href="">Contact</a>
-			</li>
-			<li>
-				<a href="{{route('products.index')}}?sale=sale">Sale</a>
-			</li>
-		</ul>						
-	</nav>
-</div>
-<!--MOBILE MENU END -->
-<!--MAIN MENU AREA  START-->
-<div class="main_menu_area">
-	<div class="container">
-		<div class="row">
-			<div class="col-lg-12 col-md-12 col-sm-12 ">
-				<!--DESKTOP MENU START -->
-				<div class="mainmenu">
-					<nav>
-						<ul id="nav">
-							<li>
-								<a href="/">HOME </a>
-							</li>
-							<li>
-								<a href="/products">Products</a>
-							</li>
-							<li>
-								<a href="">About</a>
-							</li>
-							<li>
-								<a href="">Contact</a>
-							</li>
-							<li >
-								<a href="{{route('products.index')}}?sale=sale">Sale</a>
-							</li>
-						</ul>						
-					</nav>
-				</div>
-				<!--DESKTOP MENU END -->
-			</div>
-		</div>
-	</div>
-</div>
+@section('content') 
 <!--BREADCRUMB AREA START -->
 <div class="breadcrumb_area">
 	<div class="container">
@@ -115,14 +61,14 @@
 							<?php $total += $details['price'] * $details['quantity'] ?>
 							<tr class="cart_item">
 								<td class="remove-product col-md-1">
-									<button class="btn btn-danger btn-sm remove-from-cart" data-id="{{ $id }}" data-toggle="modal" data-target="#exampleModal"><span class="icon-close"></span></button>
-									<button class="btn btn-success btn-sm update-cart" data-id="{{ $id }}"><i class="fa fa-refresh"></i></button> 
+									<button class="btn btn-danger btn-sm remove-from-cart" value="{{ $details['id'] }}" data-toggle="modal" data-target="#exampleModal"><span class="icon-close"></span></button>
+									<button class="btn btn-success btn-sm update-cart" value="{{ $details['id'] }}"><i class="fa fa-refresh"></i></button> 
 								</td>
 								<td class=" col-md-3">
 									<?php  $image = explode(',',$details['image']);	?>
 									<div class="row">
 										<div class="col-md-7">
-											<a href="{{route('products.show',$details['slug'])}}"><img  alt="04" class="" src="{{asset('images/'.$image[0])}}" style="width: 100%; height: 60px; "></a>
+											<a href="{{route('products.show',$details['slug'])}}"><img  alt="04" class="" src="{{asset('images/'.$image[0])}}" style="width: 70%; height: 60px; "></a>
 										</div>
 										<div class="col-md-5 text-left">
 											<p></p>
@@ -138,7 +84,7 @@
 									<span class="amount">{{ $details['price'] }}đ</span>					
 								</td>
 								<td class="product-quantity col-md-1">
-									<div class="quantity"><input type="number" min="1" max="20" class=" form-control" name="quantity[]" value="{{$details['quantity']}}" id="product_quantity"  style="width: 60px;"></div>
+									<div class="quantity"><input type="number" min="1" max="20" class=" form-control" name="quantity[]" value="{{$details['quantity']}}" id="product_quantity{{$details['id']}}"  style="width: 60px;"></div>
 								</td>
 								<td class="product-subtotal col-md-1">
 									<span class="amount">{{$details['price'] * $details['quantity']}}đ</span>					
@@ -216,12 +162,12 @@
 <script type="text/javascript">
 	$(".update-cart").click(function (e) {
 		e.preventDefault();
-		var ele = $(this);
-		var quantity = $("#product_quantity").val();
+		var id = $(this).val();
+		var quantity = $("#product_quantity"+id).val();
 		$.ajax({
 			url: '{{ url('update-cart') }}',
 			method: "patch",
-			data: {_token: '{{ csrf_token() }}', id: ele.attr("data-id"), quantity: quantity},
+			data: {_token: '{{ csrf_token() }}', id: id, quantity: quantity},
 			success: function (response) {
 				window.location.reload();
 			}
@@ -229,12 +175,12 @@
 	});
 	$(".remove-from-cart").click(function (e) {
 		e.preventDefault();
-		var ele = $(this);
+		var id = $(this).val();
 		$(".delete").click(function(){
 			$.ajax({
 				url: '{{ url('remove-from-cart') }}',
 				method: "DELETE",
-				data: {_token: '{{ csrf_token() }}', id: ele.attr("data-id")},
+				data: {_token: '{{ csrf_token() }}', id: id},
 				success: function (response) {
 					window.location.reload();
 				}
