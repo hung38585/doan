@@ -23,9 +23,9 @@
 			<div class="col-md-3">
 				<div class="form-group">
 					{{ Form::open(['route' => ['order.index' ],'method' => 'get']) }}
-					{{ Form::text('seachname','',['class'=>'form-control ','style'=>'float: left','placeholder'=>'Search Name']) }}
-				</div>
-				{{ Form::close() }}	
+						{{ Form::select('status', array('' => 'All status','unconfimred' => 'Unconfimred', 'confimred' => 'Confimred', 'delivery' => 'Delivery', 'delivered' => 'Delivered', 'cancel' => 'Cancel'),null,['class' => 'form-control orderstatus','placeholder'=>'Status','id'=>'status'])}}
+					{{ Form::close() }}	
+				</div> 
 			</div>
 		</div>
 		<table class="table table-striped table-sm">
@@ -80,7 +80,9 @@
 							<button type="button" class=" btn btn-light text-info orderdetail" style="width:40px; padding: 4px 5px;" data-toggle="modal" data-target="#orderinfo" value="{{$order->id}}"> 
 								<i class="fas fa-info-circle" style="font-size: 18px;"></i>  
 							</button>
+							@if($order->status != 'cancel')
 							<a href="{{route('order.edit',$order->id)}}" class="ml-1 btn" style="width:40px; padding: 5px;background: #f0f0f0;"><i class="fa fa-edit "></i></a>
+							@endif
 						</td>
 					</tr>
 					@endforeach
@@ -172,6 +174,12 @@
 				}
 			});
 		});
+	});
+	$('.orderstatus').change(function(){
+		if (!$(this).val()) {
+			document.getElementById("status").setAttribute("disabled", true);
+		}
+		this.form.submit();
 	});
 </script>
 {{ Form::close() }}

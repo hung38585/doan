@@ -179,7 +179,7 @@
 										<div class="col-lg-6 col-md-6 col-sm-6">
 											<div class="bell_ditl_s">
 												<div class="level">
-													Email Address <span class="required" title="required" >(Street, City)*</span>
+													Email Address <span class="required" title="required" >*</span>
 												</div>
 												<input type="text" placeholder="Email" value="{{ Auth::guard('client')->user()->email}}" name="email" id="emailuser" />
 												<span id="emailerr" class="text-danger"></span>

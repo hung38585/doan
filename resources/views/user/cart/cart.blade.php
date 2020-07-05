@@ -19,13 +19,11 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-lg-12 col-md-12 col-sm-12">
-				<div class="checkout-breadcrumb">
-					<a href="shopping-cart.html">
-						<div class="title-cart">
-							<span>1</span>
-							<p>Shopping Cart</p>
-						</div>
-					</a>
+				<div class="checkout-breadcrumb"> 
+					<div class="title-cart">
+						<span>1</span>
+						<p>Shopping Cart</p>
+					</div> 
 					<div class="title-checkout">
 						<span>2</span>
 						<p>Checkout details</p>
@@ -61,8 +59,7 @@
 							<?php $total += $details['price'] * $details['quantity'] ?>
 							<tr class="cart_item">
 								<td class="remove-product col-md-1">
-									<button class="btn btn-danger btn-sm remove-from-cart" value="{{ $details['id'] }}" data-toggle="modal" data-target="#exampleModal"><span class="icon-close"></span></button>
-									<button class="btn btn-success btn-sm update-cart" value="{{ $details['id'] }}"><i class="fa fa-refresh"></i></button> 
+									<button class="btn btn-danger btn-sm remove-from-cart" value="{{ $details['id'] }}" data-toggle="modal" data-target="#exampleModal"><span class="icon-close"></span></button> 
 								</td>
 								<td class=" col-md-3">
 									<?php  $image = explode(',',$details['image']);	?>
@@ -84,7 +81,7 @@
 									<span class="amount">{{ $details['price'] }}đ</span>					
 								</td>
 								<td class="product-quantity col-md-1">
-									<div class="quantity"><input type="number" min="1" max="20" class=" form-control" name="quantity[]" value="{{$details['quantity']}}" id="product_quantity{{$details['id']}}"  style="width: 60px;"></div>
+									<div class="quantity"><input type="number" min="1" max="20" class=" form-control productquantity" name="quantity[]" value="{{$details['quantity']}}" id="product_quantity{{$details['id']}}"  style="width: 60px;" data-columns="{{$details['id']}}"></div>
 								</td>
 								<td class="product-subtotal col-md-1">
 									<span class="amount">{{$details['price'] * $details['quantity']}}đ</span>					
@@ -160,10 +157,9 @@
 @endforeach
 <script src="{{asset('client/js/setabout.js')}}"></script>
 <script type="text/javascript">
-	$(".update-cart").click(function (e) {
-		e.preventDefault();
-		var id = $(this).val();
-		var quantity = $("#product_quantity"+id).val();
+	$(".productquantity").change(function(){
+		var id = this.dataset.columns;
+		var quantity = parseInt($(this).val());
 		$.ajax({
 			url: '{{ url('update-cart') }}',
 			method: "patch",
@@ -172,7 +168,7 @@
 				window.location.reload();
 			}
 		});
-	});
+	}); 
 	$(".remove-from-cart").click(function (e) {
 		e.preventDefault();
 		var id = $(this).val();

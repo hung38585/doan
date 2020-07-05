@@ -67,7 +67,7 @@
 									@endif
 									@endfor
 								</div>
-								<span class="price"><span class="amount">{{$list_product_vote[0]['price']}}đ</span></span>
+								<span class="price"><span class="amount">{{number_format($list_product_vote[0]['price'])}}đ</span></span>
 							</div>
 						</div>
 						@endif
@@ -149,7 +149,12 @@
 									@endif
 									@endfor
 								</div>
-								<span class="price"><span class="amount">{{$product->price}}đ</span></span>
+								@if($product->promotion)
+								<span class="price"><span class="amount">{{number_format($product->price - $product->price*$product->promotion/100)}}đ</span></span>
+								<strike><span class="h4" style="margin-left: 10px;"> {{number_format($product->price)}}đ</span></strike>
+								@else
+								<span class="price"><span class="amount">{{number_format($product->price)}}đ</span></span>
+								@endif  
 								<br><br>
 							</div>
 							<div class="sort_section">
@@ -267,7 +272,7 @@
 							<div class = 'item' >
 								<a href="{{route('products.show',$productbycategory->slug)}}">
 									<div class="product_img">
-										<img src="{{asset('images/'.$productbycategory->image)}}" alt="" style="height: 200px;" />
+										<img src="{{asset('images/'.$productbycategory->image)}}" class="imghome" />
 									</div>
 									<div class="addtocart_area">
 										<a href="{{route('products.show',$productbycategory->slug)}}">
@@ -284,10 +289,10 @@
 							<div class="info ">
 								<p class="name" style="height: 40px;"><a href="{{route('products.show',$productbycategory->slug)}}" title="{{$productbycategory->name}}">{{str_limit($productbycategory->name, 34)}}</a></p> 
 								@if($productbycategory->promotion)
-								<del><span class="amount nrb">{{ $productbycategory->price }}đ</span></del>
-								<span class="price"><span class="amount">{{ $productbycategory->price - intval(($productbycategory->price * $productbycategory->promotion)/100) }}đ</span></span>
+								<del><span class="amount nrb">{{ number_format($productbycategory->price) }}đ</span></del>
+								<span class="price"><span class="amount">{{number_format($productbycategory->price - intval(($productbycategory->price * $productbycategory->promotion)/100)) }}đ</span></span>
 								@else
-								<span class="price"><span class="amount">{{ $productbycategory->price }}đ</span></span>
+								<span class="price"><span class="amount">{{ number_format($productbycategory->price) }}đ</span></span>
 								@endif 
 							</div>
 							@if($productbycategory->promotion)

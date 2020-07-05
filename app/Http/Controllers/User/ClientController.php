@@ -10,6 +10,7 @@ use App\Models\Order_detail;
 use App\Models\Comment;
 use App\User;
 use Auth;
+use Hash;
 
 class ClientController extends Controller
 {
@@ -175,5 +176,39 @@ class ClientController extends Controller
         $order->status = 'delivered';
         $order->update();
         return back();
+    }
+    public function showChangePassForm() 
+    {
+        return view('user.profile.changePass');
+    }
+
+    public function changePassword(Request $request)
+    {
+        if (!(Hash::check($request->get('current_password'), Auth::user()->password))) {
+            // The passwords matches
+            return redirect()->back()->with("error","Current password is incorrect. Try again.");
+        }
+
+        if(strcmp($request->get('current_password'), $request->get('new_password')) == 0){
+            //Current password and new password are same
+            return redirect()->back()->with("error","New Password cannot be same as your current password. Choose a different password.");
+        }
+
+        $validatedData = $request->validate([
+            'current_password' => 'required',
+            'new_password' => 'required|min:8|same:new_confirm_password',
+            'new_confirm_password' => 'required',
+        ],
+        [
+            'current_password.required' => 'Field current password is required.',
+            'new_password.required' => 'Field new password is required.',
+            'new_confirm_password' => 'Field new confirm password is required.',
+        ]);
+
+        //Change Password
+        $user = Auth::user();
+        $user->password = bcrypt($request->get('new_password'));
+        $user->save(); 
+        return redirect('/profile')->with('message','Edit successfully!');
     }
 }

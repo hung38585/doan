@@ -195,10 +195,10 @@ class HomeController extends Controller
     public function homepage()
     {
         $abouts = About::take(1)->get();
-        $newproducts = Product::where('isdelete',false)->where('isdisplay',true)->orderBy('created_at','desc')->take(10)->get();
+        $newproducts = Product::where('isdelete',false)->where('isdisplay',true)->orderBy('created_at','desc')->take(8)->get();
         $categories = Category::where('isdelete','0')->where('isdisplay','1')->get(); 
         $listquatity = array();
-        $product_promotions = Product::where('promotion','<>','')->where('isdelete','0')->where('isdisplay','1')->orderBy('created_at','desc')->get(); 
+        $product_promotions = Product::where('promotion','<>','')->where('isdelete','0')->where('isdisplay','1')->orderBy('created_at','desc')->take(8)->get(); 
         $slides = Slide::where('isdelete','0')->where('isdisplay','1')->get(); 
         //Top rating
         $list_product_vote_id = $this->topVote();

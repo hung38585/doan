@@ -74,19 +74,19 @@
 							<ul class="product-categories">
 								<li class="col-md-12">
 									<input type="checkbox" name="price[]" id="pmax1000000" value="max1000000" style="margin-top: 7px;">
-									<label for="pmax1000000"><1000000</label>
+									<label for="pmax1000000"><1,000,000</label>
 								</li>
 								<li class="col-md-12">
 									<input type="checkbox" name="price[]" id="p1000000-2000000" value="1000000-2000000" style="margin-top: 7px;">
-									<label for="p1000000-2000000">1000000-2000000</label>
+									<label for="p1000000-2000000">1,000,000-2,000,000</label>
 								</li>
 								<li class="col-md-12">
 									<input type="checkbox" name="price[]" id="p2000000-5000000" value="2000000-5000000" style="margin-top: 7px;">
-									<label for="p2000000-5000000">2000000-5000000</label>
+									<label for="p2000000-5000000">2,000,000-5,000,000</label>
 								</li>
 								<li class="col-md-12">
 									<input type="checkbox" name="price[]" id="pmin5000000" value="min5000000" style="margin-top: 7px;">
-									<label for="pmin5000000">>5000000</label>
+									<label for="pmin5000000">>5,000,000</label>
 								</li>
 							</ul> 
 						</div>
@@ -161,7 +161,7 @@
 									<p>No products!</p>
 									@endif
 									@foreach($products as $key => $product)
-									<div class="col-md-4 col-xs-6 single_item">
+									<div class="col-md-4 col-xs-6 single_item" style="padding-right: 0">
 										<!-- product Item -->
 										<a href="{{route('products.show',$product->slug)}}">
 											<div class = 'item' style="position: relative;">
@@ -181,12 +181,12 @@
 										</a>
 										<!-- product info -->
 										<div class="info ">
-											<p class="name" style="height: 40px;"><a href="{{route('products.show',$product->id)}}" title="{{$product->name}}">{{ str_limit($product->name,60) }}</a></p> 
+											<p class="name" ><a href="{{route('products.show',$product->slug)}}" title="{{$product->name}}">{{ str_limit($product->name,60) }}</a></p> 
 											@if ($product->promotion)
-											<del><span class="amount nrb">{{ $product->price }}đ</span></del>
-											<span class="price"><span class="amount">{{ $product->price - intval(($product->price * $product->promotion)/100) }}đ</span></span>
+											<del><span class="amount nrb">{{ number_format($product->price) }}đ</span></del>
+											<span class="price"><span class="amount">{{ number_format($product->price - intval(($product->price * $product->promotion)/100)) }}đ</span></span>
 											@else    
-											<span class="price"><span class="amount">{{ $product->price }}đ</span></span>
+											<span class="price"><span class="amount">{{ number_format($product->price) }}đ</span></span>
 											@endif
 										</div>
 										@if ($product->promotion)

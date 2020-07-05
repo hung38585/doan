@@ -46,6 +46,11 @@
 		<div class="col-xs-12 col-sm-3 info_user">
 			<div class="info_user_inner">
 				<h2 class="text-center line_green_center">Profile</h2>
+				@if (session('message'))
+				<div class="alert alert-success notification">
+					{{ session('message') }}
+				</div>
+				@endif  
 				<h4>First name</h4>
 				<h6>{{ Auth::guard('client')->user()->first_name }}</h6>
 				<hr>	
@@ -63,11 +68,12 @@
 			</div>			
 			<div class="text-center">
 				<a href="{{route('profile.edit',Auth::guard('client')->user()->username)}}" class="btn btn-success">Edit Profile</a>
+				<a href="{{ url('/changepassword') }}" class="btn btn-primary">Change Password</a>
 			</div>
 		</div>
 		<div class="col-xs-12 col-sm-8" style="background: #f5f5f5;"> 
 			<ul class="nav nav-tabs orderstatus">
-				<li class="active ">
+				<li class="active">
 					<a class="h4 " href="{{url('/profile')}}" style="margin: 0;">All Order (<span class="text-danger" style="font-size: 15px; font-weight: bold;">{{$quantity[0]}}</span>)</a>
 				</li>
 				<li class="unconfimred">
@@ -145,25 +151,25 @@
 		$('.contentbody').html(content);  
 	});
 	@if(isset($_GET['status'])) 
-		@switch($_GET['status'])
-		    @case('unconfimred')
-		        $(".orderstatus li").removeClass("active");
-				$("li.unconfimred").addClass("active");
-		        @break 
-		    @case('delivery')
-		        $(".orderstatus li").removeClass("active");
-				$("li.delivery").addClass("active");
-		        @break
-		    @case('delivered')
-		        $(".orderstatus li").removeClass("active");
-				$("li.delivered").addClass("active");
-		        @break
-		    @case('cancel')
-		        $(".orderstatus li").removeClass("active");
-				$("li.cancel").addClass("active");
-		        @break    
-		    @default 
-		@endswitch
+	@switch($_GET['status'])
+	@case('unconfimred')
+	$(".orderstatus li").removeClass("active");
+	$("li.unconfimred").addClass("active");
+	@break 
+	@case('delivery')
+	$(".orderstatus li").removeClass("active");
+	$("li.delivery").addClass("active");
+	@break
+	@case('delivered')
+	$(".orderstatus li").removeClass("active");
+	$("li.delivered").addClass("active");
+	@break
+	@case('cancel')
+	$(".orderstatus li").removeClass("active");
+	$("li.cancel").addClass("active");
+	@break    
+	@default 
+	@endswitch
 	@endif
 	$(document).ready(function(){
 		/* 1. Visualizing things on Hover - See next part for action on click */

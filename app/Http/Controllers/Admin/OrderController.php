@@ -25,9 +25,13 @@ class OrderController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $orders = Order::orderBy('created_at', 'desc')->get();
+        $orders = Order::orderBy('created_at', 'desc');
+        if ($request->status) {
+            $orders = $orders->where('status',$request->status);
+        }
+        $orders = $orders->get();
         return view('admin.order.index',compact('orders'));
     }
 
@@ -111,6 +115,9 @@ class OrderController extends Controller
     public function edit($id)
     {
         $order = Order::findOrFail($id);
+        if ($order->status == 'cancel') {
+            return redirect('/admin/order');
+        }
         return view('admin.order.edit',compact('order'));
     }
 
@@ -129,7 +136,10 @@ class OrderController extends Controller
             $order->status = $request->status;
             $order->updated_at = Carbon::now()->toDateTimeString() ;
             $order->updated_by = Auth::guard('admin')->user()->id;
-            $order->update();
+            //$order->update();
+            if ($order->status == 'cancel') {
+                $this->updateStore($order->id);
+            } 
         }else{
             return back()->with('err','Save error!');
         }
@@ -171,5 +181,14 @@ class OrderController extends Controller
             $product_details[] = Product_Detail::select('product_details.size','product_details.color')->join('order_details','order_details.product_detail_id','=','product_details.id')->where('order_details.product_detail_id',$value->product_detail_id)->first(); 
         }
         return response()->json(array('success'=> true, 'names' => $name,'order_details'=> $order_details, 'product_details' => $product_details, 'users'=> $user,'orders'=>$order)); 
+    }
+    public function updateStore($order_id)
+    {
+        $orderdetail_id = Order_detail::select('product_detail_id','quantity')->where('order_id',$order_id)->get(); 
+        foreach ($orderdetail_id as $key => $value) {
+            $store = Store::where('productdetail_id',$value->product_detail_id)->first(); 
+            $store->quantity += $value->quantity;
+            $store->update();  
+        }
     }
 }

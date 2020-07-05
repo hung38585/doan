@@ -25,11 +25,12 @@
 					<!-- Slider Image -->
 					<div class="mainSlider classslide" style="max-height: 500px;">
 						@foreach($slides as $key => $slide)
-						<img src="{{asset('images/'.$slide->url_img)}}" alt="main slider" title="#htmlcaption111"  style="height: 100%;" />
+						<img src="{{asset('images/'.$slide->url_img)}}" alt="main slider" title="#htmlcaption11{{$key+1}}"  style="height: 100%;" />
 						@endforeach
-					</div>
-					<!-- Slider Caption 1 -->
-					<div id="htmlcaption111" class="nivo-html-caption slider-caption-1">
+					</div> 
+					@foreach($slides as $key => $slide)
+					<!-- Slider Caption -->
+					<div id="htmlcaption11{{$key+1}}" class="nivo-html-caption slider-caption-1">
 						<div class="slider-progress"></div>
 						<div class="slide1-text">
 							<div class="middle-text mdd-slide">
@@ -40,11 +41,12 @@
 									<h3 class="cap-3-h-2">Best Shoes</h3>
 								</div>
 								<div class="cap-readmore wow bounceInUp" data-wow-duration="1.3s" data-wow-delay=".5s">
-									<a href="/products">shop now</a>
+									<a href="{{$slide->link}}">shop now</a>
 								</div>
 							</div>
 						</div>
 					</div>
+					@endforeach
 				</div>
 				<!-- home slider end -->
 			</div>
@@ -56,7 +58,7 @@
 <div class="row col-md-12">
 	<div class="col-md-3">
 		<br>
-		<div class="info_widget col-xs-6 col-md-12">
+		<div class="info_widget col-xs-12 col-md-12">
 			<div class="section_title">
 				<h2 class="" style="float: left;">Top Rated Products</h2>
 			</div>
@@ -87,7 +89,7 @@
 			@endif
 			@endforeach 
 		</div>
-		<div class="info_widget col-xs-6 col-md-12">
+		<div class="info_widget col-xs-12 col-md-12">
 			<div class="info_widget">
 				<div class="small_slider">
 					<!-- single_slide -->
@@ -124,13 +126,13 @@
 								<div class = 'short-width-slider'>
 									<div class = 'slider1'>
 										@foreach($product_promotions as $key => $product)
-										<div class="col-xs-12">
+										<div class="col-xs-12 col-md-12">
 											<div class="single_item">
 												<!-- product Item -->
 												<a href="{{route('products.show',$product->slug)}}">
 													<div class = 'item'>
 														<div class="product_img">
-															<img src="{{asset('images/'.$product->image)}}" alt="" style="height: 200px;" /> 
+															<img class="imghome" src="{{asset('images/'.$product->image)}}"  /> 
 														</div>
 														<div class="addtocart_area"> 
 															<div class="cart-icons">
@@ -182,7 +184,7 @@
 												<a href="{{route('products.show',$newproduct->slug)}}">
 													<div class = 'item'>
 														<div class="product_img">
-															<img src="{{asset('images/'.$newproduct->image)}}" alt="" style="height: 200px;" />
+															<img class="imghome" src="{{asset('images/'.$newproduct->image)}}"  />
 														</div>
 														<div class="addtocart_area"> 
 															<div class="cart-icons">

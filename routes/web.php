@@ -46,6 +46,9 @@ Route::group(array('namespace'=>'User'),function(){
 	Route::get('add-to-cart/{id}', 'CartController@addToCart');
 	Route::delete('remove-from-cart', 'CartController@remove');
 	// END CART
+	// Change Password route
+	Route::get('/changepassword', 'ClientController@showChangePassForm');
+	Route::post('/changepassword','ClientController@changePassword')->name('changepassword');
 }); 
 // -------------------------------------------------------------------------------
 // END USER
@@ -72,6 +75,7 @@ Route::group(array('namespace'=>'Admin','middleware'=>'auth:admin'),function(){
 	Route::post('/save_image', 'ProductController@saveImage');
 	Route::post('/delete_image', 'ProductController@deleteImage');
 	Route::post('/get_order_detail', 'OrderController@getOrderDetail');
+	Route::post('/edit_comment', 'CommentController@editComment');
 }); 
 Route::get('/get_color_in_productdetail', 'User\HomeController@getListColor');
 Route::get('/get_quantity_in_productdetail', 'User\HomeController@getQuantity');

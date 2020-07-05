@@ -40,6 +40,11 @@ class CartController extends Controller
         if(!$product) {
             abort(404);
         }
+        if ($product->promotion) {
+            $price = $product->price - $product->price * $product->promotion/100;
+        }else{
+            $price = $product->price;
+        }
         $cart = session()->get('cart');
         // if cart is empty then this the first product
         if(!$cart) {
@@ -49,7 +54,7 @@ class CartController extends Controller
                     "name" => $product->name,
                     "slug" => $product->slug,
                     "quantity" => $request->quantity,
-                    "price" => $product->price,
+                    "price" => $price,
                     "image" => $product->image,
                     "size" => $request->size,
                     "color" => $request->color
@@ -74,7 +79,7 @@ class CartController extends Controller
             "name" => $product->name,
             "slug" => $product->slug,
             "quantity" => $request->quantity,
-            "price" => $product->price,
+            "price" => $price,
             "image" => $product->image,
             "size" => $request->size,
             "color" => $request->color
