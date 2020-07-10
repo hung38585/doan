@@ -34,11 +34,11 @@ class PlaceorderRequest extends FormRequest
     public function messages()
     {
         return [
-            'first_name.required' => 'Please Enter Information.',
-            'last_name.required' => 'Please Enter Information.',
-            'address.required' => 'Please Enter Information.',
-            'email.required' => 'Please Enter Information.',
-            'phone.required' => 'Please Enter Information.',
+            'first_name.required' => 'Please Enter First Name.',
+            'last_name.required' => 'Please Enter Last Name.',
+            'address.required' => 'Please Enter Address.',
+            'email.required' => 'Please Enter Email.',
+            'phone.required' => 'Please Enter Phone.',
         ];
     }
 }

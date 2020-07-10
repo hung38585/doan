@@ -31,8 +31,8 @@ class SlideRequest extends FormRequest
     public function messages()
     {
         return [
-           'link.required' => 'Please Enter Information.',
-            'url_img.required' => 'Please Enter Information.', 
+           'link.required' => 'Please Enter Link.',
+            'url_img.required' => 'Please select Picture.', 
         ];
     }
 }

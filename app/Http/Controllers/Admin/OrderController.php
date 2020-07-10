@@ -115,7 +115,7 @@ class OrderController extends Controller
     public function edit($id)
     {
         $order = Order::findOrFail($id);
-        if ($order->status == 'cancel') {
+        if ($order->status == 'cancel' || $order->status == 'delivered') {
             return redirect('/admin/order');
         }
         return view('admin.order.edit',compact('order'));

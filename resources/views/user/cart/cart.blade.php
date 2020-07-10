@@ -78,13 +78,13 @@
 									<a href="{{route('products.show',$details['slug'])}}">{{ $details['name'] }}</a>					
 								</td>
 								<td class="product-price col-md-1">
-									<span class="amount">{{ $details['price'] }}đ</span>					
+									<span class="amount">{{ number_format($details['price']) }}đ</span>					
 								</td>
 								<td class="product-quantity col-md-1">
 									<div class="quantity"><input type="number" min="1" max="20" class=" form-control productquantity" name="quantity[]" value="{{$details['quantity']}}" id="product_quantity{{$details['id']}}"  style="width: 60px;" data-columns="{{$details['id']}}"></div>
 								</td>
 								<td class="product-subtotal col-md-1">
-									<span class="amount">{{$details['price'] * $details['quantity']}}đ</span>					
+									<span class="amount">{{number_format($details['price'] * $details['quantity'])}}đ</span>					
 								</td>
 							</tr>
 							@endforeach
@@ -105,7 +105,7 @@
 									<tbody>
 										<tr class="cart-subtotal">
 											<th>Subtotal</th>
-											<td><span class="amount">{{$total}}đ</span></td>
+											<td><span class="amount">{{number_format($total)}}đ</span></td>
 										</tr>
 										<tr class="shipping">
 											<th>Shipping</th>
@@ -113,7 +113,7 @@
 										</tr>
 										<tr class="order-total">
 											<th>Total</th>
-											<td><strong><span class="amount">{{$total}}đ</span></strong> </td>
+											<td><strong><span class="amount">{{number_format($total)}}đ</span></strong> </td>
 										</tr>
 									</tbody>
 								</table>

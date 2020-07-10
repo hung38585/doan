@@ -36,12 +36,12 @@ class AboutRequest extends FormRequest
     public function messages()
     {
         return [
-            'title.required' => 'Please Enter Information.',
-            'name.required' => 'Please Enter Information.',
-            'address.required' => 'Please Enter Information.',
-            'phone.required' => 'Please Enter Information.',
-            'content.required' =>'Please Enter Information.',
-            'email.required' => 'Please Enter Information.',
+            'title.required' => 'Please Enter Title.',
+            'name.required' => 'Please Enter Name.',
+            'address.required' => 'Please Enter Address.',
+            'phone.required' => 'Please Enter Phone.',
+            'content.required' =>'Please Enter Content.',
+            'email.required' => 'Please Enter Email.',
             'logo.required' => 'Please Select a picture.',   
             'title.max:255' => 'No more than 255 characters.',
             'content.max:255' => 'No more than 255 characters.',

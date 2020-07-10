@@ -58,7 +58,7 @@
 							{{ $product->name }}</a>
 						</td> 
 						<td><img src="{{ asset('images/'.$product->image) }}" width="50" height="50"></img></td>
-						<td class="">{{$product->price}}</td>
+						<td class="">{{number_format($product->price)}}đ</td>
 						@if($product->isdisplay)
 						<td><span class="label label-success" style="font-size: 13px;">Display</span></td>
 						@else

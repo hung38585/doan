@@ -47,7 +47,7 @@
 					<tr>
 						<td >{{ ++$key }}</td>
 						<td >{{ $order->order_code }}</td>
-						<td>{{$order->total_amount}}</td>
+						<td>{{number_format($order->total_amount)}}đ</td>
 						@switch($order->status)
 						@case('unconfimred')
 						<td ><span class="label label-warning col-md-9 " style="font-size: 13px;" >{{$order->status}}</span></td>
@@ -80,7 +80,7 @@
 							<button type="button" class=" btn btn-light text-info orderdetail" style="width:40px; padding: 4px 5px;" data-toggle="modal" data-target="#orderinfo" value="{{$order->id}}"> 
 								<i class="fas fa-info-circle" style="font-size: 18px;"></i>  
 							</button>
-							@if($order->status != 'cancel')
+							@if($order->status != 'cancel' && $order->status != 'delivered')
 							<a href="{{route('order.edit',$order->id)}}" class="ml-1 btn" style="width:40px; padding: 5px;background: #f0f0f0;"><i class="fa fa-edit "></i></a>
 							@endif
 						</td>
@@ -127,7 +127,7 @@
 						<div class="userinfo"></div>
 					</div>
 					<div class="col-md-5">
-						<p>Total amount: <b><span class="total_amount"></span>đ</b></p>
+						<p>Total amount: <b><span class="total_amount"></span></b></p>
 						<p>Note: <span class="notes"></span></p>
 					</div>
 				</div>
@@ -147,6 +147,7 @@
 		});  
 		$(".orderdetail").click(function(){
 			var id = $(this).val();
+			const formatter = new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'VND' })
 			$.ajax({
 				type: 'POST',
 				url: '{{ URL::to('get_order_detail') }}',
@@ -159,11 +160,11 @@
 					var total_amount = 0;
 					var userinfo = '<p>Fullname: '+data.users.first_name+' '+data.users.last_name+'</p><p>Phone: '+data.users.phone+'</p><p>Email: '+data.users.email+'</p><p>Address: '+data.users.address+'</p>';
 					for (var i = 0; i < data.names.length; i++) {
-						list += '<tr><td>'+(i+1)+'</td><td>'+(data.names[i].name)+'</td><td>'+data.product_details[i].size+'</td><td>'+data.product_details[i].color+'</td><td>'+data.order_details[i].quantity+'</td><td>'+data.order_details[i].price+'</td></tr>'; 
+						list += '<tr><td>'+(i+1)+'</td><td>'+(data.names[i].name)+'</td><td>'+data.product_details[i].size+'</td><td>'+data.product_details[i].color+'</td><td>'+data.order_details[i].quantity+'</td><td>'+formatter.format(data.order_details[i].price)+'</td></tr>'; 
 						total_amount += data.order_details[i].quantity * data.order_details[i].price;
 					} 
 					$(".listorder").html(list);
-					$(".total_amount").html(total_amount);
+					$(".total_amount").html(formatter.format(total_amount));
 					$(".notes").html(data.orders.notes);
 					if (data.users) {
 						userinfo += '<p>Payment: <b>'+data.orders.payment+'</b></p>';

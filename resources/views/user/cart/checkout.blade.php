@@ -62,7 +62,7 @@
 													<strong class="product-quantity">× {{ $product['quantity'] }}</strong>
 												</td>
 												<td class="product-total">
-													<span class="amount">{{ $product['quantity'] * $product['price'] }}đ</span>
+													<span class="amount">{{ number_format($product['quantity'] * $product['price']) }}đ</span>
 												</td> 
 											</tr>
 											<input type="hidden" value="{{ $product['price'] }}" name="price[]">
@@ -72,7 +72,7 @@
 										<tfoot>
 											<tr class="cart-subtotal">
 												<th>Cart Subtotal</th>
-												<td><span class="amount">{{ $total }}đ</span></td>
+												<td><span class="amount">{{ number_format($total) }}đ</span></td>
 											</tr>
 											<tr class="shipping">
 												<th>Shipping</th>
@@ -81,7 +81,7 @@
 											<tr class="order-total">
 												<th>Order Total</th>
 												<td>
-													<strong><span class="amount">{{ $total }}đ</span></strong>
+													<strong><span class="amount">{{ number_format($total) }}đ</span></strong>
 													<input type="hidden" value="{{ $total }}" name="total_amount">
 												</td>
 											</tr>
@@ -179,7 +179,7 @@
 										<div class="col-lg-6 col-md-6 col-sm-6">
 											<div class="bell_ditl_s">
 												<div class="level">
-													Email Address <span class="required" title="required" >*</span>
+													Email <span class="required" title="required" >*</span>
 												</div>
 												<input type="text" placeholder="Email" value="{{ Auth::guard('client')->user()->email}}" name="email" id="emailuser" />
 												<span id="emailerr" class="text-danger"></span>

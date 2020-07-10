@@ -79,10 +79,10 @@
 						@endfor
 					</div>
 					@if ($list_product_vote[0]['promotion'])
-						<del><span class="amount nrb">{{ $list_product_vote[0]['price'] }}đ</span></del>
-						<span class="price"><span class="amount">{{ $list_product_vote[0]['price'] - intval(($list_product_vote[0]['price'] * $list_product_vote[0]['promotion'])/100) }}đ</span></span>
+						<del><span class="amount nrb">{{ number_format($list_product_vote[0]['price']) }}đ</span></del>
+						<span class="price"><span class="amount">{{ number_format($list_product_vote[0]['price'] - intval(($list_product_vote[0]['price'] * $list_product_vote[0]['promotion'])/100)) }}đ</span></span>
 					@else    
-						<span class="price"><span class="amount">{{$list_product_vote[0]['price']}}đ</span></span>
+						<span class="price"><span class="amount">{{number_format($list_product_vote[0]['price'])}}đ</span></span>
 					@endif  
 				</div>
 			</div>
@@ -146,8 +146,8 @@
 												<!-- product info -->
 												<div class="info ">
 													<p class="name" style="height: 40px; line-height: 20px;" title="{{$product->name}}"><a href="{{route('products.show',$product->slug)}}">{{ str_limit($product->name,50) }}</a></p> 
-													<del><span class="amount nrb">{{ $product->price }}đ</span></del>
-													<span class="price"><span class="amount">{{ $product->price - intval(($product->price * $product->promotion)/100) }}đ</span></span>
+													<del><span class="amount nrb">{{ number_format($product->price) }}đ</span></del>
+													<span class="price"><span class="amount">{{ number_format($product->price - intval(($product->price * $product->promotion)/100)) }}đ</span></span>
 												</div>
 												<div class="inner">
 													<div class="inner-text">Sale!</div>
@@ -199,10 +199,10 @@
 												<div class="info ">
 													<p class="name" style="line-height: 20px; height: 40px;"><a href="{{route('products.show',$newproduct->slug)}}" title="{{$newproduct->slug}}">{{ str_limit($newproduct->name,50) }}</a></p> 
 													@if($newproduct->promotion)
-													<del><span class="amount nrb">{{ $newproduct->price }}đ</span></del>
-													<span class="price"><span class="amount">{{ $newproduct->price - intval(($newproduct->price * $newproduct->promotion)/100) }}đ</span></span>
+													<del><span class="amount nrb">{{ number_format($newproduct->price) }}đ</span></del>
+													<span class="price"><span class="amount">{{ number_format($newproduct->price - intval(($newproduct->price * $newproduct->promotion)/100)) }}đ</span></span>
 													@else
-													<span class="price"><span class="amount">{{ $newproduct->price }}đ</span></span>
+													<span class="price"><span class="amount">{{ number_format($newproduct->price) }}đ</span></span>
 													@endif 
 												</div>
 												@if($newproduct->promotion)

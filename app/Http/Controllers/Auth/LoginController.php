@@ -91,7 +91,7 @@ class LoginController extends Controller
                 $end = strpos($request->session()->get('url.intended'),'?');
                 $id = substr($request->session()->get('url.intended'), $start+12,$end-$start-12);
                 $product = Product::findOrfail($id);
-                return redirect('products/'.$product->name);
+                return redirect('products/'.$product->slug);
             } 
             return redirect()->intended('/');
         }

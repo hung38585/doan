@@ -52,18 +52,18 @@ class ProductRequest extends FormRequest
     public function messages()
     {
         return [
-            'product_code.required'=>'Please enter your product key.',
+            'product_code.required'=>'Please enter your Product Code.',
             'product_code.max'=>'Maximum length is 100 characters.',
-            'name.required'=>'Please enter a product name.',
+            'name.required'=>'Please enter Product Name.',
             'name.max'=>'Maximum length is 100 characters.', 
-            'price.required'=>'Please enter the product price.',
-            'promotion.required'=>'Please enter the product promotion.',
+            'price.required'=>'Please enter the Product Price.',
+            'promotion.required'=>'Please enter the Product Promotion.',
             'price.numeric'=>'You entered the wrong data type.',
-            'description.required'=>'Please enter the product content.',
+            'description.required'=>'Please enter the Product Content.',
             'description.max'=>'Maximum length is 500 characters.',
-            'brand_id.required'=>'Please select a brand. ',
-            'category_id.required'=>'Please select a category. ',
-            'image.required'=>'Please select a picture. ',
+            'brand_id.required'=>'Please select Brand. ',
+            'category_id.required'=>'Please select Category. ',
+            'image.required'=>'Please select Picture. ',
 
         ];
     }

@@ -11,6 +11,7 @@ use App\Models\Store;
 use App\Models\Order;
 use App\Models\Order_detail;
 use Carbon\Carbon;
+use App\User;
 use Auth;
 use App\Http\Requests\PlaceorderRequest;
 
@@ -120,6 +121,14 @@ class CartController extends Controller
     }
     public function placeorder(Request $request)
     { 
+        $user = Auth::guard('client')->user();
+        $userinfo = User::findOrFail($user->id);
+        $userinfo->first_name = $request->first_name;
+        $userinfo->last_name = $request->last_name;
+        $userinfo->address = $request->address;
+        $userinfo->email = $request->email;
+        $userinfo->phone = $request->phone;
+        $userinfo->update();
         $status = 'unconfimred';
         if ($request->payment != 'cod') {
             $status = 'cancel';
@@ -151,10 +160,7 @@ class CartController extends Controller
             if ($status == 'unconfimred') {
                 $this->updateStore($order_detail->product_detail_id,$order_detail->quantity);
             }
-        }  
-        // $user = Auth::guard('client')->user();
-        // if ($request->first_name != $user->first_name || $request->last_name != $user->last_name || $request->address != $user->address || $request->email != $user->email || $request->phone != $user->phone) {
-        // } 
+        }    
         //VNPAY
         if ($request->payment == 'vnpay') { 
             $vnp_TmnCode = "2HULBQDO"; //Mã website tại VNPAY 
