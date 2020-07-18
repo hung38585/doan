@@ -121,6 +121,18 @@ class CartController extends Controller
     }
     public function placeorder(Request $request)
     { 
+        $isquantity = true;
+        foreach ($request->product_detail_id as $key => $value) {
+            if (!$this->checkQuantity($value,$request->quantity[$key])) {
+                $cart = session()->get('cart');
+                unset($cart[$value]);
+                session()->put('cart', $cart);
+                $isquantity = false;
+            }
+        }
+        if (!$isquantity) {
+            return redirect('/cart')->with('err', 'Product quantity not enough!');  
+        }
         $user = Auth::guard('client')->user();
         $userinfo = User::findOrFail($user->id);
         $userinfo->first_name = $request->first_name;
@@ -301,5 +313,13 @@ class CartController extends Controller
         $store = Store::where('productdetail_id',$product_detail_id)->first();  
         $store->quantity -= $quantity;
         $store->update();       
-   }   
+   } 
+   public function checkQuantity($product_detail_id,$quantity)
+    {
+        $store = Store::where('productdetail_id',$product_detail_id)->first(); 
+        if ($store->quantity < $quantity) {
+            return false;
+        }
+        return true;
+    }  
 }

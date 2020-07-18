@@ -43,8 +43,16 @@
                         </ul>
                     </div>
                 </li>
-                <li><a href="charts.html" class=""><i class="lnr lnr-chart-bars"></i> <span>Charts</span></a></li> 
-                <li><a href="notifications.html" class=""><i class="lnr lnr-alarm"></i> <span>Notifications</span></a></li> 
+                <li>
+                    <a href="#subPages5" data-toggle="collapse" class="collapsed"><i class="lnr lnr-chart-bars"></i> <span>Report</span><i class="icon-submenu lnr lnr-chevron-left"></i></a>
+                    <div id="subPages5" class="collapse ">
+                        <ul class="nav">
+                            <li><a href="{{url('/admin/report/byorder')}}" class="">By Order</a></li>  
+                            <li><a href="{{url('/admin/report/byproduct')}}" class="">By Product</a></li>
+                        </ul>
+                    </div>
+                </li> 
+                <!-- <li><a href="notifications.html" class=""><i class="lnr lnr-alarm"></i> <span>Notifications</span></a></li>  -->
             </ul>
         </nav>
     </div>

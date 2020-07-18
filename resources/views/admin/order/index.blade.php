@@ -1,6 +1,9 @@
 @extends('admin.layout.main')
 @section('title','Order')
 @section('content') 
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"> 
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script> 
 <div class="page-header">
 	<ol class="breadcrumb">
 		<li class="breadcrumb-item"><a href="/admin/home">Admin</a></li>
@@ -17,16 +20,27 @@
 <div class="card">
 	<div class="card-body">
 		<div class="row">
-			<div class="col-md-9">
+			<div class="col-md-2">
 				<a href="{{route('order.create')}}" class="btn btn-outline-success mb-2 mt-2">Create New</a>
 			</div>
-			<div class="col-md-3">
-				<div class="form-group">
-					{{ Form::open(['route' => ['order.index' ],'method' => 'get']) }}
-						{{ Form::select('status', array('' => 'All status','unconfimred' => 'Unconfimred', 'confimred' => 'Confimred', 'delivery' => 'Delivery', 'delivered' => 'Delivered', 'cancel' => 'Cancel'),null,['class' => 'form-control orderstatus','placeholder'=>'Status','id'=>'status'])}}
-					{{ Form::close() }}	
+			<form action="{{ route('order.index') }}" method="GET">
+			<div class="col-md-7">
+				<div class="form-group row col-md-12">			
+					<label for="from" class="col-md-1">From: </label>
+					<div class="col-md-4 form-group"><input type="text" class="form-control" id="from" name="from" readonly value="{{isset($_GET['from']) ? $_GET['from'] : ''}}"></div> 
+					<label for="to" class="col-md-1">To: </label>
+					<div class="col-md-4 form-group"><input type="text" class="form-control" id="to" name="to" readonly value="{{isset($_GET['to']) ? $_GET['to'] : ''}}"></div> 
+					<div class="col-md-1 form-group">
+						<input type="submit" class="btn" value="Sort" id="sort">
+					</div> 
 				</div> 
 			</div>
+			<div class="col-md-3">
+				<div class="form-group"> 
+					{{ Form::select('status', array('' => 'All status','unconfimred' => 'Unconfimred', 'confimred' => 'Confimred', 'delivery' => 'Delivery', 'delivered' => 'Delivered', 'cancel' => 'Cancel'),'',['class' => 'form-control orderstatus','id'=>'status'])}} 
+				</div> 
+			</div>
+			</form>
 		</div>
 		<table class="table table-striped table-sm">
 			<thead>
@@ -68,10 +82,10 @@
 
 						@endswitch
 						<td>{{$order->payment}}</td>
-						<td>{{$order->transaction_date}}</td>
+						<td>{{date("m/d/Y", strtotime($order->transaction_date))}}</td>
 						<td>
 							@if($order->user_id)
-							{{$order->user_id}}
+							{{$order->user->username}}
 							@else
 							At store
 							@endif
@@ -90,6 +104,10 @@
 			</tbody>
 		</table>
 	</div>
+	<!-- paginate -->
+		<div class="">
+			{{$orders->links()}}	
+		</div>
 </div>
 <!-- Modal detail -->
 <div class="modal fade bd-example-modal-lg" id="orderinfo" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
@@ -182,6 +200,61 @@
 		}
 		this.form.submit();
 	});
+	$( function() {
+		var dateFormat = "mm/dd/yy",
+		from = $( "#from" )
+		.datepicker({
+			defaultDate: "+1w",
+			changeMonth: true,
+			numberOfMonths: 1
+		})
+		.on( "change", function() {
+			to.datepicker( "option", "minDate", getDate( this ) ); 
+		}),
+		to = $( "#to" ).datepicker({
+			defaultDate: "+1w",
+			changeMonth: true,
+			numberOfMonths: 1
+		})
+		.on( "change", function() {
+			from.datepicker( "option", "maxDate", getDate( this ) );
+		});
+
+		function getDate( element ) {
+			var date;
+			try {
+				date = $.datepicker.parseDate( dateFormat, element.value );
+			} catch( error ) {
+				date = null;
+			} 
+			return date;
+		} 
+	});
+	$("#status").change(function(){
+		@if(!isset($_GET['from']))
+			document.getElementById("from").setAttribute("disabled", true);
+		@endif
+		@if(!isset($_GET['to']))
+			document.getElementById("to").setAttribute("disabled", true);
+		@endif
+		this.form.submit();
+	}); 
+	$("#sort").click(function(){
+		var status = $("#status").val();
+		var from = $("#from").val();
+		var to = $("#to").val();
+		if (!status) {
+			document.getElementById("status").setAttribute("disabled", true);
+		} 
+		if (!from) {
+			document.getElementById("from").setAttribute("disabled", true);
+		}
+		if (!to) {
+			document.getElementById("to").setAttribute("disabled", true);
+		}  
+		if (!status && !from && !to) {
+			return false;
+		} 
+	});
 </script>
-{{ Form::close() }}
 @endsection

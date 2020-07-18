@@ -49,15 +49,15 @@
 				<div class="card-body">
 					<p><a href="{{route('products.show',$order_detail->product_detail->product->slug)}}">{{$order_detail->product_detail->product->name}} ({{$order_detail->product_detail->size}} {{$order_detail->product_detail->color}})</a></p>  
 					<p>Quantity: {{$order_detail->quantity}} </p>
-					<p>Price: {{$order_detail->product_detail->product->price}} </p>
+					<p>Price: {{number_format($order_detail->product_detail->product->price)}}đ </p>
 				</div>
 			</div> 
 			<div class="col-xs-3 col-md-3">
 				<p>{{strtoupper($order_detail->order->status)}}</p>   
-				<p> <span style="color: green; font-size: 20px;">{{$order_detail->quantity * $order_detail->product_detail->product->price}}đ</span></p> 
+				<p> <span style="color: green; font-size: 20px;">{{number_format($order_detail->quantity * $order_detail->product_detail->product->price)}}đ</span></p> 
 				@if(!$order_detail->isfeedback && $order->status == 'delivered')
 				<input type="hidden" class="product{{$order_detail->id}}" value="{{$order_detail->product_detail->product->id}}">
-				<button class="feedbackproduct btn btn-success col-md-5" data-toggle="modal" data-target="#feedback" value="{{$order_detail->id}}">Feedback</button> 
+				<button class="feedbackproduct btn btn-success col-md-5"  value="{{$order_detail->id}}">Feedback</button> 
 				@endif 
 			</div>
 		</div>
@@ -138,7 +138,8 @@
 				</div>
 			</form>
 		</div>
-	</div>
+	</div> 
+</div>	
 	@foreach($abouts as $key => $about)
 	<input type="hidden" value="{{$about->title}}" id="titlevalue">
 	<input type="hidden" value="{{$about->name}}" id="namevalue">
@@ -148,12 +149,14 @@
 	<input type="hidden" value="{{asset('images/'.$about->logo)}}" id="logovalue">
 	@endforeach
 	<script src="{{asset('client/js/setabout.js')}}"></script>
-	<script>
+	<script> 
 		$('.feedbackproduct').click(function(){
 			$('.star').removeClass('selected');
 			$('.comment').val(''); 
 			$("#product_id").val($(".product"+$(this).val()).val());
 			$("#order_detail_id").val($(this).val());
+			$('#feedback').modal('show');
+			$("#bodycontent").css({"padding-right": "0px" }); 
 		});
 		$(document).ready(function(){
 			/* 1. Visualizing things on Hover - See next part for action on click */

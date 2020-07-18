@@ -1,31 +1,6 @@
 @extends('user.layout.main')
 @section('title','Profile')
-@section('content')
-<style>
-	/* Rating Star Widgets Style */ 
-	.rating-stars ul {
-		list-style-type:none;
-		padding:0;
-		-moz-user-select:none;
-		-webkit-user-select:none;
-	}
-	.rating-stars ul > li.star {
-		display:inline-block;  
-	}
-	/* Idle State of the stars */
-	.rating-stars ul > li.star > i.fa {
-		font-size:1em; /* Change the size of the stars */
-		color:#ccc; /* Color on idle state */
-	} 
-	/* Hover state of the stars */
-	.rating-stars ul > li.star.hover > i.fa {
-		color:#FFCC36;
-	} 
-	/* Selected state of the stars */
-	.rating-stars ul > li.star.selected > i.fa {
-		color:#FF912C;
-	} 
-</style>
+@section('content') 
 <!--BREADCRUMB AREA START -->
 <div class="breadcrumb_area">
 	<div class="container">
@@ -39,7 +14,7 @@
 	</div>
 </div>
 <!--BREADCRUMB AREA END -->
-<div class="container-fluid">
+<div class="container-fluid contentinfo">
 	<div class="row">
 		<!-- Khu vuc thong tin khach hang -->
 		<div class="col-md-1"></div>
@@ -67,8 +42,8 @@
 				<h6>{{ Auth::guard('client')->user()->email }}</h6>
 			</div>			
 			<div class="text-center">
-				<a href="{{route('profile.edit',Auth::guard('client')->user()->username)}}" class="btn btn-success">Edit Profile</a>
-				<a href="{{ url('/changepassword') }}" class="btn btn-primary">Change Password</a>
+				<a href="{{route('profile.edit',Auth::guard('client')->user()->username)}}" class="btn btn-success col-md-12" style="margin-bottom: 10px;">Edit Profile</a>
+				<a href="{{ url('/changepassword') }}">Change Password</a>
 			</div>
 		</div>
 		<div class="col-xs-12 col-sm-8" style="background: #f5f5f5;"> 
@@ -79,14 +54,17 @@
 				<li class="unconfimred">
 					<a class="h4" href="{{url('/profile')}}?status=unconfimred" style="color: #444;margin: 0;">Unconfimred (<span class="text-danger" style="font-size: 15px; font-weight: bold;">{{$quantity[1]}}</span>)</a>
 				</li>
+				<li class="confimred">
+					<a class="h4" href="{{url('/profile')}}?status=confimred" style="color: #444;margin: 0;">Confimred (<span class="text-danger" style="font-size: 15px; font-weight: bold;">{{$quantity[2]}}</span>)</a>
+				</li>
 				<li class="delivery">
-					<a class="h4" href="{{url('/profile')}}?status=delivery" style="color: #444;margin: 0;">Delivery (<span class="text-danger" style="font-size: 15px; font-weight: bold;">{{$quantity[2]}}</span>)</a>
+					<a class="h4" href="{{url('/profile')}}?status=delivery" style="color: #444;margin: 0;">Delivery (<span class="text-danger" style="font-size: 15px; font-weight: bold;">{{$quantity[3]}}</span>)</a>
 				</li> 
 				<li class="delivered">
-					<a class="h4" href="{{url('/profile')}}?status=delivered" style="color: #444;margin: 0;">Delivered (<span class="text-danger" style="font-size: 15px; font-weight: bold;">{{$quantity[3]}}</span>)</a>
+					<a class="h4" href="{{url('/profile')}}?status=delivered" style="color: #444;margin: 0;">Delivered (<span class="text-danger" style="font-size: 15px; font-weight: bold;">{{$quantity[4]}}</span>)</a>
 				</li> 
 				<li class="cancel">
-					<a class="h4" href="{{url('/profile')}}?status=cancel" style="color: #444;margin: 0;">Cancel (<span class="text-danger" style="font-size: 15px; font-weight: bold;">{{$quantity[4]}}</span>)</a>
+					<a class="h4" href="{{url('/profile')}}?status=cancel" style="color: #444;margin: 0;">Cancel (<span class="text-danger" style="font-size: 15px; font-weight: bold;">{{$quantity[5]}}</span>)</a>
 				</li> 
 			</ul>
 			<br>
@@ -95,7 +73,10 @@
 				<div class="row no-gutters" style="margin: 10px 0px;">
 					<a href="{{ url('order/'.$order->order_code) }}">
 						<div class="col-xs-2 col-md-2">
+							@foreach($order->order_detail as $key => $value)
 							<img src="{{asset('images/'.$order->order_detail[0]->product_detail->product->image)}}" class="card-img" style="width: 100%; height: 90px;">
+							@break
+							@endforeach 
 						</div>
 						<div class="col-xs-7 col-md-7">
 							<div class="card-body">
@@ -109,26 +90,51 @@
 					</a>
 					<div class="col-xs-3 col-md-3">
 						<p>{{strtoupper($order->status)}}</p>
-						<p>Total amount: <span style="color: green; font-size: 20px;">{{$order->total_amount}}đ</span></p> 
-						<a href="{{ url('order/'.$order->order_code) }}" class="btn btn-success col-xs-12 col-md-5" style="margin-right: 10px;">Detail</a>
+						<p>Total amount: <span style="color: green; font-size: 18px;">{{number_format($order->total_amount)}}đ</span></p> 
+						<a href="{{ url('order/'.$order->order_code) }}" class="btn btn-sm btn-success col-xs-12 col-md-5" style="margin-right: 10px; margin-top: 5px;">Detail</a>
+						@if($order->status == 'delivery')
 						<form action="{{ url('/received') }}" method="POST">
 							@csrf
-							<input type="hidden" name="order_id" value="{{$order->id}}">
-							@if($order->status == 'delivery')
-							<input type="submit" value="Received" class="btn btn-light col-xs-12 col-md-5" style="border: 1px solid gray; padding-left: 10px;">
-							@endif 
+							<input type="hidden" name="order_id" value="{{$order->id}}"> 
+							<input type="submit" value="Received" class="btn btn-light btn-sm col-xs-12 col-md-5" style="border: 1px solid gray; padding-left: 10px; margin-top: 5px;"> 
 						</form>	
+						@endif
+						@if($order->status == 'unconfimred')
+						<form action="{{ url('/cancelorder') }}" method="POST" id="formcancel">
+							@csrf
+							<input type="hidden" name="order_id" value="{{$order->id}}"> 
+							<input type="button" value="Cancel"   class="btn btn-danger btn-sm cancel col-xs-12 col-md-5" style="border: 1px solid gray; padding-left: 10px; margin-top: 5px;"> 
+						</form>	
+						@endif
 					</div>
 				</div>
 			</div>
 			@endforeach  
-		</div>
+			<!-- paginate -->
+				<div class="">
+					{{$orders->links()}}	
+				</div>
+		</div> 
 		<!-- Khu vuc thanh toan -->
 		<div class="col-xs-12 col-sm-9">
 			<!-- Thanh Header trang thai --> 
 			<!-- Khu vuc hien thi --> 
 		</div>
 	</div>
+</div> 
+<!-- Modal Cancel-->
+<div class="modal fade" id="modalcancel" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" >
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="exampleModalLabel">Cancel this order</h4> 
+      </div> 
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">No! Close</button>
+        <button type="button" class="btn btn-danger yescancel">Yes! Cancel</button>
+      </div>
+    </div>
+  </div>
 </div>
 @foreach($abouts as $key => $about)
 <input type="hidden" value="{{$about->title}}" id="titlevalue">
@@ -149,12 +155,23 @@
 		//Loai bo phan tu trung trong mang
 		product = product.filter((item, index) => product.indexOf(item) === index); 
 		$('.contentbody').html(content);  
+	}); 
+	$('.cancel').click(function(){ 
+		$('#modalcancel').modal('show'); 
+		$("#bodycontent").css({"padding-right": "0px" }); 
+		$('.yescancel').click(function(){  
+			document.getElementById("formcancel").submit();
+		}); 
 	});
 	@if(isset($_GET['status'])) 
 	@switch($_GET['status'])
 	@case('unconfimred')
 	$(".orderstatus li").removeClass("active");
 	$("li.unconfimred").addClass("active");
+	@break 
+	@case('confimred')
+	$(".orderstatus li").removeClass("active");
+	$("li.confimred").addClass("active");
 	@break 
 	@case('delivery')
 	$(".orderstatus li").removeClass("active");

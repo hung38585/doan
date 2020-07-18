@@ -31,7 +31,15 @@ class OrderController extends Controller
         if ($request->status) {
             $orders = $orders->where('status',$request->status);
         }
-        $orders = $orders->get();
+        if ($request->from) {
+            $from = date("Y-m-d", strtotime($request->from));
+            $orders = $orders->where('transaction_date','>=',$from);
+        }
+        if ($request->to) { 
+            $to = date("Y-m-d", strtotime($request->to));
+            $orders = $orders->where('transaction_date','<=',$to);
+        }
+        $orders = $orders->paginate(10)->appends(request()->query());
         return view('admin.order.index',compact('orders'));
     }
 
@@ -58,8 +66,12 @@ class OrderController extends Controller
         $total_amount = 0;
         foreach ($request->product_detail_id as $key => $value) {
             $product_id = Product_Detail::select('product_id')->where('id',$value)->first();
-            $price = Product::select('price')->where('id',$product_id->product_id)->first();
-            $total_amount += $price->price * $request->quantity[$key] ; 
+            $product = Product::select('price','promotion')->where('id',$product_id->product_id)->first();
+            $price = $product->price;
+            if ($product->promotion) {
+                $price = $product->price - ($product->price * $product->promotion)/100;
+            }
+            $total_amount += $price * $request->quantity[$key] ;
         }
         $order = new Order([
             'order_code' => $request->product_code,
@@ -75,11 +87,15 @@ class OrderController extends Controller
         $order->save();
         foreach ($request->product_detail_id as $key => $value) {
             $product_id = Product_Detail::select('product_id')->where('id',$value)->first();
-            $price = Product::select('price')->where('id',$product_id->product_id)->first();
+            $product = Product::select('price','promotion')->where('id',$product_id->product_id)->first(); 
+            $price = $product->price;
+            if ($product->promotion) {
+                $price = $product->price - ($product->price * $product->promotion)/100;
+            }
             $order_detail = new Order_detail([
                 'quantity' => $request->quantity[$key],
-                'price' => $price->price,
-                'total_amount' => $request->quantity[$key] * $price->price,
+                'price' => $price,
+                'total_amount' => $request->quantity[$key] * $price,
                 'order_id' => $order->id,
                 'product_detail_id' => $value,
                 'isfeedback' => false,
@@ -88,6 +104,7 @@ class OrderController extends Controller
             ]);
             $order_detail->save();
         }
+        $this->updateStore($order->id);
         if ($order){
             return redirect('/admin/order')->with('message','Create New successfully!');
         }else{
@@ -132,11 +149,11 @@ class OrderController extends Controller
     {
         $order= Order::findOrfail($id);
         if (isset($order))
-        {
+        { 
             $order->status = $request->status;
             $order->updated_at = Carbon::now()->toDateTimeString() ;
             $order->updated_by = Auth::guard('admin')->user()->id;
-            //$order->update();
+            $order->update();
             if ($order->status == 'cancel') {
                 $this->updateStore($order->id);
             } 
@@ -187,7 +204,7 @@ class OrderController extends Controller
         $orderdetail_id = Order_detail::select('product_detail_id','quantity')->where('order_id',$order_id)->get(); 
         foreach ($orderdetail_id as $key => $value) {
             $store = Store::where('productdetail_id',$value->product_detail_id)->first(); 
-            $store->quantity += $value->quantity;
+            $store->quantity -= $value->quantity;
             $store->update();  
         }
     }

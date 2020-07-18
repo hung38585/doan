@@ -40,6 +40,7 @@ Route::group(array('namespace'=>'User'),function(){
 	Route::get('/order/{id}','ClientController@orderdetail');   
 	Route::post('/comment','ClientController@comment');
 	Route::post('/received','ClientController@received');
+	Route::post('/cancelorder','ClientController@cancelOrder');
 	//End view client
 	// CART
 	Route::patch('update-cart', 'CartController@update');
@@ -422,6 +423,16 @@ Route::group(array('prefix'=>'admin','namespace'=>'Admin'),function(){
 		'middleware' => 'checkpermission:role_delete'
 	]); 
 	//End Role-------------------------------------------------------------------------------------------------
+	//Start Statistical----------------------------------------------------------------------------------------
+	Route::get('/report/byorder',[ 
+		'uses' => 'ReportController@byOrder',
+		'middleware' => 'checkpermission:report_byorder'
+	]);
+	Route::get('/report/byproduct',[ 
+		'uses' => 'ReportController@byProduct',
+		'middleware' => 'checkpermission:report_byproduct'
+	]);
+	//End Statistical------------------------------------------------------------------------------------------
 	Route::get('/home', 'HomeController@index')->name('admin.home');
 });
 // -------------------------------------------------------------------------------

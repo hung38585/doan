@@ -45,7 +45,7 @@
 
                         <div class="form-group">
                             <div class="col-md-6 col-md-offset-4">
-                                <button type="submit" class="btn btn-primary">Change Password</button>
+                                <button type="submit" class="btn btn-success">Change Password</button>
                                 <a href="{{ url('/profile') }}" class="btn btn-danger">Back</a>
                             </div>
                         </div>
@@ -56,4 +56,12 @@
         </div>
     </div>
 </div>
+@foreach($abouts as $key => $about)
+<input type="hidden" value="{{$about->title}}" id="titlevalue">
+<input type="hidden" value="{{$about->name}}" id="namevalue">
+<input type="hidden" value="{{$about->address}}" id="addressvalue">
+<input type="hidden" value="{{$about->email}}" id="emailvalue">
+<input type="hidden" value="{{$about->phone}}" id="phonevalue">
+<input type="hidden" value="{{asset('images/'.$about->logo)}}" id="logovalue">
+@endforeach
 @endsection
