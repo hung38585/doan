@@ -97,6 +97,7 @@ class ProductController extends Controller
                     'color' => $color,
                     'isdelete' => false,
                     'isdisplay' => false,
+                    'created_by' => Auth::guard('admin')->user()->id,
                     'updated_at' => null
                 ]);
                 $product_detail->save();

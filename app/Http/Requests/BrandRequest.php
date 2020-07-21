@@ -52,11 +52,11 @@ class BrandRequest extends FormRequest
     public function messages()
     {
         return [
-            'name.required'=>'Please enter Brand Name.',
-            'name.unique' => 'Brand Name already exists.',
-            'name.max'=>'Maximum length is 255 characters.',
-            'description.required'=>'Please enter Description.',
-            'description.max'=>'Maximum length is 500 characters.'
+            'name.required'=>'Brand name must not be blank!',
+            'name.unique' => 'Brand Name already exists!',
+            'name.max'=>'Brand name maximum length is 255 characters!',
+            'description.required'=>'Description must not be blank!',
+            'description.max'=>'Description maximum length is 500 characters!'
         ];
     }
 }

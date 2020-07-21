@@ -1,5 +1,5 @@
 @extends('user.layout.main')
-@section('title','Contact')
+@section('title',__('client.Contact'))
 @section('content') 
 <!--BREADCRUMB AREA START -->
 <div class="breadcrumb_area">
@@ -7,7 +7,7 @@
 		<div class="row">
 			<div class="col-lg-12 col-md-12 col-sm-12">	
 				<div class="breadcrumb-row">
-					<h3 class="breadcrumb"><a href="/" class="home">Home</a><span>/</span>Contact</h3>
+					<h3 class="breadcrumb"><a href="/" class="home">{{__('client.Home')}}</a><span>/</span>{{__('client.Contact')}}</h3>
 				</div>
 			</div>
 		</div>
@@ -21,14 +21,14 @@
 			<!-- contact-info start -->
 			<div class="col-md-6 col-sm-12 col-xs-12 left-con">
 				<div class="contact-info">
-					<h3>Contact info</h3>
+					<h3>{{__('client.contactinfo')}}</h3>
 					<ul>
 						<li>
-							<i class="fa fa-map-marker"></i> <strong>Address:</strong>
+							<i class="fa fa-map-marker"></i> <strong>{{__('profileUser.add')}} :</strong>
 							{{$abouts[0]->address}}
 						</li>
 						<li>
-							<i class="fa fa-mobile"></i> <strong>Phone:</strong>
+							<i class="fa fa-mobile"></i> <strong>{{__('profileUser.phone')}} :</strong>
 							{{$abouts[0]->phone}}
 						</li>
 						<li>
@@ -41,19 +41,19 @@
 			<!-- contact-info end -->
 			<div class="col-md-6 col-sm-12 col-xs-12">
 				<div class="contact-form">
-					<h3><i class="fa fa-envelope-o"></i> Leave a Message</h3>
+					<h3><i class="fa fa-envelope-o"></i>{{__('client.LEAVEAMESSAGE')}}</h3>
 					<div class="row">
 						<form action="{{ url('/sendcontact') }}" method="POST">
 							@csrf
 							<div class="col-md-6 col-sm-6 col-xs-12">
-								<input name="name" type="text" placeholder="Name (required)" />
+								<input name="name" type="text" placeholder="{{__('client.nameRequired')}}" />
 							</div>
 							<div class="col-md-6 col-sm-6 col-xs-12">
-								<input name="email" type="email" placeholder="Email (required)" />
+								<input name="email" type="email" placeholder="{{__('client.email')}}" />
 							</div> 
 							<div class="col-md-12 col-sm-12 col-xs-12">
-								<textarea name="message" id="message" cols="30" rows="10" placeholder="Message"></textarea>
-								<input type="submit" value="Send contact" />
+								<textarea name="message" id="message" cols="30" rows="10" placeholder="{{__('client.Message')}}"></textarea>
+								<input type="submit" value="{{__('client.sendcontact')}}" />
 							</div>
 						</form>
 					</div>

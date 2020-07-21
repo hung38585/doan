@@ -28,6 +28,7 @@ Route::group(array('namespace'=>'Auth'),function(){
 // -------------------------------------------------------------------------------
 Route::group(array('namespace'=>'User'),function(){
 	//View client
+	Route::get('lang/{lang}','LangController@changeLang')->name('lang');
 	Route::get('/','HomeController@homepage');
 	Route::post('/checkout','CartController@checkout');
 	Route::post('/placeorder','CartController@placeorder');
@@ -327,6 +328,39 @@ Route::group(array('prefix'=>'admin','namespace'=>'Admin'),function(){
 		'middleware' => 'checkpermission:slide_delete'
 	]); 
 	//End Slide------------------------------------------------------------------------------------------------
+//Start Banner----------------------------------------------------------------------------------------------
+	Route::get('banner',[
+		'as' => 'banner.index',
+		'uses' => 'BannerController@index',
+		'middleware' => 'checkpermission:slide_list'
+	]);
+	Route::get('/banner/create',[
+		'as' => 'banner.create',
+		'uses' => 'BannerController@create',
+		'middleware' => 'checkpermission:slide_create'
+	]);
+	Route::post('banner',[
+		'as' => 'banner.store',
+		'uses' => 'BannerController@store',
+		'middleware' => 'checkpermission:slide_create'
+	]);
+	Route::get('/banner/{banner}/edit',[
+		'as' => 'banner.edit',
+		'uses' => 'BannerController@edit',
+		'middleware' => 'checkpermission:slide_edit'
+	]);
+	Route::put('banner/{banner}',[
+		'as' => 'banner.update',
+		'uses' => 'BannerController@update',
+		'middleware' => 'checkpermission:slide_edit'
+	]);
+	Route::delete('banner_delete_modal',[
+		'as' => 'banner_delete_modal',
+		'uses' => 'BannerController@destroy',
+		'middleware' => 'checkpermission:slide_delete'
+	]); 
+	//End Slide------------------------------------------------------------------------------------------------
+
 	//Start Stote----------------------------------------------------------------------------------------------
 	Route::get('/store',[
 		'as' => 'store.index',

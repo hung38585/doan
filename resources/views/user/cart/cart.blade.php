@@ -1,5 +1,5 @@
 @extends('user.layout.main')
-@section('title','Cart')
+@section('title',__('cart.ShoppingCart'))
 @section('content') 
 <!--BREADCRUMB AREA START -->
 <div class="breadcrumb_area">
@@ -7,7 +7,7 @@
 		<div class="row">
 			<div class="col-lg-12 col-md-12 col-sm-12">	
 				<div class="breadcrumb-row">
-					<h3 class="breadcrumb"><a href="/" class="home">Home</a><span>/</span>Shopping cart</h3>
+					<h3 class="breadcrumb"><a href="/" class="home">{{__('client.Home')}}</a><span>/</span>{{__('cart.ShoppingCart')}}</h3>
 				</div>
 			</div>
 		</div>
@@ -22,15 +22,15 @@
 				<div class="checkout-breadcrumb"> 
 					<div class="title-cart">
 						<span>1</span>
-						<p>Shopping Cart</p>
+						<p>{{__('cart.ShoppingCart')}}</p>
 					</div> 
 					<div class="title-checkout">
 						<span>2</span>
-						<p>Checkout details</p>
+						<p>{{__('cart.Checkoutdetails')}}</p>
 					</div>
 					<div class="title-thankyou">
 						<span>3</span>
-						<p>Order Complete</p>
+						<p>{{__('cart.OrderComplete')}}</p>
 					</div>
 				</div>
 				<div class="cart-wrapper table-responsive">
@@ -46,10 +46,10 @@
 					<table class="shop_table cart ">
 						<thead>
 							<tr>
-								<th colspan="3" class="product-name">Product</th>
-								<th class="product-price">Price</th>
-								<th class="product-quantity">Quantity</th>
-								<th class="product-subtotal">Total</th>
+								<th colspan="3" class="product-name">{{__('cart.product')}}</th>
+								<th class="product-price">{{__('cart.price')}}</th>
+								<th class="product-quantity">{{__('cart.quantity')}}</th>
+								<th class="product-subtotal">{{__('cart.total')}}</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -69,8 +69,8 @@
 										</div>
 										<div class="col-md-5 text-left">
 											<p></p>
-											<p>Size: {{ $details['size'] }}</p>
-											<p>Color: {{ $details['color'] }}</p>
+											<p>{{__('client.size')}} : {{ $details['size'] }}</p>
+											<p>{{__('client.color')}} : {{ $details['color'] }}</p>
 										</div>
 									</div> 
 								</td>
@@ -99,27 +99,27 @@
 				<div class="row">
 					<div class="col-lg-6 col-md-6 col-sm-6 ">
 						<div class="cart_totals">
-							<h2>Cart Totals</h2>
+							<h2>{{__('cart.carttotal')}}</h2>
 							<div class="total_table">
 								<table class="table-responsive">
 									<tbody>
 										<tr class="cart-subtotal">
-											<th>Subtotal</th>
+											<th>{{__('cart.subtotal')}}</th>
 											<td><span class="amount">{{number_format($total)}}đ</span></td>
 										</tr>
 										<tr class="shipping">
-											<th>Shipping</th>
-											<td>Free Shipping</td>
+											<th>{{__('cart.Shipping')}}</th>
+											<td>{{__('cart.ship')}}</td>
 										</tr>
 										<tr class="order-total">
-											<th>Total</th>
+											<th>{{__('cart.total')}}</th>
 											<td><strong><span class="amount">{{number_format($total)}}đ</span></strong> </td>
 										</tr>
 									</tbody>
 								</table>
 								<div class="submit_crt">
 									@if(session('cart'))	
-									<input type="submit" class="proceed_chack" value="Proceed to Checkout">
+									<input type="submit" class="proceed_chack" value="{{__('cart.ProceedtoCheckout')}}">
 									@endif
 								</div>
 							</div>
@@ -136,12 +136,12 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h4 class="modal-title" id="exampleModalLabel">Delete product form cart!</h4>
+        <h4 class="modal-title" id="exampleModalLabel">{{__('cart.Deleteproductformcart')}}</h4>
         </button>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn" data-dismiss="modal">Cancel</button>
-        <button type="button" class="btn btn-danger delete">Delete</button>
+        <button type="button" class="btn" data-dismiss="modal">{{__('cart.cancel')}}</button>
+        <button type="button" class="btn btn-danger delete">{{__('cart.delete')}}</button>
       </div>
     </div>
   </div>

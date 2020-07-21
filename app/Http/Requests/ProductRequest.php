@@ -52,18 +52,18 @@ class ProductRequest extends FormRequest
     public function messages()
     {
         return [
-            'product_code.required'=>'Please enter your Product Code.',
-            'product_code.max'=>'Maximum length is 100 characters.',
-            'name.required'=>'Please enter Product Name.',
-            'name.max'=>'Maximum length is 100 characters.', 
-            'price.required'=>'Please enter the Product Price.',
-            'promotion.required'=>'Please enter the Product Promotion.',
-            'price.numeric'=>'You entered the wrong data type.',
-            'description.required'=>'Please enter the Product Content.',
-            'description.max'=>'Maximum length is 500 characters.',
-            'brand_id.required'=>'Please select Brand. ',
-            'category_id.required'=>'Please select Category. ',
-            'image.required'=>'Please select Picture. ',
+            'product_code.required'=>'Product code must not be blank!',
+            'product_code.max'=>'Product code maximum length is 100 characters!',
+            'name.required'=>'Product name must not be blank!',
+            'name.max'=>'product name maximum length is 100 characters!', 
+            'price.required'=>'Price must not be blank!',
+            'promotion.required'=>'Promotion must not be blank!',
+            'price.numeric'=>'You entered the wrong data type!',
+            'description.required'=>'Description must not be blank!',
+            'description.max'=>'Description maximum length is 500 characters!',
+            'brand_id.required'=>'Brand must not be blank!',
+            'category_id.required'=>'Category must not be blank!',
+            'image.required'=>'Image must not be blank!',
 
         ];
     }

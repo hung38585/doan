@@ -5,6 +5,10 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use App\Models\Order; 
+use App\Models\Product; 
+use App\Models\Store;
+use App\Models\Product_Detail; 
+use App\Models\Order_detail;
 use Carbon\Carbon;
 use DB;
 class ReportController extends Controller
@@ -68,8 +72,25 @@ class ReportController extends Controller
     } 
     public function byProduct(Request $request)
     {
-        
-        return view('admin.report.byproduct');
+        $products = product::where('isdelete',false)->get();  
+        $quantity_sell = array();
+        $quantity_remaining = array();
+        $from = '0000-00-00';
+        $to = date("Y-m-d", time());
+        $total_amount = 0;
+        if ($request->from) {
+            $from = date("Y-m-d", strtotime($request->from));
+        }
+        if ($request->to) {
+            $to = date("Y-m-d", strtotime($request->to));
+        }
+        foreach ($products as $key => $product) {
+            $product_detail = Product_Detail::select('id')->where('product_id',$product->id)->pluck('id')->toArray();
+            $quantity_sell[] = $this->getQuantitySell($product_detail,$from,$to); 
+            $total_amount += $this->getQuantitySell($product_detail,$from,$to);
+            $quantity_remaining[] = $this->getQuantityRemaining($product_detail); 
+        }
+        return view('admin.report.byproduct',compact('products','quantity_sell','quantity_remaining','total_amount'));
     }
     public function orderByYear()
     {
@@ -91,5 +112,28 @@ class ReportController extends Controller
                     ->orderBy('getMonth', 'ASC')
                     ->get();
         return $orderMonth;
+    }
+    public function getQuantitySell($product_detail_id,$from,$to)
+    { 
+        $quantity_sell = DB::table('order_details')
+                        ->select(DB::raw('SUM(order_details.quantity) as total_quantity'))  
+                        ->join('orders','order_details.order_id','orders.id')
+                        ->where('transaction_date','>=',$from)
+                        ->where('transaction_date','<=',$to)
+                        ->whereIn('order_details.product_detail_id',$product_detail_id)
+                        ->groupBy('order_details.product_detail_id') 
+                        ->pluck('total_quantity')
+                        ->toArray();
+        return array_sum($quantity_sell);
+    }
+    public function getQuantityRemaining($product_detail_id)
+    { 
+        $quantity_remaining = DB::table('stores')
+                        ->select(DB::raw('SUM(quantity) as total_quantity'))  
+                        ->whereIn('productdetail_id',$product_detail_id)
+                        ->groupBy('productdetail_id') 
+                        ->pluck('total_quantity')
+                        ->toArray();
+        return array_sum($quantity_remaining);
     }
 }

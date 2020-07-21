@@ -103,7 +103,7 @@
 						<form action="{{ url('/cancelorder') }}" method="POST" id="formcancel">
 							@csrf
 							<input type="hidden" name="order_id" value="{{$order->id}}"> 
-							<input type="button" value="Cancel"   class="btn btn-danger btn-sm cancel col-xs-12 col-md-5" style="border: 1px solid gray; padding-left: 10px; margin-top: 5px;"> 
+							<input type="button" value="Cancel" id="cancel"   class="btn btn-danger btn-sm  col-xs-12 col-md-5" style="border: 1px solid gray; padding-left: 10px; margin-top: 5px;"> 
 						</form>	
 						@endif
 					</div>
@@ -156,7 +156,7 @@
 		product = product.filter((item, index) => product.indexOf(item) === index); 
 		$('.contentbody').html(content);  
 	}); 
-	$('.cancel').click(function(){ 
+	$('#cancel').click(function(){ 
 		$('#modalcancel').modal('show'); 
 		$("#bodycontent").css({"padding-right": "0px" }); 
 		$('.yescancel').click(function(){  

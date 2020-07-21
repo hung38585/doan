@@ -17,14 +17,16 @@
 <div class="card">
 	<div class="card-body "> 
 		<p class="h3 text-center">Order</p>
+		<br>
 		<form method="GET">
 			<div class="form-group row col-md-12">			
 				<label for="from" class="col-md-1">From: </label>
-				<div class="col-md-3 form-group"><input type="text" class="form-control" id="from" name="from" readonly value="{{isset($_GET['from']) ? $_GET['from'] : ''}}" placeholder="Start day"></div> 
+				<div class="col-md-3 form-group"><input type="text" class="form-control" id="from" name="from" readonly value="{{isset($_GET['from']) ? $_GET['from'] : ''}}" placeholder="From date"></div> 
 				<label for="to" class="col-md-1">To: </label>
-				<div class="col-md-3 form-group"><input type="text" class="form-control" id="to" name="to" readonly value="{{isset($_GET['to']) ? $_GET['to'] : ''}}" placeholder="End day"></div> 
-				<div class="col-md-1 form-group">
+				<div class="col-md-3 form-group"><input type="text" class="form-control" id="to" name="to" readonly value="{{isset($_GET['to']) ? $_GET['to'] : ''}}" placeholder="To date"></div> 
+				<div class="col-md-3 form-group">
 					<input type="submit" class="btn" value="Sort" id="sort">
+					<button type="button" class="btn btn-danger" id="clear" style="margin-left: 5px;">Clear</button>
 				</div> 
 			</div> 
 		</form>
@@ -162,5 +164,20 @@
 			return date;
 		} 
 	}); 
+	$("#clear").click(function(){
+		$("#from").val('');
+		$("#to").val('');
+	});
+	$("#sort").click(function(){
+		var from = $("#from").val();
+		var to = $("#to").val();
+		if (!from) {
+			document.getElementById("from").setAttribute("disabled", true);
+		}
+		if (!to) {
+			document.getElementById("to").setAttribute("disabled", true);
+		}  
+		this.form.submit(); 
+	});
 </script>
 @endsection

@@ -34,11 +34,10 @@ class PlaceorderRequest extends FormRequest
     public function messages()
     {
         return [
-            'first_name.required' => 'Please Enter First Name.',
-            'last_name.required' => 'Please Enter Last Name.',
-            'address.required' => 'Please Enter Address.',
-            'email.required' => 'Please Enter Email.',
-            'phone.required' => 'Please Enter Phone.',
-        ];
+            'first_name.required' => 'First name must not be blank!',
+            'last_name.required' => 'Last name must not be blank!',
+            'address.required' => 'Address must not be blank!',
+            'email.required' => 'Email must not be blank!',
+            'phone.required' => 'Mobile number must not be blank!',
     }
 }

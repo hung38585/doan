@@ -41,12 +41,12 @@ class RoleRequest extends FormRequest
     public function messages()
     {
         return [
-            'name.required'=>'Please enter Role Name.',
-            'permission_id.required'=>'Please select Permission.',
-            'name.unique' => 'Role Name already exists.',
-            'name.max'=>'Maximum length is 255 characters.',
-            'display_name.required'=>'Please enter Display Name.',
-            'display_name.max'=>'Maximum length is 255 characters.'
+            'name.required'=>'Role name must not be blank!',
+            'permission_id.required'=>'Permission must not be blank!',
+            'name.unique' => 'Role Name already exists!',
+            'name.max'=>'Name role maximum length is 255 characters!',
+            'display_name.required'=>'Display name must not be blank!',
+            'display_name.max'=>'Display name maximum length is 255 characters!'
         ];
     }
 }

@@ -1,5 +1,5 @@
 @extends('user.layout.main')
-@section('title','Products')
+@section('title',__('client.Product'))
 @section('content') 
 <!--BREADCRUMB AREA START -->
 <div class="breadcrumb_area">
@@ -7,7 +7,7 @@
 		<div class="row">
 			<div class="col-lg-12 col-md-12 col-sm-12">	
 				<div class="breadcrumb-row">
-					<h3 class="breadcrumb"><a href="/" class="home">Home</a><span>/</span>Products</h3>
+					<h3 class="breadcrumb"><a href="/" class="home">{{__('client.Home')}}</a><span>/</span>{{__('client.Product')}}</h3>
 				</div>
 			</div>
 		</div>
@@ -54,7 +54,7 @@
 					<form action="" method="GET" id="formsort">
 						<div class="info_widget">
 							<div class="section_title">
-								<h2>Filter by category</h2>
+								<h2>{{__('client.Filterbycategory')}}</h2>
 							</div>
 							<ul class="product-categories">
 								@foreach($categories as $key => $category)
@@ -69,7 +69,7 @@
 						<!-- single widget -->
 						<div class="info_widget">
 							<div class="section_title">
-								<h2>Filter by Price</h2>
+								<h2>{{__('client.FilterbyPrice')}}</h2>
 							</div>
 							<ul class="product-categories">
 								<li class="col-md-12">
@@ -93,7 +93,7 @@
 						<!-- single widget -->
 						<div class="info_widget">
 							<div class="section_title">
-								<h2>Filter by color</h2>
+								<h2>{{__('client.Filterbycolor')}}</h2>
 							</div>
 							<ul class="product-categories">
 								@foreach($listcolorquantity as $key => $value)
@@ -136,13 +136,13 @@
 								<div class="col-lg-4 col-md-4 col-sm-6 ">
 									<div class="sort_section">
 										<ul class="sort-bar">
-											<li class="sort-bar-text">Sort by: </li>
+											<li class="sort-bar-text">{{__('client.Sortby')}}</li>
 											<li> 
 												<div class="select-wrapper">
 													<select class="orderby form-control" name="orderby" id="orderbyprice"> 
-														<option value="">Default</option>
-														<option value="asc">Price: low to high</option>
-														<option value="desc">Price: high to low</option>	
+														<option value="">{{__('client.Default')}}</option>
+														<option value="asc">{{__('client.Pricelowtohigh')}}</option>
+														<option value="desc">{{__('client.Pricehighttolow')}}</option>	
 													</select>
 												</div>
 											</li>
@@ -173,7 +173,7 @@
 														<div class="cart-icons">
 															<strong><span class="fa fa-shopping-cart"></span></strong>
 															<span class="cart-icon-handle"></span>
-															<span class="add-to-cart-text">ADD TO CART</span>
+															<span class="add-to-cart-text">{{__('client.addtocart')}}</span>
 														</div>
 													</a>
 												</div>

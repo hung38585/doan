@@ -40,6 +40,7 @@
                         <ul class="nav">
                             <li><a href="{{route('about.index')}}" class="">About</a></li>  
                             <li><a href="{{route('slide.index')}}" class="">Slide</a></li>
+                            <li><a href="{{route('banner.index')}}" class="">Banner</a></li>
                         </ul>
                     </div>
                 </li>

@@ -1,5 +1,5 @@
 @extends('user.layout.main')
-@section('title','Home')
+@section('title',__('client.Home'))
 @section('content')
 <!-- RIGHT SIDEBAR MENU AREA START -->
 <div class="right_sidebar_menu_area">
@@ -8,7 +8,7 @@
 			<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 ">
 				<div class="right_sidebar_menu">
 					<div class="right_menu_title">
-						<h1 class="widgettitle"> <i class="fa fa-bars"></i> <span>CATEGORIES</span>  </h1>
+						<h1 class="widgettitle"> <i class="fa fa-bars"></i> <span>{{__('client.category')}}</span>  </h1>
 					</div>
 					<div class="r_menu" style="overflow-x: auto; height: 450px;">
 						<ul>
@@ -35,13 +35,13 @@
 						<div class="slide1-text">
 							<div class="middle-text mdd-slide">
 								<div class="cap-dec wow bounceInDown" data-wow-duration="0.9s" data-wow-delay="0s">
-									<h2 class="cap-3-h">Latest collection 2020</h2>
+									<h2 class="cap-3-h">{{__('client.Latestcollection2020')}}</h2>
 								</div>
 								<div class="cap-title wow bounceInRight" data-wow-duration="1.2s" data-wow-delay="0.2s">
-									<h3 class="cap-3-h-2">Best Shoes</h3>
+									<h3 class="cap-3-h-2">{{__('client.BestShoes')}}</h3>
 								</div>
 								<div class="cap-readmore wow bounceInUp" data-wow-duration="1.3s" data-wow-delay=".5s">
-									<a href="{{$slide->link}}">shop now</a>
+									<a href="{{$slide->link}}">{{__('client.shopnow')}}</a>
 								</div>
 							</div>
 						</div>
@@ -60,7 +60,7 @@
 		<br>
 		<div class="info_widget col-xs-12 col-md-12">
 			<div class="section_title">
-				<h2 class="" style="float: left;">Top Rated Products</h2>
+				<h2 class="" style="float: left;">{{__('client.TopRatedProducts')}}</h2>
 			</div>
 			<div style="clear: both;"></div>        
 			@foreach($list_product_votes as $key => $list_product_vote)
@@ -117,7 +117,7 @@
 					<div class="col-lg-12 col-md-12 col-sm-12 ">
 						<div class="section_title row"> 
 							<hr class="col-md-4" style="margin-left: 1.1%;">
-							<h2 class="text-center col-md-3"><a href="{{route('products.index')}}?sale=sale" style="text-decoration: none; color: black;">Sale</a></h2>
+							<h2 class="text-center col-md-3"><a href="{{route('products.index')}}?sale=sale" style="text-decoration: none; color: black;">{{__('client.Sale')}}</a></h2>
 							<hr class="col-md-4">
 						</div>	
 						<div class='panel-container row'>
@@ -138,7 +138,7 @@
 															<div class="cart-icons">
 																<strong><span class="fa fa-shopping-cart"></span></strong>
 																<span class="cart-icon-handle"></span>
-																<span class="add-to-cart-text">ADD TO CART</span>
+																<span class="add-to-cart-text">{{__('client.addtocart')}}</span>
 															</div> 
 														</div>
 													</div>
@@ -169,7 +169,7 @@
 					<div class="col-lg-12 col-md-12 col-sm-12 ">
 						<div class="section_title row">
 							<hr class="col-md-4" style="margin-left: 1.1%;">
-							<h2 class="text-center col-md-3"><a href="/products" style="text-decoration: none; color: black;">New products</a></h2>
+							<h2 class="text-center col-md-3"><a href="/products" style="text-decoration: none; color: black;">{{__('client.newproducts')}}</a></h2>
 							<hr class="col-md-4">
 						</div>	
 						<div class='panel-container row'>
@@ -190,7 +190,7 @@
 															<div class="cart-icons">
 																<strong><span class="fa fa-shopping-cart"></span></strong>
 																<span class="cart-icon-handle"></span>
-																<span class="add-to-cart-text">ADD TO CART</span>
+																<span class="add-to-cart-text">{{__('client.addtocart')}}</span>
 															</div> 
 														</div>
 													</div>

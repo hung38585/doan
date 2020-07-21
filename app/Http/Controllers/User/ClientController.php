@@ -105,13 +105,13 @@ class ClientController extends Controller
             'email' => 'required|email|unique:users,email,'.$id
         ],
         [
-            'first_name.required' => 'Field first name is required.',
-            'last_name.required' => 'Field last name is required.',
-            'address.required' => 'Field address is required.',
-            'phone.required' => 'Field phone is required.',
-            'email.required' => 'Field email is required.',
-            'email.email' => 'Malformed email.',
-            'email.unique' => 'Email already exists.',
+            'first_name.required' => trans('editprofile.firstnameRequired'),
+            'last_name.required' => trans('editprofile.lasnameRequired'),
+            'address.required' => trans('editprofile.addressRequired'),
+            'phone.required' => trans('editprofile.phoneRequired'),
+            'email.required' => trans('editprofile.emailRequired'),
+            'email.email' => trans('editprofile.emailcheck'),
+            'email.unique' => trans('editprofile.emailunique'),
         ]);
 
         $users= User::findOrfail($id);
@@ -127,7 +127,8 @@ class ClientController extends Controller
         }else{
             return back()->with('err','Save error!');
         }
-        return redirect('/profile')->with('message','Edit successfully!');
+        return redirect('/profile')->with("message",trans('profileUser.Editprofile
+            '));
     }
 
     /**
@@ -184,16 +185,16 @@ class ClientController extends Controller
         return view('user.profile.changePass',compact('abouts'));
     }
 
-    public function changePassword(Request $request)
+     public function changePassword(Request $request)
     {
         if (!(Hash::check($request->get('current_password'), Auth::user()->password))) {
             // The passwords matches
-            return redirect()->back()->with("error","Current password is incorrect. Try again.");
+            return redirect()->back()->with("error",trans('editpass.checkpass'));
         }
 
         if(strcmp($request->get('current_password'), $request->get('new_password')) == 0){
             //Current password and new password are same
-            return redirect()->back()->with("error","New Password cannot be same as your current password. Choose a different password.");
+            return redirect()->back()->with("error",trans('editpass.checkpassnew'));
         }
 
         $validatedData = $request->validate([
@@ -203,15 +204,16 @@ class ClientController extends Controller
         ],
         [
             'current_password.required' => 'Field current password is required.',
-            'new_password.required' => 'Field new password is required.',
-            'new_confirm_password' => 'Field new confirm password is required.',
+            'new_password.required' => trans('editpass.newpasswordRequired'),
+            'new_password.same' => trans('editpass.passsame'),
+            'new_password.min' => trans('editpass.passmin'),
+            'new_confirm_password.required' => trans('editpass.cfnewpasswordRequired'),
         ]);
-
         //Change Password
         $user = Auth::user();
         $user->password = bcrypt($request->get('new_password'));
         $user->save(); 
-        return redirect('/profile')->with('message','Edit successfully!');
+        return redirect('/profile')->with("message",trans('profileUser.Editpass'));
     }
     public function cancelOrder(Request $request)
     { 
