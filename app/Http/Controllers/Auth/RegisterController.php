@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Hash;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\RegisterRequest;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use App\Models\About;
 
 class RegisterController extends Controller
 {
@@ -50,7 +51,8 @@ class RegisterController extends Controller
 
     public function showClientRegisterForm()
     {
-        return view('user.auth.register', ['url' => 'client']);
+        $abouts = About::take(1)->get();
+        return view('user.auth.register', ['url' => 'client'], compact('abouts'));
     }
 
     // validator

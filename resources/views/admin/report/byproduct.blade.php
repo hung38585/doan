@@ -44,7 +44,7 @@
 					<tr>
 						<th scope="row">{{$key+1}}</th>
 						<td>{{ $product->name }}</td>
-						<th class="text-center">{{ $quantity_sell[$key] }}</th>
+						<th class="text-center">{{ $quantity_sell[$product->id] }}</th>
 						<th class="text-center">{{ $quantity_remaining[$key] }}</th>
 					</tr> 
 					@endforeach

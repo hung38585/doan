@@ -62,7 +62,7 @@ class CartController extends Controller
                 ]
             ];
             session()->put('cart', $cart);
-            return redirect()->back()->with('success', 'Product added to cart successfully!');
+            return redirect()->back()->with('success', trans('cart.addsuccess'));
         }
         // if cart not empty then check if this product exist then increment quantity
         if(isset($cart[$productdetail_id->id])) {
@@ -72,7 +72,7 @@ class CartController extends Controller
                 $cart[$productdetail_id->id]['quantity'] = $quantity->quantity;
             }
             session()->put('cart', $cart);
-            return redirect()->back()->with('success', 'Product added to cart successfully!');
+            return redirect()->back()->with('success', trans('cart.addsuccess'));
         }
         // if item not exist in cart then add to cart
         $cart[$productdetail_id->id] = [
@@ -86,7 +86,7 @@ class CartController extends Controller
             "color" => $request->color
         ];
         session()->put('cart', $cart);
-        return redirect()->back()->with('success', 'Product added to cart successfully!');
+        return redirect()->back()->with('success', trans('cart.addsuccess'));
     }
     public function update(Request $request)
     {
@@ -94,12 +94,12 @@ class CartController extends Controller
         {
             $quantity = Store::select('quantity')->where('isdelete',false)->where('productdetail_id',$request->id)->first();
             if ($request->quantity > $quantity->quantity) {
-                session()->flash('err', 'Quantity less than '.$quantity->quantity);
+                session()->flash('err', trans('cart.quantityerr').$quantity->quantity.'!');
             }else{
                 $cart = session()->get('cart');
                 $cart[$request->id]["quantity"] = $request->quantity;
                 session()->put('cart', $cart);
-                session()->flash('success', 'Cart updated successfully');
+                session()->flash('success', trans('cart.updatesuccess'));
             } 
         }
     }
@@ -111,7 +111,7 @@ class CartController extends Controller
                 unset($cart[$request->id]);
                 session()->put('cart', $cart);
             }
-            session()->flash('success', 'Product removed successfully');
+            session()->flash('success', trans('cart.removesuccess'));
         }
     }
     public function checkout(Request $request)
@@ -131,14 +131,13 @@ class CartController extends Controller
             }
         }
         if (!$isquantity) {
-            return redirect('/cart')->with('err', 'Product quantity not enough!');  
+            return redirect('/cart')->with('err', trans('cart.quantityerr2'));  
         }
         $user = Auth::guard('client')->user();
         $userinfo = User::findOrFail($user->id);
         $userinfo->first_name = $request->first_name;
         $userinfo->last_name = $request->last_name;
         $userinfo->address = $request->address;
-        $userinfo->email = $request->email;
         $userinfo->phone = $request->phone;
         $userinfo->update();
         $status = 'unconfimred';
@@ -151,7 +150,7 @@ class CartController extends Controller
             'status' => $status,
             'payment' => $request->payment,
             'transaction_date' => Carbon::now()->toDateTimeString(),
-            'notes' => $request->notes,
+            'notes' => $request->notes.'  Address:'.$request->address,
             'user_id' => Auth::guard('client')->user()->id,
             'created_by' => Auth::guard('client')->user()->id,
             'updated_at' => null,
@@ -179,7 +178,7 @@ class CartController extends Controller
             $vnp_HashSecret = "CQBSBRQYSPMAZJSNTOUVNHGRBRFMUHLA"; //Chuỗi bí mật
             $vnp_Url = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
             $vnp_Returnurl = "http://myshop.vn/return-vnpay";
-            $vnp_TxnRef = date("YmdHis").$order->id; //Mã đơn hàng. Trong thực tế Merchant cần insert đơn hàng vào DB và gửi mã này sang VNPAY
+            $vnp_TxnRef = date("YmdHis").$order->id; //Mã đơn hàng. 
             $vnp_OrderInfo = "Thanh toán hóa đơn ";
             $vnp_OrderType = 'billpayment';
             $vnp_Amount = $request->total_amount * 100;
@@ -227,9 +226,12 @@ class CartController extends Controller
         //MoMo
         if ($request->payment == 'momo'){
             $endpoint = "https://test-payment.momo.vn/gw_payment/transactionProcessor";
-            $partnerCode = "MOMOBKUN20180529";
-            $accessKey = "klm05TvNBzhg7h7j";
-            $serectkey = "at67qH6mk8w5Y1nAyMoYKMWACiEi2bsa";
+            // $partnerCode = "MOMOBKUN20180529";
+            // $accessKey = "klm05TvNBzhg7h7j";
+            // $serectkey = "at67qH6mk8w5Y1nAyMoYKMWACiEi2bsa";
+            $partnerCode = "MOMOLCAM20200521";
+            $accessKey = "41iYdxtatQqKtN9G";
+            $serectkey = "F77KWkR5GjFwacjNrGgtnS3LOyq9y8T1";
             $orderId = date("YmdHis").$order->id; // Mã đơn hàng
             $orderInfo = "Thanh toán qua MoMo";
             $amount = $request->total_amount;

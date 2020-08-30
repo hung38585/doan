@@ -4,11 +4,13 @@ return[
       'Checkoutdetails'=>'Chi Tiết Thanh Toán',
       'OrderComplete'=>'Hoàn Tất Đơn Hàng',
       'product'=>'Sản Phẩm',
+      'transactiondate'=>'Ngày Giao Dịch',
+      'orderdetail'=>'Thông Tin Đơn Hàng',
       'price'=>'Giá Sản Phẩm',
       'quantity'=>'Số Lượng',
       'total'=>'Tổng Giá',
       'subtotal'=>'Tổng Phụ',
-      'Shipping'=>' Phí Vận Chuyển',
+      'Shipping'=>' Vận Chuyển',
       'carttotal'=>'Tổng Giỏ Hàng',
       'ship'=>'Miễn Phí',
       'ProceedtoCheckout'=>'Tiến Hành Thanh Toán',
@@ -23,7 +25,12 @@ return[
       'billingdetails'=>'Chi Tiết Thanh Toán',
       'OrderNotes'=>'Ghi Chú Đặt Hàng',
       'Notes'=>'Ghi Chú Về Đơn Hàng Của Bạn.',
-      'Placeorder'=>'Đặt Hàng',
+      'Placeorder'=>'Đặt Hàng', 
+      'addsuccess' => 'Sản phẩm đã thêm vào giỏ hàng thành công!',
+      'updatesuccess' => 'Cập nhật giỏ hàng thành công!',
+      'quantityerr' => 'Số lượng phải nhỏ hơn ',
+      'removesuccess' => 'Xóa sản phẩm thành công!',
+      'quantityerr2' => 'Số lượng sản phẩm không đủ!',
 ];
 
 

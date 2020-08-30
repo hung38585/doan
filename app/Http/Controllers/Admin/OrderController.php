@@ -50,7 +50,7 @@ class OrderController extends Controller
      */
     public function create()
     {
-        $product_details = Product_Detail::orderBy('created_at', 'desc')->where('isdelete',false)->get();
+        $product_details = Product_Detail::join('products','product_details.product_id','products.id')->orderBy('product_details.created_at', 'desc')->where('product_details.isdelete',false)->where('products.isdisplay',true)->get();
         return view('admin.order.create',compact('product_details'));
     }
 
@@ -204,7 +204,7 @@ class OrderController extends Controller
         $orderdetail_id = Order_detail::select('product_detail_id','quantity')->where('order_id',$order_id)->get(); 
         foreach ($orderdetail_id as $key => $value) {
             $store = Store::where('productdetail_id',$value->product_detail_id)->first(); 
-            $store->quantity -= $value->quantity;
+            $store->quantity += $value->quantity;
             $store->update();  
         }
     }

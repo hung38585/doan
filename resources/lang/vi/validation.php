@@ -1,8 +1,8 @@
 <?php 
 return[ 
-    'Login'				=>'Đăng Nhập',
-    'Register'			=>'Đăng Ký',
-    'contact'           => 'Liên Hệ',
-    'shop'           	=> 'Cửa Hàng', 
+    'Login'				=>'Đăng nhập',
+    'Register'			=>'Đăng ký',
+    'contact'           => 'Liên hệ',
+    'shop'           	=> 'Cửa hàng', 
 ];
 

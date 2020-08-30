@@ -7,14 +7,14 @@
 			<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
 				<div class="header_top">
 					<div class="header_top_left pull-left ">
-						<p id="title">Default welcome msg!</p>
+						<!-- <p id="title">Default welcome msg!</p> -->
 					</div>
 					<div class="header_top_right_menu pull-right ">
 						<ul>
 						<li><a href="/">{{ __('validation.shop') }}</a></li>
 						<li><a href="/contact">{{ __('validation.contact') }}</a></li> 
 							@auth('client')
-							<li><a href="{{ url('/profile') }}" style="color: white;">{{ Auth::guard('client')->user()->username}}</a></li>
+							<li><a href="{{ url('/profile') }}" style="color: white;">{{ strtoupper(Auth::guard('client')->user()->username)}}</a></li>
 							<li>
 								<a class="dropdown-item" href="{{ url('/') }}"
 								onclick="event.preventDefault();document.getElementById('logout-form').submit();">
@@ -125,7 +125,7 @@
 				<a href="{{url('contact')}}">{{ __('client.Contact') }}</a>
 			</li>
 			<li>
-				<a href="{{route('products.index')}}?sale=sale">{{ __('client.Sale') }}</a>
+				<a href="{{url('product_sale')}}">{{ __('client.Sale') }}</a>
 			</li>
 		</ul>						
 	</nav>
@@ -153,7 +153,7 @@
 								<a href="{{url('contact')}}">{{ __('client.Contact') }}</a>
 							</li>
 							<li >
-								<a href="{{route('products.index')}}?sale=sale">{{ __('client.Sale') }}</a>
+								<a href="{{url('product_sale')}}">{{ __('client.Sale') }}</a>
 							</li>
 						</ul>						
 					</nav>

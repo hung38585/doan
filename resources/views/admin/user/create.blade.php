@@ -5,7 +5,7 @@
 	<ol class="breadcrumb">
 		<li class="breadcrumb-item"><a href="/admin/home">Admin</a></li> 
 		<li class="breadcrumb-item" ><a href="{{route('user.index')}}" title="Danh mục">User</a></li>
-		<li class="breadcrumb-item active">Create</li>
+		<li class="breadcrumb-item active">Create(Admin)</li>
 	</ol>
 </div> 
 <div class="card">

@@ -1,5 +1,5 @@
 @extends('user.layout.main')
-@section('title','Checkout')
+@section('title',__('cart.checkuot'))
 @section('content')
 <!--BREADCRUMB AREA START -->
 <div class="breadcrumb_area">
@@ -7,7 +7,7 @@
 		<div class="row">
 			<div class="col-lg-12 col-md-12 col-sm-12">	
 				<div class="breadcrumb-row">
-					<h3 class="breadcrumb"><a href="/" class="home">Home</a><span>/</span><a href="/cart" class="home">{{__('cart.ShoppingCart')}}</a><span>/</span>{{__('cart.checkuot')}}</h3>
+					<h3 class="breadcrumb"><a href="/" class="home">{{__('client.Home')}}</a><span>/</span><a href="/cart" class="home">{{(__('cart.ShoppingCart'))}}</a><span>/</span>{{(__('cart.checkuot'))}}</h3>
 				</div>
 			</div>
 		</div>
@@ -176,16 +176,7 @@
 												<span id="addresserr" class="text-danger"></span>
 											</div>
 										</div>
-										<div class="col-lg-6 col-md-6 col-sm-6">
-											<div class="bell_ditl_s">
-												<div class="level">
-													Email <span class="required" title="required" >*</span>
-												</div>
-												<input type="text" placeholder="Email" value="{{ Auth::guard('client')->user()->email}}" name="email" id="emailuser" />
-												<span id="emailerr" class="text-danger"></span>
-											</div>
-										</div>
-										<div class="col-lg-6 col-md-6 col-sm-6">
+										<div class="col-lg-12 col-md-12 col-sm-12">
 											<div class="bell_ditl_s">
 												<div class="level">
 													{{__('profileUser.phone')}}<span class="required" title="required">*</span>
@@ -229,7 +220,6 @@
 		var first_name = $("#first_name").val();
 		var last_name = $("#last_name").val();
 		var address = $("#address").val();
-		var email = $("#emailuser").val();
 		var phone = $("#phonenumber").val();	
 		var result = true;
 		if (!first_name) {
@@ -249,17 +239,7 @@
 			$('#addresserr').html('{{trans('regis.add')}}')
 		}else{
 			$('#addresserr').html("");
-		}
-		if (!email) {
-			result = false;
-			$('#emailerr').html('{{trans('regis.email')}}')
-		}else{
-			$('#emailerr').html("");
-			if (!validateEmail(email)) {
-				result = false;
-				$('#emailerr').html('{{trans('regis.emailerr')}}')
-			}
-		}
+		} 
 		if (!phone) {
 			result = false;
 			$('#phoneerr').html('{{trans('regis.phone')}}')

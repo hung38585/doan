@@ -1,5 +1,5 @@
-@extends('user.layout.main')
-@section('title','Profile')
+	@extends('user.layout.main')
+@section('title',__('profileUser.profile'))
 @section('content') 
 <!--BREADCRUMB AREA START -->
 <div class="breadcrumb_area">
@@ -7,7 +7,7 @@
 		<div class="row">
 			<div class="col-lg-12 col-md-12 col-sm-12">	
 				<div class="breadcrumb-row">
-					<h3 class="breadcrumb"><a href="/" class="home">Home</a><span>/</span>Profile</h3>
+					<h3 class="breadcrumb"><a href="/" class="home">{{__('client.Home')}}</a><span>/</span>{{(__('profileUser.profile'))}}</h3>
 				</div>
 			</div>
 		</div>
@@ -20,51 +20,52 @@
 		<div class="col-md-1"></div>
 		<div class="col-xs-12 col-sm-3 info_user">
 			<div class="info_user_inner">
-				<h2 class="text-center line_green_center">Profile</h2>
+				<h2 class="text-center " style="margin: 0;">{{__('profileUser.profile')}}</h2>
+				<hr style="height: 1px;background: green;">
 				@if (session('message'))
 				<div class="alert alert-success notification">
 					{{ session('message') }}
 				</div>
 				@endif  
-				<h4>First name</h4>
+				<h4>{{__('profileUser.firstname')}}:</h4>
 				<h6>{{ Auth::guard('client')->user()->first_name }}</h6>
 				<hr>	
-				<h4>Last name</h4>
+				<h4>{{__('profileUser.lastname')}}:</h4>
 				<h6 >{{ Auth::guard('client')->user()->last_name }}</h6>
 				<hr>
-				<h4>Address</h4>
+				<h4>{{__('profileUser.add')}}:</h4>
 				<h6 >{{ Auth::guard('client')->user()->address }}</h6>
 				<hr>
-				<h4>Phone </h4>
+				<h4>{{__('profileUser.phone')}}:</h4>
 				<h6 >{{ Auth::guard('client')->user()->phone }}</h6>
 				<hr>
 				<h4>Email </h4>
 				<h6>{{ Auth::guard('client')->user()->email }}</h6>
 			</div>			
 			<div class="text-center">
-				<a href="{{route('profile.edit',Auth::guard('client')->user()->username)}}" class="btn btn-success col-md-12" style="margin-bottom: 10px;">Edit Profile</a>
-				<a href="{{ url('/changepassword') }}">Change Password</a>
+				<a href="{{route('profile.edit',Auth::guard('client')->user()->username)}}" class="btn btn-success col-md-12" style="margin-bottom: 10px;">{{__('profileUser.edit')}}</a>
+				<a href="{{ url('/changepassword') }}">{{__('profileUser.editpass')}}</a>
 			</div>
 		</div>
 		<div class="col-xs-12 col-sm-8" style="background: #f5f5f5;"> 
 			<ul class="nav nav-tabs orderstatus">
 				<li class="active">
-					<a class="h4 " href="{{url('/profile')}}" style="margin: 0;">All Order (<span class="text-danger" style="font-size: 15px; font-weight: bold;">{{$quantity[0]}}</span>)</a>
+					<a class="h4 " href="{{url('/profile')}}" style="margin: 0;">{{__('profileUser.allorder')}}(<span class="text-danger" style="font-size: 15px; font-weight: bold;">{{$quantity[0]}}</span>)</a>
 				</li>
 				<li class="unconfimred">
-					<a class="h4" href="{{url('/profile')}}?status=unconfimred" style="color: #444;margin: 0;">Unconfimred (<span class="text-danger" style="font-size: 15px; font-weight: bold;">{{$quantity[1]}}</span>)</a>
+					<a class="h4" href="{{url('/profile')}}?status=unconfimred" style="color: #444;margin: 0;">{{__('profileUser.uncomf')}}(<span class="text-danger" style="font-size: 15px; font-weight: bold;">{{$quantity[1]}}</span>)</a>
 				</li>
 				<li class="confimred">
-					<a class="h4" href="{{url('/profile')}}?status=confimred" style="color: #444;margin: 0;">Confimred (<span class="text-danger" style="font-size: 15px; font-weight: bold;">{{$quantity[2]}}</span>)</a>
+					<a class="h4" href="{{url('/profile')}}?status=confimred" style="color: #444;margin: 0;">{{__('profileUser.comfim')}}(<span class="text-danger" style="font-size: 15px; font-weight: bold;">{{$quantity[2]}}</span>)</a>
 				</li>
 				<li class="delivery">
-					<a class="h4" href="{{url('/profile')}}?status=delivery" style="color: #444;margin: 0;">Delivery (<span class="text-danger" style="font-size: 15px; font-weight: bold;">{{$quantity[3]}}</span>)</a>
+					<a class="h4" href="{{url('/profile')}}?status=delivery" style="color: #444;margin: 0;">{{__('profileUser.delivery')}}(<span class="text-danger" style="font-size: 15px; font-weight: bold;">{{$quantity[3]}}</span>)</a>
 				</li> 
 				<li class="delivered">
-					<a class="h4" href="{{url('/profile')}}?status=delivered" style="color: #444;margin: 0;">Delivered (<span class="text-danger" style="font-size: 15px; font-weight: bold;">{{$quantity[4]}}</span>)</a>
+					<a class="h4" href="{{url('/profile')}}?status=delivered" style="color: #444;margin: 0;">{{__('profileUser.delivered')}}(<span class="text-danger" style="font-size: 15px; font-weight: bold;">{{$quantity[4]}}</span>)</a>
 				</li> 
 				<li class="cancel">
-					<a class="h4" href="{{url('/profile')}}?status=cancel" style="color: #444;margin: 0;">Cancel (<span class="text-danger" style="font-size: 15px; font-weight: bold;">{{$quantity[5]}}</span>)</a>
+					<a class="h4" href="{{url('/profile')}}?status=cancel" style="color: #444;margin: 0;">{{__('profileUser.cancel')}}(<span class="text-danger" style="font-size: 15px; font-weight: bold;">{{$quantity[5]}}</span>)</a>
 				</li> 
 			</ul>
 			<br>
@@ -88,10 +89,28 @@
 							</div>
 						</div>
 					</a>
-					<div class="col-xs-3 col-md-3">
-						<p>{{strtoupper($order->status)}}</p>
-						<p>Total amount: <span style="color: green; font-size: 18px;">{{number_format($order->total_amount)}}đ</span></p> 
-						<a href="{{ url('order/'.$order->order_code) }}" class="btn btn-sm btn-success col-xs-12 col-md-5" style="margin-right: 10px; margin-top: 5px;">Detail</a>
+					<div class="col-xs-3 col-md-3"> 
+						@switch($order->status)
+						@case('unconfimred')
+						<p>{{mb_strtoupper(__('profileUser.uncomf'),'UTF-8')}}</p>
+						@break 
+						@case('confimred')
+						<p>{{mb_strtoupper(__('profileUser.comfim'),'UTF-8')}}</p>
+						@break
+						@case('cancel')
+						<p>{{mb_strtoupper(__('profileUser.cancel'),'UTF-8')}}</p>
+						@break
+						@case('delivery')
+						<p>{{mb_strtoupper(__('profileUser.delivery'),'UTF-8')}}</p>
+						@break
+						@case('delivered')
+						<p>{{mb_strtoupper(__('profileUser.delivered'),'UTF-8')}}</p>
+						@break          
+						@default
+
+						@endswitch
+						<p>{{__('profileUser.totalamount')}}:<span style="color: green; font-size: 18px;">{{number_format($order->total_amount)}}đ</span></p> 
+						<a href="{{ url('order/'.$order->order_code) }}" class="btn btn-sm btn-success col-xs-12 col-md-5" style="margin-right: 10px; margin-top: 5px;">{{__('profileUser.detail')}}</a>
 						@if($order->status == 'delivery')
 						<form action="{{ url('/received') }}" method="POST">
 							@csrf
@@ -103,7 +122,7 @@
 						<form action="{{ url('/cancelorder') }}" method="POST" id="formcancel">
 							@csrf
 							<input type="hidden" name="order_id" value="{{$order->id}}"> 
-							<input type="button" value="Cancel" id="cancel"   class="btn btn-danger btn-sm  col-xs-12 col-md-5" style="border: 1px solid gray; padding-left: 10px; margin-top: 5px;"> 
+							<input type="button" value="{{__('profileUser.cancel')}}" id="cancel"   class="btn btn-danger btn-sm  col-xs-12 col-md-5" style="border: 1px solid gray; padding-left: 10px; margin-top: 5px;"> 
 						</form>	
 						@endif
 					</div>
@@ -127,11 +146,11 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h4 class="modal-title" id="exampleModalLabel">Cancel this order</h4> 
+        <h4 class="modal-title" id="exampleModalLabel">{{__('profileUser.Cancelthisorder')}}</h4> 
       </div> 
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">No! Close</button>
-        <button type="button" class="btn btn-danger yescancel">Yes! Cancel</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">{{__('profileUser.no')}}</button>
+        <button type="button" class="btn btn-danger yescancel">{{__('profileUser.yes')}}</button>
       </div>
     </div>
   </div>

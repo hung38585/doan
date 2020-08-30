@@ -16,7 +16,7 @@ return [
     'accepted'             => 'The :attribute must be accepted.',
     'Login'                => 'Login',
     'Register'             => 'Register',
-    'contact'              => 'Contact Us',
+    'contact'              => 'Contact',
     'shop'                 => 'Shop',
     'err'                  => 'Username or Password incorrect!',
     'active_url'           => 'The :attribute is not a valid URL.',

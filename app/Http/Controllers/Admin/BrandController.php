@@ -61,7 +61,7 @@ class BrandController extends Controller
         $brand->description = $request->description;
         $brand->slug = Str::slug($request->slug ? $request->slug : $request->name);
         $brand->isdelete = false;
-        $brand->isdisplay = false;
+        $brand->isdisplay = true;
         $brand->created_by = Auth::guard('admin')->user()->id;
         $brand->updated_at = null;
         $brand->save();
@@ -113,9 +113,7 @@ class BrandController extends Controller
         {
             $brand->name = $request->name;
             $brand->description = $request->description;
-            $brand->slug = $request->slug ? $request->slug : $request->name;
-            $brand->isdelete = false;
-            $brand->isdisplay = $request->isdisplay;
+            $brand->slug = $request->slug ? $request->slug : $request->name; 
             $brand->updated_at = Carbon::now()->toDateTimeString();
             $brand->updated_by = Auth::guard('admin')->user()->id;
             $brand->update();

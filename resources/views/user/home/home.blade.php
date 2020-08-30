@@ -93,19 +93,16 @@
 			<div class="info_widget">
 				<div class="small_slider">
 					<!-- single_slide -->
-					<div class="single_slide">
-						<img src="{{asset('images/baner1.jpg')}}" alt="" />
+					@foreach($banners as $key => $banner)
+					<div class="single_slide"> 
+						<a href="{{$banner->link}}">
+							<img src="{{asset('images/'.$banner->url_img)}}" alt="" /> 
+						</a>
 						<div class="s_slider_text">
 							<h2>MEET <br />THE <br />MARKET</h2>
 						</div>
 					</div> 
-					<!-- single_slide -->
-					<div class="single_slide">
-						<img src="{{asset('images/baner2.png')}}" alt="" />
-						<div class="s_slider_text another">
-							<h2>AWESOME <br />BANNER</h2>
-						</div>
-					</div> 
+					@endforeach
 				</div>
 			</div>
 		</div>
@@ -184,7 +181,7 @@
 												<a href="{{route('products.show',$newproduct->slug)}}">
 													<div class = 'item'>
 														<div class="product_img">
-															<img class="imghome" src="{{asset('images/'.$newproduct->image)}}"  />
+															<img class="imghome" src="{{asset('images/'.$newproduct->image)}}" style="min-height: 250px;"  />
 														</div>
 														<div class="addtocart_area"> 
 															<div class="cart-icons">
@@ -227,7 +224,7 @@
 	<div class="container-fluid">
 		<div class="section_title row">
 			<hr class="col-md-5" style="margin-left: 1.1%;">
-			<h2 class="col-md-2">OUR BRANDS</h2>
+			<h2 class="col-md-2">{{__('client.brand')}}</h2>
 			<hr class="col-md-4">
 		</div>
 		<div class="row">
@@ -235,35 +232,23 @@
 				<div class="brand">
 					<!-- SINGLE BRAND -->
 					<div class="brand_item">
-						<div class="band_single">
-							<a href="#">
-								<img src="{{asset('images/nikelogo.jpg')}}" alt="" />
-							</a>
+						<div class="band_single"> 
+								<img src="{{asset('images/nikelogo.jpg')}}" alt="" /> 
 						</div>
-						<div class="band_single">
-							<a href="#">
-								<img src="{{asset('images/vanslogo.png')}}" alt="" />
-							</a>
+						<div class="band_single"> 
+								<img src="{{asset('images/vanslogo.png')}}" alt="" /> 
 						</div>
-						<div class="band_single">
-							<a href="#">
-								<img src="{{asset('images/converselogo.png')}}" alt="" />
-							</a>
+						<div class="band_single"> 
+								<img src="{{asset('images/converselogo.png')}}" alt="" /> 
 						</div>
-						<div class="band_single">
-							<a href="#">
-								<img src="{{asset('images/balenlogo.png')}}" alt="" />
-							</a>
+						<div class="band_single"> 
+								<img src="{{asset('images/balenlogo.png')}}" alt="" /> 
 						</div>
-						<div class="band_single">
-							<a href="#">
-								<img src="{{asset('images/yeezylogo.png')}}" alt="" />
-							</a>
+						<div class="band_single"> 
+								<img src="{{asset('images/yeezylogo.png')}}" alt="" /> 
 						</div>
-						<div class="band_single">
-							<a href="#">
-								<img src="{{asset('images/adidaslogo.png')}}" alt="" />
-							</a>
+						<div class="band_single"> 
+								<img src="{{asset('images/adidaslogo.png')}}" alt="" /> 
 						</div> 
 					</div>
 				</div>

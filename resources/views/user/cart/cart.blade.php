@@ -1,6 +1,12 @@
 @extends('user.layout.main')
 @section('title',__('cart.ShoppingCart'))
 @section('content') 
+<style>
+	a.proceed_chack:hover{
+		text-decoration: none;
+		color: white;
+	}
+</style>
 <!--BREADCRUMB AREA START -->
 <div class="breadcrumb_area">
 	<div class="container">
@@ -94,8 +100,6 @@
 						</tbody>
 					</table>
 				</div>
-				<form method="POST" action="{{ url('/checkout') }}" >
-				@csrf
 				<div class="row">
 					<div class="col-lg-6 col-md-6 col-sm-6 ">
 						<div class="cart_totals">
@@ -118,15 +122,14 @@
 									</tbody>
 								</table>
 								<div class="submit_crt">
-									@if(session('cart'))	
-									<input type="submit" class="proceed_chack" value="{{__('cart.ProceedtoCheckout')}}">
+									@if(session('cart'))	 
+									<a href="{{ url('/checkout') }}" class="proceed_chack">{{__('cart.ProceedtoCheckout')}}</a>
 									@endif
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
-				</form>
 			</div>
 		</div>
 	</div>

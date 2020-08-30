@@ -33,8 +33,7 @@
 				<tr>
 					<th >#</th>
 					<th >Name</th>
-					<th>Slug</th>
-					<th>IsDisplay</th>
+					<th>Slug</th> 
 					<th>Action</th>
 				</tr>
 			</thead>
@@ -44,12 +43,7 @@
 					<tr>
 						<td >{{ ++$key }}</td>
 						<td ><a href="{{route('brand.show',$brand->id)}}" style="text-decoration: none;color: black;">{{ $brand->name }}</a> </td>
-						<td>{{$brand->slug}}</td>
-						@if($brand->isdisplay)
-						<td><span class="label label-success" style="font-size: 13px;">Display</span></td>
-						@else
-						<td><span class="label label-danger" style="font-size: 13px;">Hidden</span></td>
-						@endif
+						<td>{{$brand->slug}}</td> 
 						<td >
 							<!-- Button trigger modal -->
 							<!-- Tạo data-id để chưa giá trị id -->

@@ -1,5 +1,5 @@
 @extends('admin.layout.main')
-@section('title','Index')
+@section('title','Comment')
 @section('content')
 <div class="page-header">
 	<ol class="breadcrumb">
@@ -25,9 +25,10 @@
 					<th >#</th>
 					<th >User</th>
 					<th >Comment</th>
-					<th >star</th>
+					<th >Star</th>
 					<th >Product</th>
-					<th >isdisplay</th>
+					<th >Reply</th>
+					<th >Isdisplay</th>
 					<th colspan="5">Action</th>
 				</tr>
 			</thead>
@@ -40,19 +41,25 @@
 						<td>{!! $comment->content !!}</td>
 						<td>{{$comment->star}}</td>
 						<td>{{$comment->product->name}}</td>
+						<td>{{$comment->reply}}</td>
 						<td>{!! $comment->isdisplay ? '<span class="label label-success">Display</span>':'<span class="label label-danger">Hidden</span>' !!}</td>
 						<td colspan="5">
 							@if($comment->isdisplay)
-							<button class="btn-xs btn btn-danger displaycomment" value= "{{ $comment->id }}">Hidden</button>
+							<button class="btn-sm btn btn-danger displaycomment" value= "{{ $comment->id }}">Hidden</button>
 							@else
-							<button class="btn-xs btn btn-success displaycomment" value="{{ $comment->id }}">Display</button>
+							<button class="btn-sm btn btn-success displaycomment" value="{{ $comment->id }}">Display</button>
 							@endif
+							<a href="{{route('comment.edit',$comment->id)}}" class="btn-sm btn btn-primary">Reply</a>
 						</td>
 					</tr>
 					@endforeach
 				</tr>
 			</tbody>
 		</table>
+	</div>
+	<!-- paginate -->
+	<div class="">
+		{{$comments->links()}}	
 	</div>
 </div>
 <script>

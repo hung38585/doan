@@ -38,5 +38,9 @@
 			</tbody>
 		</table>
 	</div>
+	<!-- paginate -->
+	<div class="">
+		{{$order_details->links()}}	
+	</div>
 </div>
 @endsection

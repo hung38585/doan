@@ -74,12 +74,12 @@
 <div class="fb-customerchat" attribution=setup_tool page_id="1387478951510015" theme_color="#13cf13"></div>
 <!--Chatbot-Botman  -->
 <script>
-        // var botmanWidget = {
-        //     aboutText: 'Shop',
-        //     introMessage: "✋ Hi! Can i help you ?"
-        // };
-    </script> 
-    <!-- <script src='https://cdn.jsdelivr.net/npm/botman-web-widget@0/build/js/widget.js'></script> -->
+        var botmanWidget = {
+            aboutText: 'Shop',
+            introMessage: "✋ Xin chào! Nhập 'hi' để bắt đầu.<br> Hoặc nhập 'Thông tin liên hệ' để biết thông tin liên hệ trực tiếp với nhân viên.'"
+        };
+</script>  
+    <script src="{{asset('client/js/widget.js')}}"></script>
     <!--END Chatbot-Botman  -->
 
     <!-- ALL JS FILES -->

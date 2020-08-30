@@ -24,7 +24,7 @@ class ClientController extends Controller
         $this->middleware('auth:client');
     }
     public function index(Request $request)
-    {
+    { 
         $abouts = About::take(1)->get();
         $user_id = Auth::guard('client')->user()->id; 
         $orders = Order::orderBy('created_at','desc')->where('user_id',$user_id);
@@ -127,8 +127,7 @@ class ClientController extends Controller
         }else{
             return back()->with('err','Save error!');
         }
-        return redirect('/profile')->with("message",trans('profileUser.Editprofile
-            '));
+        return redirect('/profile')->with("message",trans('profileUser.Editprofile'));
     }
 
     /**

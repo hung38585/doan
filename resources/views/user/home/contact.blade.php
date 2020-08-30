@@ -41,18 +41,27 @@
 			<!-- contact-info end -->
 			<div class="col-md-6 col-sm-12 col-xs-12">
 				<div class="contact-form">
-					<h3><i class="fa fa-envelope-o"></i>{{__('client.LEAVEAMESSAGE')}}</h3>
+					<h3>{{__('client.LEAVEAMESSAGE')}}</h3>
 					<div class="row">
-						<form action="{{ url('/sendcontact') }}" method="POST">
+						@if (Session::has('message'))
+							<p class="alert alert-success notification">{{ Session::get('message')}}</p>
+						@endif
+						<form action="{{ url('/contact') }}" method="POST">
 							@csrf
 							<div class="col-md-6 col-sm-6 col-xs-12">
 								<input name="name" type="text" placeholder="{{__('client.nameRequired')}}" />
+								<strong class="text-danger">{{ $errors->first('name')}}</strong>
 							</div>
 							<div class="col-md-6 col-sm-6 col-xs-12">
-								<input name="email" type="email" placeholder="{{__('client.email')}}" />
+								<input name="email" class="form_email" placeholder="{{__('client.email')}}" />
+								<strong class="text-danger">{{ $errors->first('email')}}</strong>
 							</div> 
 							<div class="col-md-12 col-sm-12 col-xs-12">
 								<textarea name="message" id="message" cols="30" rows="10" placeholder="{{__('client.Message')}}"></textarea>
+								<strong class="text-danger">{{ $errors->first('message')}}</strong>
+								
+							</div>
+							<div class="col-md-12 col-sm-12 col-xs-12">
 								<input type="submit" value="{{__('client.sendcontact')}}" />
 							</div>
 						</form>

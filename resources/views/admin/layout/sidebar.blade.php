@@ -10,6 +10,7 @@
                             <li><a href="{{route('brand.index')}}" class="">Brand</a></li>
                             <li><a href="{{route('category.index')}}" class="">Category</a></li> 
                             <li><a href="{{route('product.index')}}" class="">Product</a></li>
+                            <li><a href="{{ url('/admin/product_sale')}}" class="">Product Sale</a></li>
                             <li><a href="{{route('productdetail.index')}}" class="">Product Detail</a></li> 
                             <li><a href="{{route('store.index')}}" class="">Store</a></li>
                         </ul>
@@ -50,6 +51,7 @@
                         <ul class="nav">
                             <li><a href="{{url('/admin/report/byorder')}}" class="">By Order</a></li>  
                             <li><a href="{{url('/admin/report/byproduct')}}" class="">By Product</a></li>
+                            <li><a href="{{ url('/admin/report/byrevenue')}}" class="">By Revenue</a></li>
                         </ul>
                     </div>
                 </li> 

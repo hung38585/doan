@@ -15,7 +15,7 @@
 </div>
 <!--BREADCRUMB AREA END -->
 @foreach($abouts as $key => $about)
-<div class="card-body row col-md-12">
+<div class="card-body container">
 	<div class="col-md-12">
 		<ul class="list-group list-group-flush"> 
 			<li class="list-group-item"><span class="h4 ">{{__('client.title')}}:</span> {{$about->title}}</li>

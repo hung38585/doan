@@ -15,6 +15,9 @@
 .short-width-slider .slider1 .single_item img.imghome {
   height: 200px;
 }
+img.imgproductdetail {
+  height: 200px;
+}
 }
 /* Normal desktop :992px. */
 @media (min-width: 992px) and (max-width: 1169px) {

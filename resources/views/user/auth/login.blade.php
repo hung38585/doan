@@ -7,7 +7,7 @@
 		<div class="row">
 			<div class="col-lg-12 col-md-12 col-sm-12">	
 				<div class="breadcrumb-row">
-					<h3 class="breadcrumb"><a href="/" class="home">Home</a><span>/</span>{{__('validation.Login')}}</h3>
+					<h3 class="breadcrumb"><a href="/" class="home">{{mb_strtoupper(__('client.Home'))}}</a><span>/</span>{{__('validation.Login')}}</h3>
 				</div>
 			</div>
 		</div>
@@ -34,7 +34,14 @@
 					</div>
 					<div class="form-group">							
 						<button type="submit" class="btn btn-success btn-block">{{__('validation.Login')}}</button>
-						<p class="text-center" style="margin-top: 10px;"><a href="{{ url('/register') }}" >{{__('log.create')}}</a></p> 
+						<p class="text-center" style="margin-top: 10px;"><a href="{{ url('/register') }}" >{{__('log.create')}}</a></p>
+						@if (Route::has('password.request'))
+						<p class="text-center">
+                            <a class="btn btn-link" href="{{ route('password.request') }}">
+                                {{__('log.forgotpw')}}
+                            </a>
+                        </p>
+                        @endif
 					</div>
 				</form>
 			</div>

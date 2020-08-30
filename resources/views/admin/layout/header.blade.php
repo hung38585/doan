@@ -1,6 +1,6 @@
 <nav class="navbar navbar-default navbar-fixed-top">
     <div class="brand">
-        <a href="/"><img src="{{asset('assets/img/logo-dark.png')}}" alt="Klorofil Logo" class="img-responsive logo"></a>
+        <a href="/"><img src="{{asset('client/img/logo.png')}}" alt="Klorofil Logo" class="img-responsive logo" style="height: 20px;"></a>
     </div>
     <div class="container-fluid">
         <div class="navbar-btn">
@@ -25,7 +25,7 @@
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown"><img src="{{asset('assets/img/apple-icon.png')}}" class="img-circle" alt="Avatar"> <span>{{ Auth::guard('admin')->user()->username}}</span> <i class="icon-submenu lnr lnr-chevron-down"></i></a>
                     <ul class="dropdown-menu"> 
-                        <li><a href="#"><i class="lnr lnr-cog"></i> <span>Change Password</span></a></li>                        
+                        <li><a href="{{ url('admin/changepassword') }}"><i class="lnr lnr-cog"></i> <span>Change Password</span></a></li>                        
                         <!-- Logout Button -->
                         <li>
                             <a class="dropdown-item" href="{{ url('/admin/logout') }}"

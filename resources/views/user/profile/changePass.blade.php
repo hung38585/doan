@@ -1,5 +1,5 @@
 @extends('user.layout.main')
-@section('title','Change password')
+@section('title',__('profileUser.editpass'))
 @section('content')
 <div class="container">
     <div class="row">

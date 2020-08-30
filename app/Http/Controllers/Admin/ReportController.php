@@ -7,10 +7,16 @@ use Illuminate\Routing\Controller;
 use App\Models\Order; 
 use App\Models\Product; 
 use App\Models\Store;
+use App\Models\Brand;
+use App\Models\User;
 use App\Models\Product_Detail; 
+use App\Models\Category; 
 use App\Models\Order_detail;
 use Carbon\Carbon;
 use DB;
+use Auth;
+use Response;
+
 class ReportController extends Controller
 {
     // Kiem tra xac thuc khi admin chua dang nhap
@@ -23,6 +29,65 @@ class ReportController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function index()
+    {
+        $product = Product::count();
+        $productsale = Product::where('promotion','<>','0')->count();
+        $category = Category::count();
+        $brand = Brand::count();
+        $order = Order::count();
+        $user = User::where('level',2)->count();
+        $order_take = Order::orderBy('created_at', 'desc')
+        ->take(5)
+        ->get();
+        $orders = Order::all();
+        $year_have_order = $orders->unique(function($item){
+            return $item['created_at']->year;
+        })->map(function($item){
+            return $item['created_at']->year;
+        })->sort()->toArray();
+        $arr_year = $year_have_order;
+        $year_now = date("Y");
+        return view('admin.report.byrevenue',compact('product','category','brand','order','user','productsale','order_take','arr_year','year_now'));
+    }
+    public function chartTotalmonth(Request $request)
+    {
+        $array = array();
+        for ($i=1; $i<=12 ; $i++) { 
+            $arrTotal = array();
+            $orderInMonth =  DB::table('orders')
+            ->whereMonth('created_at', $i)->whereYear('created_at', $request->year)
+            ->get();
+            foreach ($orderInMonth as $key) {
+                $arrTotal[] =  $key->total_amount;
+            }            
+            $array[] = array_sum($arrTotal);
+        }
+        return Response::json($array);
+    }
+    public function chartTotalYear()
+    {
+        $orders = Order::all();
+        $year_have_order = $orders->unique(function($item)
+        {
+            return $item['created_at']->year;
+                })->map(function($item){
+                    return $item['created_at']->year;
+                })->sort()->toArray();
+                $total =array();
+                foreach ($year_have_order as $key) {
+                    $arr_year[] = $key; 
+                    $orderByYear = DB::table('orders')->whereYear('created_at', $key)->get();
+                    $arrTotal = array();
+                    foreach ($orderByYear as $o) {
+                       $arrTotal[] =  $o->total_amount;
+                   } 
+                   $sum = array_sum($arrTotal);
+                   $total[] = $sum;
+       }
+        $result = [$arr_year,$total];
+       return Response::json($result);
+    }
     public function byOrder(Request $request)
     {  
         $year = strftime("%Y", time());
@@ -72,23 +137,30 @@ class ReportController extends Controller
     } 
     public function byProduct(Request $request)
     {
-        $products = product::where('isdelete',false)->get();  
+        $products_id = product::select('id')->where('isdelete',false)->get();  
         $quantity_sell = array();
-        $quantity_remaining = array();
+        $quantity_remaining = array(); 
         $from = '0000-00-00';
         $to = date("Y-m-d", time());
         $total_amount = 0;
         if ($request->from) {
             $from = date("Y-m-d", strtotime($request->from));
-        }
+        }   
         if ($request->to) {
             $to = date("Y-m-d", strtotime($request->to));
         }
-        foreach ($products as $key => $product) {
-            $product_detail = Product_Detail::select('id')->where('product_id',$product->id)->pluck('id')->toArray();
-            $quantity_sell[] = $this->getQuantitySell($product_detail,$from,$to); 
-            $total_amount += $this->getQuantitySell($product_detail,$from,$to);
+        foreach ($products_id as $key => $product) {
+            $product_detail = Product_Detail::select('id')->where('product_id',$product->id)->pluck('id')->toArray(); 
+            $total_amount += $this->getQuantitySell($product_detail,$from,$to); 
+            $quantity_sell += array($product->id => $this->getQuantitySell($product_detail,$from,$to));
+        }
+        arsort($quantity_sell);
+        $products = array();
+        foreach ($quantity_sell as $key => $value) {
+            $product_detail = Product_Detail::select('id')->where('product_id',$key)->pluck('id')->toArray(); 
             $quantity_remaining[] = $this->getQuantityRemaining($product_detail); 
+            $product = Product::findOrfail($key);
+            array_push($products,$product); 
         }
         return view('admin.report.byproduct',compact('products','quantity_sell','quantity_remaining','total_amount'));
     }

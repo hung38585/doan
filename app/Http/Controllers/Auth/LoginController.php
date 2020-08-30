@@ -64,8 +64,8 @@ class LoginController extends Controller
 
             return redirect()->intended('/admin/home');
         }
-        Session::flash('err',trans('validation.contact'));
-        return back()->withInput($request->only('username', 'remember'))->with('err',trans('validation.contact'));
+        Session::flash('err',trans('log.passerr'));
+        return back()->withInput($request->only('username', 'remember'))->with('err',trans('log.passerr'));
     }
 
     public function showClientLoginForm()
@@ -87,8 +87,8 @@ class LoginController extends Controller
                 //GET id product 
                 $end = strpos($request->session()->get('url.intended'),'?');
                 $id = substr($request->session()->get('url.intended'), $start+12,$end-$start-12);
-                $product = Product::findOrfail($id);
-                return redirect('products/'.$product->name);
+                $product = Product::findOrfail($id); 
+                return redirect('products/'.$product->slug);
             } 
             return redirect()->intended('/');
         }

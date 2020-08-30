@@ -1,6 +1,7 @@
 <?php 
 return[ 
-  'edit'=>'Cập Nhật Thông Tin',
+   'edit'=>'Cập Nhật Thông Tin',
+   'edit1'=>'Sửa Thông Tin',
 	 'firstname'=>'Họ',
    'lastname'=>'Tên',
    'address'=>'Địa Chỉ',
@@ -13,5 +14,5 @@ return[
   'phoneRequired'=>'Só điện thoại không được bỏ trống!',
   'emailRequired'=>'Emai không được bỏ trống!',
   'emailcheck'=>'Vui lòng nhập một email hợp lệ!',
-  'emaiUnique'=>'Email đã được sử dụng. Vui lòng chọn một email khác!',
+  'emailunique'=>'Email đã được sử dụng!',
 ];

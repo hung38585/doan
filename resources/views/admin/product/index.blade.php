@@ -202,8 +202,9 @@
 					success: (data) => {
 						this.reset(); 
 						var filename = '{{ asset('images/')}}'; 
-						$("#begin").after('<div class="form-group col-md-3 row'+i+'"><img src="'+filename+'/'+data+'"style="height: 150px; width:100%;"><p class="text-center"><button type="button" class="text-danger btn fas fa-trash-alt  remove" id="'+i+'" onclick="remove('+i+','+addimage+');" style="padding: 5px 15px; margin-top:5px;"></button></p></div>');
-						$(".afterlist").after('<input type="hidden" name="listimage[]" value="'+data+'" class="image'+i+'">');
+						var j = i+1;
+						$("#begin").after('<div class="form-group col-md-3 row'+j+'"><img src="'+filename+'/'+data+'"style="height: 150px; width:100%;"><p class="text-center"><button type="button" class="text-danger btn fas fa-trash-alt  remove" id="'+j+'" onclick="remove('+j+','+addimage+');" style="padding: 5px 15px; margin-top:5px;"></button></p></div>');
+						$(".afterlist").after('<input type="hidden" name="listimage[]" value="'+data+'" class="image'+j+'">');
 					} 
 				});
 			}else{
@@ -241,8 +242,12 @@
 		$.notify(message, "success");
 	}
 	$("#category").change(function(){
-		@if(!isset($_GET['name']))
-			document.getElementById("search").setAttribute("disabled", true);
+		@if(!isset($_GET['name'])) 
+			document.getElementById("search").setAttribute("disabled", true); 
+		@else
+			@if ($_GET['name'] == '')
+			document.getElementById("search").setAttribute("disabled", true); 
+			@endif
 		@endif
 		this.form.submit();
 	}); 

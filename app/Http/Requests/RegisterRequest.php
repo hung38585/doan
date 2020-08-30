@@ -28,9 +28,9 @@ class RegisterRequest extends FormRequest
             'first_name' => 'required|string|max:255',
             'last_name' => 'required|string|max:255',
             'address' => 'required|string|max:255',
-            'phone' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|size:10',
-            'username' => 'required|string|max:255|unique:users',
-            'email' => 'required|email',
+            'phone' => 'required|regex:/^[0][0-9]*$/|size:10',
+            'username' => 'required|string|max:30|regex:/^[a-zA-Z0-9]*$/|unique:users',
+            'email' => 'required|email|unique:users',
             'password' => 'required|min:8|same:confirm_password',
             'confirm_password' => 'required',
         ];
@@ -43,6 +43,7 @@ class RegisterRequest extends FormRequest
             'address.required' => trans('regis.add'),
             'email.required' => trans('regis.email'),
             'email.email' => trans('regis.emailerr'),
+            'email.unique' => trans('regis.emailuniqueerr'),
             'phone.required' => trans('regis.phone'),
             'username.required' => trans('regis.Username'),
             'username.unique' => trans('regis.Userunique'),
@@ -51,7 +52,7 @@ class RegisterRequest extends FormRequest
             'password.min' => trans('regis.passmin'),
             'password.same' => trans('regis.passsame'),
             'confirm_password.required' => trans('regis.passcf'),
-
+            'username.regex' => trans('regis.UserRegex'),
 
         ];
     }

@@ -1,17 +1,20 @@
 <?php 
 return[   
-    'profile'=>'Hồ Sơ',
+    'profile'=>'Thông tin',
     'firstname'=>'Họ',
     'lastname'=>'Tên',
     'add'=>'Địa Chỉ',
     'phone'=>'Số Điện Thoại',
     'edit'=>'Sửa Thông Tin',
   	'editpass'=>'Thay đổi mật khẩu',
-  	'allorder'=>'Tất Cả Đơn Hàng',
+  	'allorder'=>'Đơn Hàng',
   	'uncomf'=>'Chưa xác nhận',
     'comfim'=>'Đã xác nhận',
   	'delivery'=>'Đang Giao',
   	'delivered'=>'Đã Giao',
+    'Cancelthisorder'=>'Hủy đơn hàng này!',
+    'yes'=>'Đồng ý',
+    'no'=>'Không',
   	'cancel'=>'Hủy Bỏ',
   	'detail'=>'Chi Tiết',
   	'totalamount'=>'Tổng Số Tiền',
@@ -22,6 +25,12 @@ return[
   	'currentpasswordRequired'=>'Vui Lòng Nhập Mật Khẩu Mới.',
     'Editpass'=>'Thay đổi mật khẩu thành công!',
     'Editprofile'=>'Thay đổi thông tin thành công!',
-
+    'order'=>'Đơn hàng',
+    'orderDetail'=>'Chi tiết đơn hàng',
+    'feedback'=>'Phản hồi',
+    'comment'=>'Bình luận',
+    'vote'=>'Đánh giá',
+    'starerr'=>'Hãy chọn sao!',
+    'cmterr' =>'Hãy nhập bình luận!', 
 ];
 

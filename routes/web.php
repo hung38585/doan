@@ -30,13 +30,12 @@ Route::group(array('namespace'=>'User'),function(){
 	//View client
 	Route::get('lang/{lang}','LangController@changeLang')->name('lang');
 	Route::get('/','HomeController@homepage');
-	Route::post('/checkout','CartController@checkout');
+	Route::get('/product_sale','HomeController@product_sale');
+	Route::get('/checkout','CartController@checkout');
 	Route::post('/placeorder','CartController@placeorder');
 	Route::resource('products','HomeController');
 	Route::resource('cart','CartController');
 	Route::resource('/profile','ClientController');   
-	Route::get('/contact','HomeController@contact'); 
-	Route::post('/sendcontact','HomeController@sendContact');
 	Route::get('/about','HomeController@about');
 	Route::get('/order/{id}','ClientController@orderdetail');   
 	Route::post('/comment','ClientController@comment');
@@ -51,6 +50,10 @@ Route::group(array('namespace'=>'User'),function(){
 	// Change Password route
 	Route::get('/changepassword', 'ClientController@showChangePassForm');
 	Route::post('/changepassword','ClientController@changePassword')->name('changepassword');
+	// Contact
+	Route::get('/contact','HomeController@contact'); 
+	Route::post('/contact','HomeController@sendContact')->name('sendcontact');
+	// End Contact
 }); 
 // -------------------------------------------------------------------------------
 // END USER
@@ -84,9 +87,7 @@ Route::get('/get_quantity_in_productdetail', 'User\HomeController@getQuantity');
 //END ajax
 // -------------------------------------------------------------------------------
 // -------------------------------------------------------------------------------
-Route::group(array('prefix'=>'admin','namespace'=>'Admin'),function(){
-	Route::resource('about','AboutController'); 
-	Route::resource('comment','CommentController');  
+Route::group(array('prefix'=>'admin','namespace'=>'Admin'),function(){ 
 	//Start About-------------------------------------------------------------------------------------------------
 	Route::get('/about',[
 		'as' => 'about.index',
@@ -119,6 +120,23 @@ Route::group(array('prefix'=>'admin','namespace'=>'Admin'),function(){
 		'middleware' => 'checkpermission:about_edit'
 	]); 
 	//End About--------------------------------------------------------------------------------------------------- 
+	//Start Comment-----------------------------------------------------------------------------------------------
+	Route::get('/comment',[
+		'as' => 'comment.index',
+		'uses' => 'CommentController@index',
+		'middleware' => 'checkpermission:comment_list'
+	]);  
+	Route::get('/comment/{comment}/edit',[
+		'as' => 'comment.edit',
+		'uses' => 'CommentController@edit',
+		'middleware' => 'checkpermission:comment_reply'
+	]);
+	Route::put('comment/{comment}',[
+		'as' => 'comment.update',
+		'uses' => 'CommentController@update',
+		'middleware' => 'checkpermission:comment_reply'
+	]); 
+	//End Comment------------------------------------------------------------------------------------------------- 
 	//Start Brand-------------------------------------------------------------------------------------------------
 	Route::get('/brand',[
 		'as' => 'brand.index',
@@ -263,6 +281,11 @@ Route::group(array('prefix'=>'admin','namespace'=>'Admin'),function(){
 		'uses' => 'ProductController@destroy',
 		'middleware' => 'checkpermission:product_delete'
 	]); 
+	Route::get('/product_sale',[
+		'as' => 'product_sale',
+		'uses' => 'ProductController@sale',
+		'middleware' => 'checkpermission:product_list'
+	]);
 	//End Product---------------------------------------------------------------------------------------------- 
 	//Start ProductDetail--------------------------------------------------------------------------------------
 	Route::get('/productdetail',[
@@ -328,7 +351,7 @@ Route::group(array('prefix'=>'admin','namespace'=>'Admin'),function(){
 		'middleware' => 'checkpermission:slide_delete'
 	]); 
 	//End Slide------------------------------------------------------------------------------------------------
-//Start Banner----------------------------------------------------------------------------------------------
+	//Start Banner---------------------------------------------------------------------------------------------
 	Route::get('banner',[
 		'as' => 'banner.index',
 		'uses' => 'BannerController@index',
@@ -337,29 +360,29 @@ Route::group(array('prefix'=>'admin','namespace'=>'Admin'),function(){
 	Route::get('/banner/create',[
 		'as' => 'banner.create',
 		'uses' => 'BannerController@create',
-		'middleware' => 'checkpermission:slide_create'
+		'middleware' => 'checkpermission:banner_create'
 	]);
 	Route::post('banner',[
 		'as' => 'banner.store',
 		'uses' => 'BannerController@store',
-		'middleware' => 'checkpermission:slide_create'
+		'middleware' => 'checkpermission:banner_create'
 	]);
 	Route::get('/banner/{banner}/edit',[
 		'as' => 'banner.edit',
 		'uses' => 'BannerController@edit',
-		'middleware' => 'checkpermission:slide_edit'
+		'middleware' => 'checkpermission:banner_edit'
 	]);
 	Route::put('banner/{banner}',[
 		'as' => 'banner.update',
 		'uses' => 'BannerController@update',
-		'middleware' => 'checkpermission:slide_edit'
+		'middleware' => 'checkpermission:banner_edit'
 	]);
 	Route::delete('banner_delete_modal',[
 		'as' => 'banner_delete_modal',
 		'uses' => 'BannerController@destroy',
-		'middleware' => 'checkpermission:slide_delete'
+		'middleware' => 'checkpermission:banner_delete'
 	]); 
-	//End Slide------------------------------------------------------------------------------------------------
+	//End Banner-----------------------------------------------------------------------------------------------
 
 	//Start Stote----------------------------------------------------------------------------------------------
 	Route::get('/store',[
@@ -460,14 +483,24 @@ Route::group(array('prefix'=>'admin','namespace'=>'Admin'),function(){
 	//Start Statistical----------------------------------------------------------------------------------------
 	Route::get('/report/byorder',[ 
 		'uses' => 'ReportController@byOrder',
-		'middleware' => 'checkpermission:report_byorder'
+		'middleware' => 'checkpermission:report'
 	]);
 	Route::get('/report/byproduct',[ 
 		'uses' => 'ReportController@byProduct',
-		'middleware' => 'checkpermission:report_byproduct'
+		'middleware' => 'checkpermission:report'
+	]);
+	Route::get('/report/byrevenue',[ 
+		'uses' => 'ReportController@index',
+		'middleware' => 'checkpermission:report'
 	]);
 	//End Statistical------------------------------------------------------------------------------------------
 	Route::get('/home', 'HomeController@index')->name('admin.home');
+	Route::get('/report/chart','ReportController@chartTotalmonth');
+	Route::get('/report/chart_by_year','ReportController@chartTotalYear');
+	//Admin Change Password------------------------------------------------------------------------------------------
+	Route::get('/changepassword', 'UserController@showAdminChangePassForm');
+	Route::post('/changepassword', 'UserController@changeAdminPassword')->name('admin.changepass');
+	//End Admin Change Password------------------------------------------------------------------------------------------
 });
 // -------------------------------------------------------------------------------
 // END ADMIN

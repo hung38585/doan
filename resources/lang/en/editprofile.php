@@ -1,6 +1,6 @@
 <?php 
 return[ 
-  'edit'=>'Edit Your Profile',
+  'edit1'=>'Edit Your Profile',
 	'firstname'=>'First Name',
   'lastname'=>'Last Name',
   'address'=>'Address',
@@ -14,5 +14,5 @@ return[
   'phoneRequired'=>'Address must not be blank!',
   'emailRequired'=>'Email must not be blank!',
   'emailcheck'=>'Invalid email!',
-  'emaiUnique'=>'Email already exists.',
+  'emailunique'=>'Email already exists!',
   ];

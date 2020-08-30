@@ -1,13 +1,13 @@
 <?php 
 return[   
-    'Home'=>'HOME',
-    'Product'=>'PRODUCT',
-    'About'=>'ABOUT',
-    'Contact'=>'CONTACT',
-    'Sale'=>'SALE',
+    'Home'=>'Home',
+    'Product'=>'Product',
+    'About'=>'About',
+    'Contact'=>'Contact',
+    'Sale'=>'Sale',
     'call'=>'Call Us',
-    'search'=>'Search...',
-    'loguot'=>'Loguot',
+    'search'=>'Search by name',
+    'loguot'=>'Logout',
     'addtocart'=>'ADD TO CART',
     'newproducts'=>'New Products',
     'Latestcollection2020'=>'Latest Collection 2020',
@@ -23,7 +23,7 @@ return[
     'Pricehighttolow'=>'Price: Hight To Low',
     'Pricelowtohigh'=>'Price: Low To Hight',
     'contactinfo'=>'Contact Info',
-    'LEAVEAMESSAGE'=>'LEAVEAMESSAGE',
+    'LEAVEAMESSAGE'=>'CONTACT',
     'nameRequired'=>'Name (Required)',
     'email'=>'Email (Required)',
     'Message'=>'Message',
@@ -43,5 +43,11 @@ return[
     'brand'=>'Brand',
     'PleaseselectSizeandColor'=>'Please select Size and Color!',
     'quantity1'=>'Quantity must be less than : ',
+    'productsale'=>'Product sale',
+    'name'=>'Name must not be blank! ',
+    'Email'=>'Email must not be blank! ',
+    'Emailerr'=>'Invalid email!',
+    'message'=>'Message must not be blank!',
+    'messAlert'=>'Send message success!',
+    
 ];
-

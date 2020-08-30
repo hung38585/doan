@@ -38,10 +38,12 @@
 					{{ Form::text('email',$user->email,['class'=>'form-control'])}}
 					<span class="text-danger">{{ $errors->first('email')}}</span>
 				</div>   
+				@if($user->level == 1) 
 				<div class="form-group col-md-6">
 					{{Form::label('Roles:')}}
 					{{Form::select('role_id[]',$roles,$list_roles,['class' => 'form-control roles', 'multiple'=>'multiple'])}}   
 				</div>
+				@endif
 				<div class="form-group col-md-12"> 
 					{{ Form::submit('Save',['class'=>'btn btn-success']) }}
 					<a class="btn btn-danger" href="{{route('user.index')}}">Back</a>

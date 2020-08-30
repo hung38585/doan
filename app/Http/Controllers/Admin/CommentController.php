@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Comment;
+use Carbon\Carbon;
 
 class CommentController extends Controller
 {
@@ -21,7 +22,7 @@ class CommentController extends Controller
      */
     public function index()
     {
-        $comments = Comment::orderBy('created_at', 'desc')->where('isdelete',false)->get();
+        $comments = Comment::orderBy('created_at', 'desc')->where('isdelete',false)->paginate(10);
         return view('admin.comment.index',compact('comments'));
     }
 
@@ -65,7 +66,8 @@ class CommentController extends Controller
      */
     public function edit($id)
     {
-        //
+        $comment = Comment::findOrFail($id);
+        return view('admin.comment.edit',compact('comment'));
     }
 
     /**
@@ -76,8 +78,12 @@ class CommentController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
-    {
-        //
+    { 
+        $comment= Comment::findOrfail($id);
+        $comment->reply = $request->reply;
+        $comment->updated_at = Carbon::now()->toDateTimeString();
+        $comment->update();
+        return redirect('/admin/comment')->with('message','Reply successfully!');
     }
 
     /**

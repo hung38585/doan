@@ -74,19 +74,19 @@
 							<ul class="product-categories">
 								<li class="col-md-12">
 									<input type="checkbox" name="price[]" id="pmax1000000" value="max1000000" style="margin-top: 7px;">
-									<label for="pmax1000000"><1,000,000</label>
+									<label for="pmax1000000"><1,000,000đ</label>
 								</li>
 								<li class="col-md-12">
 									<input type="checkbox" name="price[]" id="p1000000-2000000" value="1000000-2000000" style="margin-top: 7px;">
-									<label for="p1000000-2000000">1,000,000-2,000,000</label>
+									<label for="p1000000-2000000">1,000,000-2,000,000đ</label>
 								</li>
 								<li class="col-md-12">
 									<input type="checkbox" name="price[]" id="p2000000-5000000" value="2000000-5000000" style="margin-top: 7px;">
-									<label for="p2000000-5000000">2,000,000-5,000,000</label>
+									<label for="p2000000-5000000">2,000,000-5,000,000đ</label>
 								</li>
 								<li class="col-md-12">
 									<input type="checkbox" name="price[]" id="pmin5000000" value="min5000000" style="margin-top: 7px;">
-									<label for="pmin5000000">>5,000,000</label>
+									<label for="pmin5000000">>5,000,000đ</label>
 								</li>
 							</ul> 
 						</div>
@@ -99,8 +99,8 @@
 								@foreach($listcolorquantity as $key => $value)
 								<li class="col-md-12">
 									<input type="checkbox" name="color[]" id="{{$key}}" class="cate col-md-1" value="{{$key}}" style="margin-top: 7px;">
-									<label for="{{$key}}" class="col-md-9"><?php echo ucwords($key); ?></label>
-									<span class="count col-md-1">({{$value}})</span>
+									<label for="{{$key}}" class="col-md-8"><?php echo ucwords($key); ?></label>
+									<span class="count col-md-2">({{$value}})</span>
 								</li>
 								@endforeach 
 							</ul>
@@ -111,19 +111,14 @@
 						<div class="info_widget">
 							<div class="small_slider">
 								<!-- single_slide -->
+								@foreach($banners as $key => $banner)
 								<div class="single_slide">
-									<img src="{{asset('images/baner1.jpg')}}" alt="" />
+									<img src="{{asset('images/'.$banner->url_img)}}" alt="" />
 									<div class="s_slider_text">
 										<h2>MEET <br />THE <br />MARKET</h2>
 									</div>
 								</div> 
-								<!-- single_slide -->
-								<div class="single_slide">
-									<img src="{{asset('images/baner2.png')}}" alt="" />
-									<div class="s_slider_text another">
-										<h2>AWESOME <br />BANNER</h2>
-									</div>
-								</div> 
+								@endforeach 
 							</div>
 						</div>
 					</div>

@@ -59,7 +59,7 @@ class CategoryController extends Controller
         $category->description = $request->description;
         $category->slug = Str::slug($request->slug ? $request->slug : $request->name);
         $category->isdelete = false;
-        $category->isdisplay = false;
+        $category->isdisplay = true;
         $category->updated_at = null;
         $category->created_by = Auth::guard('admin')->user()->id;
         $category->save();
@@ -110,9 +110,7 @@ class CategoryController extends Controller
         {
             $category->name = $request->name;
             $category->description = $request->description;
-            $category->slug = $request->slug ? $request->slug : $request->name; 
-            $category->isdelete = false;
-            $category->isdisplay = $request->isdisplay;
+            $category->slug = $request->slug ? $request->slug : $request->name;   
             $category->updated_at = Carbon::now()->toDateTimeString();
             $category->updated_by = Auth::guard('admin')->user()->id;
             $category->update();

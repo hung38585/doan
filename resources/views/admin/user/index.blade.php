@@ -41,11 +41,16 @@
 						<td>{{$user->username}}</td> 
 						<td>{{$user->level}}</td> 
 						<td>{{$user->email}}</td> 
-						<td colspan="5">
+						<td colspan="5"> 
 							<!-- Button trigger modal -->
 							<!-- Tạo data-id để chưa giá trị id -->
-							<button type="button" class="fas fa-trash-alt deleteUser text-danger btn" data-id="{{$user->id}}" data-toggle="modal" data-target="#Modal" style="width: 40px; padding: 7px 5px;">
+							@if($user->isdelete == 0)
+							<button type="button" class="fas fa-lock deleteUser text-danger btn" data-id="{{$user->id}}" data-toggle="modal" data-target="#Modal" style="width: 40px; padding: 7px 5px;">
 							</button>
+							@else
+							<button type="button" class="fas fa-unlock-alt deleteUser unlockuser text-success btn" data-id="{{$user->id}}" data-toggle="modal" data-target="#Modal" style="width: 40px; padding: 7px 5px;">
+							</button> 
+							@endif
 							<a href="{{route('user.edit',$user->id)}}" class="ml-1 btn" style="width:40px; padding: 4px;background: #f0f0f0;"><i class="fa fa-edit "></i></a>
 						</td>
 					</tr>
@@ -61,4 +66,14 @@
 <!-- Modal -->
 @include('admin.Modal.delete')
 {{ Form::close() }}
+<script>
+	$('.yesdel').html('Yes, Lock');
+	$('.titledelete').html('Are you sure want to Lock?');
+	$('.unlockuser').click(function(){
+		$('.yesdel').html('Yes, Unlock');
+		$('.titledelete').html('Are you sure want to Unlock?');
+		$(".yesily").removeClass("btn-danger");
+		$(".yesily").addClass("btn-success");
+	});
+</script>
 @endsection

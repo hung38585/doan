@@ -17,7 +17,7 @@
 		<div class="row">
 			<div class="col-lg-12 col-md-12 col-sm-12">	
 				<div class="breadcrumb-row">
-					<h3 class="breadcrumb"><a href="/" class="home">{{__('client.Home')}}</a> <span>/</span> <a href="{{url('products')}}"></a> <span>/</span>{{$product->name}}</h3>
+					<h3 class="breadcrumb"><a href="/" class="home">{{__('client.Home')}}</a> <span>/</span> <a href="{{url('products')}}">{{__('client.Product')}}</a> <span>/</span>{{$product->name}}</h3>
 				</div>
 			</div>
 		</div>
@@ -42,7 +42,7 @@
 						<div class="r_menu" style="overflow-x: auto; height: 450px;">
 							<ul>
 								@foreach($categories as $key => $category)
-								<li><a href="{{route('products.index')}}?category={{$category->name}}">{{ $category->name }}</a></li>
+								<li><a href="{{route('products.index')}}?category[]={{$category->name}}">{{ $category->name }}</a></li>
 								@endforeach
 							</ul>
 						</div>
@@ -76,19 +76,16 @@
 					<div class="info_widget">
 						<div class="small_slider">
 							<!-- single_slide -->
-							<div class="single_slide">
-								<img src="{{asset('client/img/slider/8.jpg')}}" alt="" />
+							@foreach($banners as $key => $banner)
+							<div class="single_slide"> 
+								<a href="{{$banner->link}}">
+									<img src="{{asset('images/'.$banner->url_img)}}" alt=""  />
+								</a>	
 								<div class="s_slider_text">
 									<h2>MEET <br />THE <br />MARKET</h2>
 								</div>
 							</div> 
-							<!-- single_slide -->
-							<div class="single_slide">
-								<img src="{{asset('client/img/slider/7.jpg')}}" alt="" />
-								<div class="s_slider_text another">
-									<h2>AWESOME <br />BANNER</h2>
-								</div>
-							</div> 
+							@endforeach 
 						</div>
 					</div> 
 				</div>
@@ -214,7 +211,7 @@
 							</div>
 							<div class="product_meta">
 								<span class="sku_wrapper">{{__('client.brand')}}: {{$product->brand->name}}</span>
-								<span class="posted_in">{{__('client.category')}} : <a rel="tag" href="{{route('products.index')}}?category={{$product->category->name}}">{{$product->category->name}}</a></span>
+								<span class="posted_in">{{__('client.category')}} : <a rel="tag" href="{{route('products.index')}}?category[]={{$product->category->name}}">{{$product->category->name}}</a></span>
 							</div>
 						</div>
 					</div>
@@ -249,7 +246,10 @@
 													<p style="margin: 5px 0px 0px 0px;">{{$comment->content}}</p> 
 													<p class="card-text "><small class="text-muted">{{$comment->created_at}}</small></p>
 												</div>
-											</div>  
+												@if($comment->reply)
+												<p><span style="font-weight: bolder;">Reply:</span> {{$comment->reply}}</p> 
+												@endif
+											</div> 
 										</div>
 									</div>
 									@endforeach 
@@ -271,8 +271,8 @@
 						<div class=" single_item"> 
 							<div class = 'item' >
 								<a href="{{route('products.show',$productbycategory->slug)}}">
-									<div class="product_img">
-										<img src="{{asset('images/'.$productbycategory->image)}}" class="imghome" />
+									<div class="product_img" >
+										<img src="{{asset('images/'.$productbycategory->image)}}" class="imghome imgproductdetail" />
 									</div>
 									<div class="addtocart_area">
 										<a href="{{route('products.show',$productbycategory->slug)}}">

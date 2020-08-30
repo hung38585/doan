@@ -12,16 +12,12 @@
 	<div class="card-body col-md-12">
 		{{Form::open(['route'=>['category.update',$category->id],'method'=>'put'])}}
 		<input type="hidden" name="id" value="{{$category->id}}" placeholder="">
-		<div class="form-group col-md-6">
+		<div class="form-group col-md-12">
 			{{ Form::label('name','Name : ')}}
 			{{ Form::text('name',$category->name,['class'=>'form-control col-md-8'])}}
 			<br>
 			<span class="text-danger">{{ $errors->first('name')}}</span>
-		</div>
-		<div class="form-group col-md-6">
-			{{ Form::label('Isdisplay:','',['class'=>'']) }}
-			{{ Form::select('isdisplay', array('1' => 'Display', '0' => 'Hidden'),$category->isdisplay,['class' => 'form-control'])}} 
-		</div>
+		</div> 
 		<div class="form-group col-md-12">
 			{{ Form::label('description','Description : ')}}
 				<br>

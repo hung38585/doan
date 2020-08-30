@@ -29,7 +29,7 @@
                                 <strong class="text-danger">{{ $errors->first('first_name')}}</strong> 
                             </div>
                             <div class="form-group ">        
-                                <label for="">{{ __('regis.firstname') }}:</label>                     
+                                <label for="">{{ __('regis.lastname') }}:</label>                     
                                 <input id="last_name" type="text" class="form-control" name="last_name" value="{{ old('last_name') }}" placeholder="{{ __('regis.lastname') }}" autofocus>
                                 <strong class="text-danger">{{ $errors->first('last_name') }}</strong>
                             </div>
@@ -39,7 +39,7 @@
                                 <strong class="text-danger">{{ $errors->first('address') }}</strong>
                             </div>
                             <div class="form-group ">  
-                                <label for="">{{ __('regis.phone') }}:</label>                          
+                                <label for="">{{ __('regis.Phone') }}:</label>                          
                                 <input id="phone" type="text" class="form-control" name="phone" value="{{ old('phone') }}" placeholder="{{ __('regis.Phone') }}"  autofocus>
                                 <strong class="text-danger">{{ $errors->first('phone') }}</strong>
                             </div>
@@ -51,8 +51,8 @@
                                 <strong class="text-danger">{{ $errors->first('username') }}</strong>
                             </div>
                             <div class="form-group ">
-                                <label for="">{{ __('regis.email') }}:</label>
-                                <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" placeholder="{{ __('regis.email.') }}">
+                                <label for="">{{ __('regis.Email') }}:</label>
+                                <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" placeholder="{{ __('regis.Email') }}">
                                 <strong class="text-danger">{{ $errors->first('email') }}</strong>
                             </div>
                             <div class="form-group "> 
@@ -77,4 +77,12 @@
         </div>
     </div>
 </div>
+@foreach($abouts as $key => $about)
+<input type="hidden" value="{{$about->title}}" id="titlevalue">
+<input type="hidden" value="{{$about->name}}" id="namevalue">
+<input type="hidden" value="{{$about->address}}" id="addressvalue">
+<input type="hidden" value="{{$about->email}}" id="emailvalue">
+<input type="hidden" value="{{$about->phone}}" id="phonevalue">
+<input type="hidden" value="{{asset('images/'.$about->logo)}}" id="logovalue">
+@endforeach
 @endsection
