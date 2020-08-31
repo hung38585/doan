@@ -9,10 +9,12 @@ use App\Models\Store;
 use App\Models\Order_detail;
 use App\Models\Product_Detail;
 use App\Models\Product;
+use App\Models\About;
 use App\User;
 use Carbon\Carbon;
 use Auth;
-
+use Mail;
+use Session;
 class OrderController extends Controller
 {
     // Kiem tra xac thuc khi admin chua dang nhap
@@ -156,6 +158,14 @@ class OrderController extends Controller
             $order->update();
             if ($order->status == 'cancel') {
                 $this->updateStore($order->id);
+                $user = User::where('id',$order->user_id)->first();
+                $message = "Your order has been canceled due to insufficient quantity, sorry for the inconvenience!";
+                $this->sendMailToUser($user->email,$message,"Cancer order");
+            }
+            if ($order->status == 'confimred') { 
+                $user = User::where('id',$order->user_id)->first();
+                $message = "Your order has been confimred. Thank you!";
+                $this->sendMailToUser($user->email,$message,'Confimred order');
             } 
         }else{
             return back()->with('err','Save error!');
@@ -207,5 +217,24 @@ class OrderController extends Controller
             $store->quantity += $value->quantity;
             $store->update();  
         }
+    }
+    public function sendMailToUser($email,$message,$stt)
+    {
+        $about =  About::first();
+        $data = array(
+            'name' => $about->name,
+            'email' => $stt,
+            'content' => $message
+        );
+        Mail::send('user.home.mail',$data, function($message) use ($data,$email){
+            //form
+            //to
+            $message->to($email);
+            //subject
+            // $message->subject($data['name']);
+            $message->subject("Reply form Jessica Shop");
+        });
+        Session::flash('message', trans('client.messAlert'));
+        return redirect('/reply');
     }
 }

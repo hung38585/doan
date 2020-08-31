@@ -45,7 +45,7 @@
 		</li> 
 		<li class="list-group-item"  id="noteli">
 			<span class="col-md-4">Notes: </span>
-			<div class="col-md-8" id="note" >{{$order->notes}}</div>
+			<div class="col-md-8" id="note" >{!! $order->notes !!}</div>
 		</li>   
 	</div>
 	<div class="col-md-12" style="margin-top: 5px;">

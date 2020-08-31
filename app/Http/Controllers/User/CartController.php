@@ -134,12 +134,6 @@ class CartController extends Controller
             return redirect('/cart')->with('err', trans('cart.quantityerr2'));  
         }
         $user = Auth::guard('client')->user();
-        $userinfo = User::findOrFail($user->id);
-        $userinfo->first_name = $request->first_name;
-        $userinfo->last_name = $request->last_name;
-        $userinfo->address = $request->address;
-        $userinfo->phone = $request->phone;
-        $userinfo->update();
         $status = 'unconfimred';
         if ($request->payment != 'cod') {
             $status = 'cancel';
@@ -150,7 +144,7 @@ class CartController extends Controller
             'status' => $status,
             'payment' => $request->payment,
             'transaction_date' => Carbon::now()->toDateTimeString(),
-            'notes' => $request->notes.'  Address:'.$request->address,
+            'notes' => $request->notes."<br>Recipient's name: ".$request->first_name." ".$request->last_name."<br>Phone: ".$request->phone."<br>Receiving address: ".$request->address,
             'user_id' => Auth::guard('client')->user()->id,
             'created_by' => Auth::guard('client')->user()->id,
             'updated_at' => null,
